@@ -266,7 +266,7 @@ graph LR
 
 ## Additional Resources
 
-- [Maintenance Procedures](maintenance.md)
-- [Emergency Response](emergency.md)
-- [Security Protocols](security.md)
-- [Compliance Guide](compliance.md) 
+- [Maintenance Procedures](maintenance.md) - Coming Soon.
+- [Emergency Response](emergency.md) - Coming Soon.
+- [Security Protocols](security.md) - Coming Soon.
+- [Compliance Guide](compliance.md) - Coming Soon.
