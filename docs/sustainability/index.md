@@ -40,11 +40,11 @@ graph TD
 
 | Metric | Current Value | Target 2025 | Industry Average |
 |--------|--------------|-------------|------------------|
-| Energy Efficiency (PUE) | 1.12 | 1.08 | 1.57 |
-| Carbon Intensity (gCO2e/kWh) | 45 | 30 | 100 |
-| Water Usage (WUE) | 1.15 | 1.10 | 1.80 |
-| E-waste Recycling Rate | 95% | 98% | 75% |
-| Compute Utilization | 85% | 90% | 65% |
+| Energy Efficiency (PUE) | - | 1.08 | 1.57 |
+| Carbon Intensity (gCO2e/kWh) | - | 30 | 100 |
+| Water Usage (WUE) | - | 1.10 | 1.80 |
+| E-waste Recycling Rate | - | 98% | 75% |
+| Compute Utilization | - | 90% | 65% |
 
 ## Navigation
 
@@ -88,17 +88,17 @@ graph LR
 
 ```mermaid
 gantt
-    title Sustainability Goals 2024-2025
+    title Sustainability Goals 2025-2026
     dateFormat  YYYY-MM
     section Energy
-    100% Renewable Energy    :2024-01, 2024-12
-    PUE Optimization        :2024-03, 2024-09
+    100% Renewable Energy    :2025-01, 2025-12
+    PUE Optimization        :2025-03, 2025-09
     section Carbon
-    Carbon Neutral Operations :2024-01, 2024-12
-    Carbon Negative Goal    :2024-06, 2025-12
+    Carbon Neutral Operations :2025-01, 2025-12
+    Carbon Negative Goal    :2025-06, 2026-12
     section Resources
-    Water Usage Optimization :2024-01, 2024-09
-    E-waste Program Enhancement :2024-03, 2024-12
+    Water Usage Optimization :2025-01, 2025-09
+    E-waste Program Enhancement :2025-03, 2025-12
 ```
 
 ## Get Involved
