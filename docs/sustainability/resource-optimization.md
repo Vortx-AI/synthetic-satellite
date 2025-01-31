@@ -55,10 +55,10 @@ graph LR
 
 | Metric | Target | Current | Industry Avg |
 |--------|--------|---------|--------------|
-| GPU Utilization | 90% | 85% | 60% |
-| CPU Utilization | 85% | 80% | 55% |
-| Response Time | <100ms | 95ms | 250ms |
-| Energy/FLOP | 0.1W | 0.15W | 0.3W |
+| GPU Utilization | 90% | - | 60% |
+| CPU Utilization | 85% | - | 55% |
+| Response Time | <100ms | - | 250ms |
+| Energy/FLOP | 0.1W | - | 0.3W |
 
 ### Memory Management
 
@@ -131,7 +131,7 @@ graph LR
     style B fill:#f9f,stroke:#333
 ```
 
-#### Memory Efficiency Metrics
+#### Simulated Memory Efficiency Metrics
 | Operation | Before | After | Improvement |
 |-----------|--------|-------|-------------|
 | Formation | 100GB | 25GB | 75% |
