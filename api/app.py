@@ -12,6 +12,8 @@ import threading
 from werkzeug.utils import secure_filename
 import torch
 from io import BytesIO
+# Cache for tile results
+from cachetools import TTLCache
 
 # Import model load functions
 
@@ -77,6 +79,8 @@ from werkzeug.utils import secure_filename
 from google.cloud import storage
 import base64
 
+service_account_path = os.getenv("GOOGLE_EARTH_CREDENTIALS")
+
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)
@@ -95,7 +99,7 @@ swagger_template = {
         "version": "1.0.0",
         "contact": {
             "name": "API Support",
-            "url": "http://www.yourwebsite.com",
+            "url": "https://vortx.ai",
         }
     },
     "basePath": "/api/v1",
@@ -180,8 +184,6 @@ limiter = Limiter(
 config = SyntheticConfig.from_yaml('config.yaml')
 generator = SyntheticDataGenerator(config)
 
-# Cache for tile results
-from cachetools import TTLCache
 tile_cache = TTLCache(
     maxsize=int(os.getenv('TILE_CACHE_SIZE', 1000)),
     ttl=int(os.getenv('TILE_CACHE_TTL', 3600))
@@ -198,7 +200,13 @@ def get_tile_key(z: int, x: int, y: int, params: Dict[str, Any]) -> str:
 
 @app.route('/')
 def index():
-    """Root endpoint - redirect to API documentation"""
+    """
+    Redirect to API documentation.
+    ---
+    responses:
+      302:
+        description: Redirect to /apidocs/
+    """
     return redirect('/apidocs/')
 
 @app.route('/health')
@@ -209,7 +217,7 @@ def health_check():
     ---
     responses:
       200:
-        description: Returns the health status of the application
+        description: Server is healthy.
         schema:
           type: object
           properties:
@@ -219,6 +227,7 @@ def health_check():
             timestamp:
               type: string
               format: date-time
+              example: "2025-01-31T12:00:00Z"
     """
     return jsonify({
         'status': 'healthy',
@@ -230,8 +239,10 @@ def health_check():
 @require_api_key('generate')
 def generate_synthetic():
     """
-    Generate Synthetic Satellite Image
+    Generate Synthetic Image with Geo-Privacy Protection
     ---
+    tags:
+      - Generation
     consumes:
       - application/json
     parameters:
@@ -254,19 +265,19 @@ def generate_synthetic():
                   example: 1024
                 format:
                   type: string
+                  enum: ['png', 'jpg', 'jpeg']
                   example: png
-                # Add other relevant parameters as needed
     responses:
       200:
-        description: Successfully generated synthetic image
+        description: Successfully generated synthetic image.
         schema:
           type: object
           properties:
             image_url:
               type: string
-              example: http://34.45.181.99:5000/api/v1/download/generated_image.png
+              example: "http://34.45.181.99:5000/api/v1/download/generated_image.png"
       400:
-        description: Invalid input parameters
+        description: Bad Request - Missing 'image_parameters' in request body.
         schema:
           type: object
           properties:
@@ -274,7 +285,7 @@ def generate_synthetic():
               type: string
               example: "Missing 'image_parameters' in request body"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
@@ -282,13 +293,13 @@ def generate_synthetic():
               type: string
               example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to generate image"
     """
     try:
         data = request.get_json()
@@ -311,12 +322,14 @@ def generate_synthetic():
         logger.error(f"Error in generate_synthetic: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/tiles/<int:z>/<int:x>/<int:y>.png')
+@app.route('/api/v1/tiles/<int:z>/<int:x>/<int:y>.png', methods=['GET'])
 @require_api_key('read')
 def get_tile(z: int, x: int, y: int):
     """
-    Retrieve Encrypted XYZ Tile
+    Serve Encrypted XYZ Tiles with Geo-Privacy Protection
     ---
+    tags:
+      - Tiles
     parameters:
       - name: z
         in: path
@@ -327,87 +340,188 @@ def get_tile(z: int, x: int, y: int):
         in: path
         type: integer
         required: true
-        description: Tile's X coordinate
+        description: Tile X coordinate
       - name: y
         in: path
         type: integer
         required: true
-        description: Tile's Y coordinate
+        description: Tile Y coordinate
+      - name: image_url
+        in: query
+        type: string
+        required: true
+        description: URL of the source image
+      - name: X-Access-Token
+        in: header
+        type: string
+        required: true
+        description: Access token for decoding the tile
     responses:
       200:
-        description: Returns the encrypted tile image
+        description: Successfully retrieved the tile image.
         content:
           image/png:
             schema:
               type: string
               format: binary
+      400:
+        description: Bad Request - Missing 'image_url' parameter.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "image_url parameter is required"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Missing or invalid access token.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Invalid or missing API key"
-      404:
-        description: Tile not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Tile not found"
+              example: "Unauthorized"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to generate tile"
     """
     try:
-        # Your implementation to retrieve the tile
-        # For example:
-        # tile_data = generator.get_tile(z, x, y)
-        # if not tile_data:
-        #     return jsonify({"error": "Tile not found"}), 404
-        # return send_file(tile_data, mimetype='image/png')
-        return send_file(io.BytesIO(b''), mimetype='image/png')  # Placeholder
+        # Get parameters
+        image_url = request.args.get('image_url')
+        if not image_url:
+            return jsonify({'error': 'image_url parameter is required'}), 400
+
+        access_token = request.headers.get('X-Access-Token')
+        if not access_token:
+            return jsonify({'error': 'Access token required'}), 401
+
+        # Check cache
+        cache_key = get_tile_key(z, x, y, request.args)
+        if cache_key in tile_cache:
+            encrypted_data, secure_metadata = tile_cache[cache_key]
+
+            # Decode tile with geo-privacy
+            tile_data, geometry = secure_api.decode_tile_with_geo_privacy(
+                encrypted_data,
+                secure_metadata,
+                access_token
+            )
+
+            if tile_data is None:
+                return jsonify({'error': 'Unauthorized'}), 401
+
+            # Convert to PNG
+            img_byte_arr = io.BytesIO()
+            Image.fromarray(tile_data).save(img_byte_arr, format='PNG')
+            img_byte_arr.seek(0)
+
+            return send_file(
+                img_byte_arr,
+                mimetype='image/png'
+            )
+
+        # Calculate tile bounds
+        tile = mercantile.Tile(x, y, z)
+        bounds = mercantile.bounds(tile)
+
+        # Process tile
+        with rasterio.open(image_url) as src:
+            # Transform bounds to image CRS
+            bounds_transformed = transform_bounds(
+                CRS.from_epsg(4326),
+                src.crs,
+                *bounds
+            )
+
+            # Create geometry from bounds
+            geometry = shape({
+                'type': 'Polygon',
+                'coordinates': [[
+                    [bounds.west, bounds.south],
+                    [bounds.east, bounds.south],
+                    [bounds.east, bounds.north],
+                    [bounds.west, bounds.north],
+                    [bounds.west, bounds.south]
+                ]]
+            })
+
+            # Generate tile
+            result = generator.generate_synthetic_image(
+                input_image=src.read(),
+                prompt=request.args.get('prompt', 'A satellite view of terrain'),
+                negative_prompt=request.args.get('negative_prompt', '')
+            )
+
+            if result is None:
+                return jsonify({'error': 'Failed to generate tile'}), 500
+
+            # Encode tile with geo-privacy
+            encrypted_data, secure_metadata = secure_api.encode_tile_with_geo_privacy(
+                result['image'],
+                geometry,
+                {
+                    'z': z,
+                    'x': x,
+                    'y': y,
+                    'bounds': bounds._asdict(),
+                    'timestamp': datetime.utcnow().isoformat()
+                }
+            )
+
+            # Cache result
+            tile_cache[cache_key] = (encrypted_data, secure_metadata)
+
+            # Decode for response
+            tile_data, _ = secure_api.decode_tile_with_geo_privacy(
+                encrypted_data,
+                secure_metadata,
+                access_token
+            )
+
+            if tile_data is None:
+                return jsonify({'error': 'Unauthorized'}), 401
+
+            # Convert to PNG
+            img_byte_arr = io.BytesIO()
+            Image.fromarray(tile_data).save(img_byte_arr, format='PNG')
+            img_byte_arr.seek(0)
+
+            return send_file(
+                img_byte_arr,
+                mimetype='image/png'
+            )
 
     except Exception as e:
-        logger.error(f"Error in get_tile: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error serving tile: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
-@app.route('/api/v1/map')
+@app.route('/api/v1/map', methods=['GET'])
 def map_viewer():
     """
-    Serve Map Viewer HTML
+    Serve Map Viewer HTML Interface
     ---
+    tags:
+      - Map Viewer
     responses:
       200:
-        description: Returns the map viewer HTML page
+        description: Successfully retrieved the map viewer HTML.
         content:
           text/html:
             schema:
               type: string
-              example: "<!DOCTYPE html>..."
-      404:
-        description: HTML template not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Template not found"
+              example: "<html>...</html>"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to retrieve map viewer.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to retrieve map viewer."
     """
     try:
         return send_from_directory('templates', 'map.html')
@@ -415,14 +529,16 @@ def map_viewer():
         logger.error(f"Error in map_viewer: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/capabilities')
+@app.route('/api/v1/capabilities', methods=['GET'])
 def get_capabilities():
     """
-    Get Server Capabilities and Configuration
+    Retrieve Server Capabilities and Configuration
     ---
+    tags:
+      - Capabilities
     responses:
       200:
-        description: Returns the server capabilities and configuration
+        description: Successfully retrieved server capabilities.
         schema:
           type: object
           properties:
@@ -445,13 +561,13 @@ def get_capabilities():
               properties:
                 stable_diffusion:
                   type: string
-                  example: "stable_diffusion_model_v1"
+                  example: "stable_diffusion_v1"
                 controlnet:
                   type: string
-                  example: "controlnet_model_v2"
+                  example: "controlnet_v2"
                 segmentation:
                   type: string
-                  example: "segmentation_model_v3"
+                  example: "segmentation_v3"
             endpoints:
               type: object
               properties:
@@ -465,13 +581,13 @@ def get_capabilities():
                   type: string
                   example: "/api/v1/map"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to retrieve capabilities.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to retrieve capabilities."
     """
     try:
         return jsonify({
@@ -494,36 +610,51 @@ def get_capabilities():
         logger.error(f"Error in get_capabilities: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/download/<path:filename>')
+@app.route('/api/v1/download/<path:filename>', methods=['GET'])
 @require_api_key('read')
 def download_result(filename):
     """
     Download Encrypted Results with Geo-Privacy Protection
     ---
+    tags:
+      - Download
     parameters:
       - name: filename
         in: path
         type: string
         required: true
         description: Name of the file to download
+      - name: X-Access-Token
+        in: header
+        type: string
+        required: true
+        description: Access token for decoding the file
     responses:
       200:
-        description: Returns the encrypted file for download
+        description: Successfully downloaded the file.
         content:
           application/octet-stream:
             schema:
               type: string
               format: binary
-      401:
-        description: Unauthorized - Invalid or missing API key
+      400:
+        description: Bad Request - Missing metadata in request.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Invalid or missing API key"
+              example: "Metadata required"
+      401:
+        description: Unauthorized - Missing or invalid access token.
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Unauthorized"
       404:
-        description: File not found
+        description: Not Found - File does not exist.
         schema:
           type: object
           properties:
@@ -531,25 +662,51 @@ def download_result(filename):
               type: string
               example: "File not found"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to download file.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to download file."
     """
     try:
-        # Your implementation to handle file download
-        # For example:
-        # file_path = os.path.join('outputs', filename)
-        # if not os.path.exists(file_path):
-        #     return jsonify({"error": "File not found"}), 404
-        # return send_file(file_path, as_attachment=True)
-        return send_file(io.BytesIO(b''), mimetype='application/octet-stream')  # Placeholder
+        # Read encrypted data
+        with open(Path('outputs') / filename, 'rb') as f:
+            encrypted_data = f.read()
+
+        # Get metadata from request
+        secure_metadata = request.get_json()
+        if not secure_metadata:
+            return jsonify({'error': 'Metadata required'}), 400
+
+        # Decode data with geo-privacy
+        image_data, geometry = secure_api.decode_tile_with_geo_privacy(
+            encrypted_data,
+            secure_metadata,
+            request.headers.get('X-Access-Token')
+        )
+
+        if image_data is None:
+            return jsonify({'error': 'Unauthorized'}), 401
+
+        # Convert to PNG
+        img_byte_arr = io.BytesIO()
+        Image.fromarray(image_data).save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+
+        return send_file(
+            img_byte_arr,
+            mimetype='image/png',
+            as_attachment=True,
+            download_name=f"{Path(filename).stem}.png"
+        )
+
+    except FileNotFoundError:
+        return jsonify({'error': 'File not found'}), 404
     except Exception as e:
-        logger.error(f"Error in download_result: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error downloading file: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/locen', methods=['POST'])
 @limiter.limit("10 per minute")
@@ -558,87 +715,125 @@ def locen():
     """
     Handle Generation of Synthetic Images with Geo-Privacy Protection
     ---
+    tags:
+      - Location Retraction
+    consumes:
+      - multipart/form-data
+    parameters:
+      - name: Secret-Key
+        in: query
+        type: string
+        required: true
+        description: User Secret Key for authentication
+      - name: image
+        in: formData
+        type: file
+        required: true
+        description: Image file to upload
     responses:
       200:
-        description: Successfully processed location
+        description: Successfully generated synthetic image.
         schema:
           type: object
           properties:
             status:
-              type: string
-              example: success
+              type: integer
+              example: 200
             message:
               type: string
+              example: "Success"
             description:
               type: string
+              example: "Description extracted from image"
             text1:
               type: string
+              example: "Generated text from LLaMA model"
             scene:
               type: string
+              example: "Scene description for Stable Diffusion"
             image:
               type: string
-            uploaded_image_url:
-              type: string
+              example: "https://storage.cloud.google.com/appimage/geni1_20231005_123456.png"
       400:
-        description: Invalid input parameters
+        description: Bad Request - Invalid input or missing parameters.
         schema:
           type: object
           properties:
-            error:
+            status:
+              type: integer
+              example: 400
+            message:
               type: string
+              example: "Invalid file type."
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
-            error:
+            status:
+              type: integer
+              example: 401
+            message:
               type: string
+              example: "Unauthorized"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
-            error:
+            status:
+              type: integer
+              example: 500
+            message:
               type: string
+              example: "Internal Server Error"
     """
     try:
-        data = request.get_json()
-        if not data or 'flow_parameters' not in data:
-            return jsonify({"error": "Missing 'flow_parameters' in request body"}), 400
+        # Clear GPU cache if needed
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
 
-        flow_params = data['flow_parameters']
-        input_data = flow_params.get('input_data')
-        if not input_data:
-            return jsonify({"error": "Missing 'input_data' in 'flow_parameters'"}), 400
+        logger.info("Received a request to /locen")
 
-        # Handle image upload if present
-        image = request.files.get('image')
-        if image:
-            upload_folder = app.config['UPLOAD_FOLDER']
-            os.makedirs(upload_folder, exist_ok=True)
+        # === Authentication ===
+        secret_key = request.args.get("Secret-Key")
+        userId = request.args.get("user_id", '')
 
-            filename = secure_filename(image.filename)
-            upload_path = os.path.join(upload_folder, filename)
-            image.save(upload_path)
-        else:
-            upload_path = None  # Handle accordingly
+        # === Image Validation ===
+        if "image" not in request.files:
+            logger.warning("No image part in the request")
+            return jsonify({"status": 400, "message": "No image part in request"}), 400
+
+        image = request.files["image"]
+        if image.filename == "":
+            logger.warning("No selected image")
+            return jsonify({"status": 400, "message": "No selected image"}), 400
+
+        if not image.filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            logger.warning("Invalid file type uploaded")
+            return jsonify({"status": 400, "message": "Invalid file type. Only PNG, JPG, and JPEG are allowed."}), 400
 
         # === Load Models ===
         load_stable_diffusion_model()  # Load Stable Diffusion model
-        load_llama_model()
+        load_llama_model()             # Load LLaMA model
+
+        # === Save Uploaded Image ===
+        upload_folder = app.config.get("UPLOAD_FOLDER", "uploads")
+        os.makedirs(upload_folder, exist_ok=True)
+
+        filename = secure_filename(image.filename)
+        upload_path = os.path.join(upload_folder, filename)
+        image.save(upload_path)
+        logger.info(f"Image saved to {upload_path}")
 
         # === Image Description (BLIP Model) ===
-        if upload_path:
-            description = extract_image_details(upload_path)
-            logger.info(f"Extracted description: {description}")
-        else:
-            description = "No image provided."
-            logger.info("No image uploaded for description extraction.")
+        description = extract_image_details(upload_path)
+        logger.info(f"Extracted description: {description}")
 
         # === Generate Response (LLaMA Model) ===
         prompt = (
             f"From the sentence: \"{description}\", extract all living objects such as plants, animals, or any living entities. "
-            f"Respond ONLY with JSON containing comma-separated living object names, without any additional text or examples."
+            f"Respond ONLY json containing comma separated living object names, without any additional text or examples."
         )
         generated_text = generate_prompt_from_caption(prompt)
         logger.info(f"Generated text: {generated_text}")
@@ -647,8 +842,6 @@ def locen():
         json_start = generated_text.find("{")
         if json_start == -1:
             raise ValueError("No JSON found in generated text")
-
-        # Parse the JSON
         json_part = generated_text[json_start:].strip()
         response_dict = json.loads(json_part)
 
@@ -656,8 +849,8 @@ def locen():
         living_objects = []
         for key, value in response_dict.items():
             if isinstance(value, str) and key.strip():  # Extract value if it's a string
-                living_objects.append(key.strip())  # Extract the key (e.g., "tomatoes")
-            elif isinstance(value, list):  # Handle lists if present
+                living_objects.append(key.strip())       # Extract the key (e.g., "tomatoes")
+            elif isinstance(value, list):               # Handle lists if present
                 living_objects.extend([item.strip() for item in value if isinstance(item, str)])
 
         # Ensure unique items
@@ -667,22 +860,14 @@ def locen():
 
         # Create a description for Stable Diffusion
         prompt1 = (
-            f"Create a description for a stable diffusion prompt where \"{', '.join(living_objects)}\" are seen in a farm. "
+            f"Create a description for a stable diffusion prompt where \"{living_objects}\" are seen in a farm. "
             f"Respond with only a descriptive sentence suitable for generating an image, without any extra text."
         )
         scene = generate_prompt_from_caption(prompt1)
-
         logger.info(f"Scene description for Stable Diffusion: {scene}")
 
-        # Handle potential extra content
-        content_start = scene.find("\n\n")
-        if content_start != -1:
-            extracted_content = scene[content_start + 2:].strip()
-        else:
-            extracted_content = scene
-
         # === Generate Image (Stable Diffusion Model) ===
-        generated_image = generate_image_from_text(extracted_content, None)
+        generated_image = generate_image_from_text(scene, None)
 
         # === Save Generated Image ===
         image_byte_array = io.BytesIO()
@@ -695,10 +880,10 @@ def locen():
         unique_filename1 = f"up1_{timestamp}.png"
 
         # === Set Up Google Cloud Storage ===
-        service_account_path = os.getenv("SERVICE_ACCOUNT")
+        service_account_path = "/home/jaya/syn_project/peak-sorter-432307-p8-c68a06a6da43.json"
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = service_account_path
 
-        bucket_name = os.getenv("BUCKET_NAME")
+        bucket_name = "appimage"
         client = storage.Client()
         bucket = client.get_bucket(bucket_name)
 
@@ -719,6 +904,8 @@ def locen():
         # Generate public URL
         image_url = f"https://storage.cloud.google.com/{bucket_name}/{unique_filename}"
 
+        logger.info(f"Image uploaded successfully to: {image_url}")
+
         # Unload models after use to free memory
         unload_stable_diffusion_model()
         unload_llama_model()
@@ -733,17 +920,25 @@ def locen():
             "uploaded_image_url": image_url1
         }), 200
 
+    except ValueError as e:
+        logger.error(f"Value error: {e}")
+        return jsonify({"status": 400, "message": str(e)}), 400
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON error: {e}")
+        return jsonify({"status": 400, "message": "Failed to parse JSON response"}), 400
     except Exception as e:
-        logger.error(f"Error in locen: {str(e)}")
-        return jsonify({"error": str(e)}), 500  
+        logger.error(f"Error processing /locen: {e}")
+        return jsonify({"status": 500, "message": "Internal Server Error"}), 500
 
-@app.route("/tileformer", methods=['POST'])
+@app.route('/tileformer', methods=['POST'])
 @limiter.limit("10 per minute")
 @require_api_key('generate')
 def tileformer():
     """
-    Generate Tile from B04 and B08 Band Images
+    Generate and Serve Tile Images Based on Provided Band Images and Bounding Boxes
     ---
+    tags:
+      - Tile Generation
     consumes:
       - application/json
     parameters:
@@ -754,7 +949,6 @@ def tileformer():
           type: object
           required:
             - band_images
-            - bounding_box
           properties:
             band_images:
               type: object
@@ -764,56 +958,52 @@ def tileformer():
               properties:
                 B04:
                   type: string
-                  format: url
-                  example: "http://example.com/image_b04.png"
+                  description: URL for the B04 band image
+                  example: "http://example.com/b04_image.png"
                 B08:
                   type: string
-                  format: url
-                  example: "http://example.com/image_b08.png"
+                  description: URL for the B08 band image
+                  example: "http://example.com/b08_image.png"
             bounding_box:
               type: object
-              required:
-                - minx
-                - miny
-                - maxx
-                - maxy
               properties:
                 minx:
                   type: number
-                  example: -180.0
+                  example: -118.5
                 miny:
                   type: number
-                  example: -90.0
+                  example: 33.9
                 maxx:
                   type: number
-                  example: 180.0
+                  example: -118.0
                 maxy:
                   type: number
-                  example: 90.0
+                  example: 34.2
             tile_size:
               type: integer
               example: 256
             algorithm:
               type: string
+              description: Processing algorithm
               example: "transformer"
     responses:
       200:
-        description: Successfully generated tile image
+        description: Successfully generated tile image.
         content:
           image/png:
             schema:
               type: string
               format: binary
       400:
-        description: Invalid input parameters
+        description: Bad Request - Missing required parameters or unsupported algorithm.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Missing required parameters"
+              example: "Both 'B04' and 'B08' image URLs are required"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
@@ -821,13 +1011,13 @@ def tileformer():
               type: string
               example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to generate tile.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to generate tile"
     """
     try:
         data = request.get_json()
@@ -894,8 +1084,10 @@ pipeline_memory = SynthesisPipeline(
 @require_api_key('generate')
 def analyze_datacenters():
     """
-    Analyze data centers and their infrastructure.
+    Analyze Data Centers and Their Infrastructure
     ---
+    tags:
+      - Advanced Analysis
     consumes:
       - application/json
     parameters:
@@ -925,7 +1117,7 @@ def analyze_datacenters():
               example: true
     responses:
       200:
-        description: Successfully analyzed data centers
+        description: Successfully analyzed data centers.
         schema:
           type: object
           properties:
@@ -970,26 +1162,29 @@ def analyze_datacenters():
                     co:
                       type: number
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to analyze data centers."
     """
     try:
         data = request.get_json()
@@ -1058,8 +1253,10 @@ def analyze_datacenters():
 @require_api_key('generate')
 def analyze_energy():
     """
-    Analyze energy infrastructure and potential.
+    Analyze Energy Infrastructure and Potential
     ---
+    tags:
+      - Advanced Analysis
     consumes:
       - application/json
     parameters:
@@ -1089,7 +1286,7 @@ def analyze_energy():
               example: true
     responses:
       200:
-        description: Successfully analyzed energy infrastructure
+        description: Successfully analyzed energy infrastructure.
         schema:
           type: object
           properties:
@@ -1121,26 +1318,29 @@ def analyze_energy():
                 diffuse_horizontal_irradiance:
                   type: number
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to analyze energy infrastructure."
     """
     try:
         data = request.get_json()
@@ -1202,8 +1402,10 @@ def analyze_energy():
 @require_api_key('generate')
 def analyze_spacetech():
     """
-    Analyze satellite coverage and space infrastructure.
+    Analyze Satellite Coverage and Space Infrastructure
     ---
+    tags:
+      - Advanced Analysis
     consumes:
       - application/json
     parameters:
@@ -1233,7 +1435,7 @@ def analyze_spacetech():
               example: true
     responses:
       200:
-        description: Successfully analyzed space technology
+        description: Successfully analyzed space technology.
         schema:
           type: object
           properties:
@@ -1263,26 +1465,29 @@ def analyze_spacetech():
                 potential_interference_level:
                   type: string
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to analyze space technology."
     """
     try:
         data = request.get_json()
@@ -1343,8 +1548,10 @@ def analyze_spacetech():
 @require_api_key('generate')
 def analyze_agi_infrastructure():
     """
-    Analyze infrastructure relevant for AGI deployment.
+    Analyze Infrastructure Relevant for AGI Deployment
     ---
+    tags:
+      - Advanced Analysis
     consumes:
       - application/json
     parameters:
@@ -1377,7 +1584,7 @@ def analyze_agi_infrastructure():
               example: true
     responses:
       200:
-        description: Successfully analyzed AGI infrastructure
+        description: Successfully analyzed AGI infrastructure.
         schema:
           type: object
           properties:
@@ -1388,8 +1595,10 @@ def analyze_agi_infrastructure():
                   type: array
                   items:
                     type: number
+                  example: [34.05, -118.25]
                 radius_km:
                   type: number
+                  example: 50.0
             compute_infrastructure:
               type: object
               properties:
@@ -1434,26 +1643,29 @@ def analyze_agi_infrastructure():
                   items:
                     type: string
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - An unexpected error occurred.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to analyze AGI infrastructure."
     """
     try:
         data = request.get_json()
@@ -1553,8 +1765,10 @@ def analyze_agi_infrastructure():
 @require_api_key('generate')
 def detect_environmental_changes():
     """
-    Detect and analyze environmental changes over time.
+    Detect and Analyze Environmental Changes Over Time
     ---
+    tags:
+      - Analysis
     consumes:
       - application/json
     parameters:
@@ -1591,7 +1805,7 @@ def detect_environmental_changes():
               example: 0.1
     responses:
       200:
-        description: Successfully detected environmental changes
+        description: Successfully detected environmental changes.
         schema:
           type: object
           properties:
@@ -1616,26 +1830,29 @@ def detect_environmental_changes():
                   current_state:
                     type: object
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to detect environmental changes.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to detect environmental changes."
     """
     try:
         data = request.get_json()
@@ -1695,8 +1912,10 @@ def detect_environmental_changes():
 @require_api_key('generate')
 def find_similar_locations():
     """
-    Find locations with similar environmental characteristics.
+    Find Locations with Similar Environmental Characteristics
     ---
+    tags:
+      - Analysis
     consumes:
       - application/json
     parameters:
@@ -1728,7 +1947,7 @@ def find_similar_locations():
               example: 5
     responses:
       200:
-        description: Successfully found similar locations
+        description: Successfully found similar locations.
         schema:
           type: object
           properties:
@@ -1742,6 +1961,7 @@ def find_similar_locations():
                   type: array
                   items:
                     type: number
+                  example: [34.05, -118.25]
                 metadata:
                   type: object
             similar_locations:
@@ -1753,33 +1973,39 @@ def find_similar_locations():
                     type: array
                     items:
                       type: number
+                    example: [34.10, -118.20]
                   distance_km:
                     type: number
+                    example: 5.0
                   similarity_score:
                     type: number
+                    example: 0.95
                   metadata:
                     type: object
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude', 'timestamp']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to find similar locations.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to find similar locations."
     """
     try:
         data = request.get_json()
@@ -1808,6 +2034,7 @@ def find_similar_locations():
         # Query similar locations from memory store
         similar = pipeline_memory.memory_store.query_memories(
             coordinates=(latitude, longitude),
+            time_range=None,  # Assuming no time range filter
             k=limit
         )
 
@@ -1826,6 +2053,7 @@ def find_similar_locations():
                     reference["embedding"].flatten(),
                     mem["embedding"].flatten()
                 )
+                similarity /= (np.linalg.norm(reference["embedding"].flatten()) * np.linalg.norm(mem["embedding"].flatten()) + 1e-8)  # Normalize
 
                 results.append({
                     "coordinates": mem["coordinates"],
@@ -1859,8 +2087,10 @@ def find_similar_locations():
 @require_api_key('generate')
 def get_location_context():
     """
-    Get comprehensive context for a location.
+    Get Comprehensive Context for a Location
     ---
+    tags:
+      - Analysis
     consumes:
       - application/json
     parameters:
@@ -1889,7 +2119,7 @@ def get_location_context():
               example: 365
     responses:
       200:
-        description: Successfully retrieved location context
+        description: Successfully retrieved location context.
         schema:
           type: object
           properties:
@@ -1931,26 +2161,29 @@ def get_location_context():
                   type: string
                   format: date-time
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude', 'timestamp']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to retrieve location context.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to retrieve location context."
     """
     try:
         data = request.get_json()
@@ -2027,8 +2260,10 @@ def get_location_context():
 @require_api_key('generate')
 def decision_support():
     """
-    Get decision support analysis for a location.
+    Get Decision Support Analysis for a Location
     ---
+    tags:
+      - Analysis
     consumes:
       - application/json
     parameters:
@@ -2058,7 +2293,7 @@ def decision_support():
                 type: any
     responses:
       200:
-        description: Successfully performed decision support analysis
+        description: Successfully performed decision support analysis.
         schema:
           type: object
           properties:
@@ -2068,26 +2303,29 @@ def decision_support():
             analysis_results:
               type: object
       400:
-        description: Invalid input parameters or unsupported analysis type
+        description: Invalid input parameters or unsupported analysis type.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Unsupported analysis type: unknown_type"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to perform analysis.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to perform analysis."
     """
     try:
         data = request.get_json()
@@ -2188,7 +2426,7 @@ def analyze_environmental_impact(data: Dict[str, Any]):
         return jsonify({"error": str(e)}), 500
 
 # ====================
-# + New Memory Analysis Endpoints
+# + Memory Analysis Endpoints
 # ====================
 
 @app.route('/api/v1/memory/query', methods=['POST'])
@@ -2196,8 +2434,10 @@ def analyze_environmental_impact(data: Dict[str, Any]):
 @require_api_key('generate')
 def query_memories_endpoint():
     """
-    Query memories by location and time range.
+    Query Memories by Location and Time Range
     ---
+    tags:
+      - Memory
     consumes:
       - application/json
     parameters:
@@ -2231,7 +2471,7 @@ def query_memories_endpoint():
               example: 5
     responses:
       200:
-        description: Successfully queried memories
+        description: Successfully queried memories.
         schema:
           type: array
           items:
@@ -2252,26 +2492,29 @@ def query_memories_endpoint():
                 items:
                   type: number
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to query memories.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to query memories."
     """
     try:
         data = request.get_json()
@@ -2323,8 +2566,10 @@ def query_memories_endpoint():
 @require_api_key('generate')
 def process_location_endpoint():
     """
-    Process a new location and store it in memory.
+    Process a New Location and Store It in Memory
     ---
+    tags:
+      - Memory
     consumes:
       - application/json
     parameters:
@@ -2355,7 +2600,7 @@ def process_location_endpoint():
               example: {"additional_info": "Sample metadata"}
     responses:
       200:
-        description: Successfully processed location
+        description: Successfully processed location.
         schema:
           type: object
           properties:
@@ -2369,26 +2614,29 @@ def process_location_endpoint():
             metadata:
               type: object
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude', 'timestamp']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to process location.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to process location."
     """
     try:
         data = request.get_json()
@@ -2429,8 +2677,10 @@ def process_location_endpoint():
 @require_api_key('generate')
 def process_time_series_endpoint():
     """
-    Process a location across a time range.
+    Process a Location Across a Time Range and Store the Time Series Data in Memory
     ---
+    tags:
+      - Memory
     consumes:
       - application/json
     parameters:
@@ -2466,7 +2716,7 @@ def process_time_series_endpoint():
               example: 1
     responses:
       200:
-        description: Successfully processed time series
+        description: Successfully processed time series.
         schema:
           type: object
           properties:
@@ -2491,26 +2741,29 @@ def process_time_series_endpoint():
                   metadata:
                     type: object
       400:
-        description: Invalid input parameters
+        description: Invalid input parameters.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Missing required fields: ['latitude', 'longitude', 'start_time', 'end_time']"
       401:
-        description: Unauthorized - Invalid or missing API key
+        description: Unauthorized - Invalid or missing API key.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Invalid or missing API key"
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to process time series.
         schema:
           type: object
           properties:
             error:
               type: string
+              example: "Failed to process time series."
     """
     try:
         data = request.get_json()
@@ -2559,11 +2812,13 @@ def process_time_series_endpoint():
 @limiter.exempt
 def memory_health_check():
     """
-    Check the health of the memory service.
+    Check the Health of the Memory Service
     ---
+    tags:
+      - Memory
     responses:
       200:
-        description: Returns the health status of the memory service
+        description: Returns the health status of the memory service.
         schema:
           type: object
           properties:
@@ -2574,13 +2829,13 @@ def memory_health_check():
               type: integer
               example: 1500
       500:
-        description: Internal Server Error
+        description: Internal Server Error - Failed to check memory health.
         schema:
           type: object
           properties:
             error:
               type: string
-              example: "Detailed error message"
+              example: "Failed to check memory health."
     """
     try:
         return jsonify({
