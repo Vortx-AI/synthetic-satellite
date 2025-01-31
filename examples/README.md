@@ -48,9 +48,7 @@ pip install -r requirements.txt
 ## Getting Started
 
 1. Set up your environment:
-   ```bash
-   export VORTX_API_KEY="your-api-key"
-   ```
+
 
 2. Run the quickstart example:
    ```bash
@@ -83,11 +81,11 @@ Example scripts will create an `output/` directory for storing:
 
 ## Additional Resources
 
-- [Documentation](https://docs.vortx.ai)
-- [API Reference](https://docs.vortx.ai/api)
-- [Sustainability Guide](https://docs.vortx.ai/sustainability)
-- [Best Practices](https://docs.vortx.ai/best-practices)
+- [Documentation](https://docs.vortx.ai) - Coming Soon.
+- [API Reference](https://docs.vortx.ai/api) - Coming Soon.
+- [Sustainability Guide](https://docs.vortx.ai/sustainability) - Coming Soon.
+- [Best Practices](https://docs.vortx.ai/best-practices) - Coming Soon.
 
 ## License
 
-MIT License - see LICENSE file for details. 
+See LICENSE file for details. 
