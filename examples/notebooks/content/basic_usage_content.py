@@ -1,14 +1,16 @@
 """Content module for basic usage notebook."""
 
+import torch
+
 def get_content():
     """Return content for basic usage notebook."""
     return [
         {
-            'title': 'Introduction to Earth Memory System',
-            'description': 'Learn the fundamentals of the Earth Memory System and its core components.',
+            'title': 'Introduction to Satellite Synthesis System',
+            'description': 'Learn the fundamentals of the Satellite Synthesis System and its core components.',
             'code': '''
-# Initialize the Earth Memory System
-system = AGIMemorySystem(
+# Initialize the Satellite Synthesis System
+system = SynthesisSystem(
     config={
         'memory_type': 'hierarchical',
         'compression': 'adaptive',
@@ -19,10 +21,10 @@ system = AGIMemorySystem(
     }
 )
 
-# Create memory components
-episodic = create_memory_pipeline('general')
-spatial = create_memory_pipeline('spatial')
-temporal = create_memory_pipeline('temporal')
+# Create processing pipelines
+data_pipeline = DataProcessor('satellite')
+spatial_pipeline = SpatialMemory('high_resolution')
+temporal_pipeline = TemporalMemory('pattern_analysis')
 
 # Display system configuration
 print("System Configuration:")
@@ -30,17 +32,25 @@ print(system.get_config())
 '''
         },
         {
-            'title': 'Loading Earth Data',
-            'description': 'Learn how to load and preprocess different types of Earth observation data.',
+            'title': 'Loading Satellite Data',
+            'description': 'Learn how to load and preprocess different types of satellite data.',
             'examples': [
                 {
-                    'title': 'Loading Satellite Data',
+                    'title': 'Loading Observation Data',
                     'description': 'Load and process high-resolution satellite imagery.',
                     'resource_usage': 'Medium',
                     'code': '''
+# Initialize data loader with correct paths
+loader = SatelliteDataLoader(
+    cache_dir='data/cache',
+    raw_dir='data/raw',
+    processed_dir='data/processed',
+    use_gpu=torch.cuda.is_available()
+)
+
 # Load satellite data for a specific region
-satellite_data = load_earth_data(
-    data_type='satellite',
+satellite_data = loader.load_data(
+    data_type='observation',
     time_range=['2024-01-01', '2024-01-31'],
     region={
         'lat': (45.5, 46.5),
@@ -52,23 +62,6 @@ satellite_data = load_earth_data(
 print("Satellite Data Summary:")
 print(satellite_data.info())
 '''
-                },
-                {
-                    'title': 'Loading Climate Data',
-                    'description': 'Load and analyze climate patterns.',
-                    'resource_usage': 'Low',
-                    'code': '''
-# Load climate data
-climate_data = load_earth_data(
-    data_type='climate',
-    time_range=['2024-01-01', '2024-01-31'],
-    region='global'
-)
-
-# Create interactive climate visualization
-fig = visualize_earth_memory(climate_data, viz_type='temporal')
-fig.show()
-'''
                 }
             ]
         },
@@ -76,8 +69,8 @@ fig.show()
             'title': 'Memory Formation',
             'description': 'Understanding how memories are formed and stored.',
             'code': '''
-# Process and store satellite data as memories
-memory_id = episodic.store(
+# Process and store satellite data
+memory_id = data_pipeline.process(
     data=satellite_data,
     context={
         'source': 'sentinel-2',
@@ -87,15 +80,15 @@ memory_id = episodic.store(
 )
 
 # Create spatial memory index
-spatial_index = spatial.create_index(
+spatial_index = spatial_pipeline.create_index(
     data=satellite_data,
     resolution='10m',
     index_type='quadtree'
 )
 
-# Store temporal patterns
-temporal_patterns = temporal.extract_patterns(
-    data=climate_data,
+# Extract temporal patterns
+temporal_patterns = temporal_pipeline.extract_patterns(
+    data=satellite_data,
     window_size='1M',
     pattern_type=['trend', 'seasonality', 'anomaly']
 )
@@ -112,14 +105,14 @@ temporal_patterns = temporal.extract_patterns(
                     'complexity': 'Medium',
                     'code': '''
 # Create and display sustainability dashboard
-dashboard = monitor_sustainability()
+dashboard = SystemMetrics.create_dashboard()
 dashboard.show()
 
 # Display detailed metrics
 print("\\nDetailed Sustainability Metrics:")
-print(f"Energy Efficiency: {ResourceOptimizer.get_efficiency_score():.2f}")
-print(f"Memory Utilization: {ResourceOptimizer.get_memory_utilization():.2f}")
-print(f"Carbon Footprint: {CarbonTracker.get_total_emissions():.2f} kgCO2e")
+print(f"Energy Efficiency: {SystemMetrics.get_efficiency_score():.2f}")
+print(f"Memory Utilization: {SystemMetrics.get_memory_utilization():.2f}")
+print(f"Carbon Footprint: {SystemMetrics.get_carbon_emissions():.2f} kgCO2e")
 '''
                 }
             ]

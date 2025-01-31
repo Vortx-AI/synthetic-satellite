@@ -18,16 +18,13 @@ def load_notebook_content():
     # Add content directory to Python path
     sys.path.append(os.path.abspath(content_dir))
     
-    # Define modern notebook types with earth memory synthesis focus
+    # Define modern notebook types with satellite synthesis focus
     notebooks = {
-        "basic_usage": "Introduction to Earth Memory System",
-        "synthetic_data": "Synthetic Earth Data Generation",
-        "advanced_ml": "Advanced Machine Learning for Earth Memories",
-        "climate_analysis": "Climate Pattern Analysis",
-        "3d_visualization": "3D Earth Memory Visualization",
-        "memory_optimization": "Memory Formation & Optimization",
-        "privacy_security": "Privacy-Preserving Earth Data Processing",
-        "distributed_computing": "Distributed Earth Memory Processing",
+        "basic_usage": "Introduction to Satellite Synthesis",
+        "synthetic_data": "Synthetic Satellite Data Generation",
+        "advanced_ml": "Advanced ML for Satellite Analysis",
+        "3d_visualization": "3D Satellite Data Visualization",
+        "distributed_computing": "Distributed Satellite Processing",
         "sustainability": "Sustainable Computing Practices"
     }
     
@@ -62,35 +59,30 @@ def update_notebook_metadata(notebook):
             "pygments_lexer": "ipython3",
             "version": "3.9.0"
         },
-        "toc": {
-            "base_numbering": 1,
-            "nav_menu": {},
-            "number_sections": True,
-            "sideBar": True,
-            "skip_h1_title": False,
-            "title_cell": "Table of Contents",
-            "title_sidebar": "Contents",
-            "toc_cell": False,
-            "toc_position": {},
-            "toc_section_display": True,
-            "toc_window_display": True
-        },
-        "accelerator": {
-            "gpu_support": True,
-            "distributed": True,
-            "memory_optimization": True
-        },
-        "sustainability": {
-            "energy_tracking": True,
-            "resource_optimization": True,
-            "carbon_awareness": True
-        },
-        "interactive_visualization": {
-            "plotly": True,
-            "bokeh": True,
-            "ipywidgets": True,
-            "ipyleaflet": True,
-            "ipyvolume": True
+        "satellite_synthesis": {
+            "version": "0.1.0",
+            "data_paths": {
+                "cache": "data/cache",
+                "raw": "data/raw",
+                "processed": "data/processed"
+            },
+            "features": {
+                "gpu_enabled": True,
+                "distributed": True,
+                "memory_optimization": True
+            },
+            "sustainability": {
+                "energy_tracking": True,
+                "resource_optimization": True,
+                "carbon_awareness": True
+            },
+            "visualization": {
+                "plotly": True,
+                "bokeh": True,
+                "ipywidgets": True,
+                "ipyleaflet": True,
+                "pyvista": True
+            }
         }
     }
     return notebook
@@ -221,7 +213,7 @@ def update_notebook_content(notebook, content):
     def load_earth_data(data_type='satellite', time_range=None, region=None):
         \"\"\"Load and preprocess Earth observation data\"\"\"
         loader = SatelliteDataLoader(
-            cache_dir='./data/cache',
+            cache_dir='examples/notebooks/data/cache',
             use_gpu=torch.cuda.is_available()
         )
         
@@ -622,6 +614,11 @@ def add_documentation(notebook):
 def main():
     """Main function to update notebooks with modern features"""
     notebooks_dir = "examples/notebooks"
+    
+    # Ensure data directories exist
+    os.makedirs("data/cache", exist_ok=True)
+    os.makedirs("data/raw", exist_ok=True)
+    os.makedirs("data/processed", exist_ok=True)
     
     # Load content
     content = load_notebook_content()

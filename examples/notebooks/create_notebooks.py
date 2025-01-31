@@ -9,13 +9,13 @@ def create_notebook_structure():
     """Define the structure for all notebooks"""
     return {
         "01_basic_usage": {
-            "title": "Basic Usage of Vortx AGI Memory System",
+            "title": "Basic Usage of Satellite Synthesis System",
             "sections": [
                 "Environment Setup",
-                "Memory System Architecture",
-                "Cognitive Data Processing",
+                "System Architecture",
+                "Data Processing",
                 "Memory Operations",
-                "Advanced Memory Features",
+                "Advanced Features",
                 "Visualization and Analysis",
                 "Sustainable Operation"
             ],
@@ -23,12 +23,12 @@ def create_notebook_structure():
                 "os", "numpy as np", "pandas as pd", "matplotlib.pyplot as plt",
                 "seaborn as sns", "torch", "networkx as nx",
                 "from datetime import datetime, timedelta",
-                "from vortx import AGIMemorySystem",
-                "from vortx.utils import setup_environment, ConfigManager",
-                "from vortx.viz import CognitiveVisualizer, MemoryMapper",
-                "from vortx.memory import EpisodicMemory, SemanticMemory, ProceduralMemory, WorkingMemory",
-                "from vortx.cognitive import ContextProcessor, TemporalReasoner, CausalEngine",
-                "from vortx.metrics import MemoryMetrics"
+                "from satellite_synthesis import SynthesisSystem",
+                "from satellite_synthesis.utils import setup_environment, ConfigManager",
+                "from satellite_synthesis.viz import DataVisualizer, MemoryMapper",
+                "from satellite_synthesis.memory import EpisodicMemory, SpatialMemory, TemporalMemory",
+                "from satellite_synthesis.processing import DataProcessor, TemporalAnalyzer, CausalEngine",
+                "from satellite_synthesis.metrics import SystemMetrics"
             ]
         },
         "02_synthetic_data": {
@@ -152,6 +152,13 @@ def create_notebook_metadata():
             "nbconvert_exporter": "python",
             "pygments_lexer": "ipython3",
             "version": "3.9.0"
+        },
+        "satellite_synthesis": {
+            "version": "0.1.0",
+            "data_path": "data/",
+            "cache_dir": "cache/",
+            "gpu_enabled": True,
+            "sustainability_tracking": True
         }
     }
 
@@ -190,8 +197,13 @@ def create_notebook(notebook_name, structure):
 
 def main():
     """Main function to create all notebooks"""
-    notebooks_dir = "."
+    notebooks_dir = "examples/notebooks"
     os.makedirs(notebooks_dir, exist_ok=True)
+    
+    # Ensure data directories exist
+    os.makedirs("data/cache", exist_ok=True)
+    os.makedirs("data/raw", exist_ok=True)
+    os.makedirs("data/processed", exist_ok=True)
     
     # Get notebook structure
     structure = create_notebook_structure()
