@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the key metrics and reporting frameworks used to measure and track the environmental impact of the Vortx Earth Memory System.
+This document simulates the key metrics and reporting frameworks used to measure and track the environmental impact of the Vortx Earth Memory System.
 
 ## Key Performance Indicators (KPIs)
 
@@ -36,23 +36,23 @@ graph TD
 ### Energy Efficiency
 | Metric | Value | Target | Industry Avg |
 |--------|-------|--------|--------------|
-| PUE | 1.12 | 1.08 | 1.57 |
-| Energy per Operation | 0.15 kWh | 0.12 kWh | 0.30 kWh |
-| Renewable Energy Mix | 75% | 95% | 40% |
+| PUE | - | 1.08 | 1.57 |
+| Energy per Operation | - | 0.12 kWh | 0.30 kWh |
+| Renewable Energy Mix | - | 95% | 40% |
 
 ### Carbon Footprint
 | Scope | Current (tCO2e/year) | Target | Reduction |
 |-------|---------------------|--------|-----------|
-| Scope 1 | 450 | 225 | 50% |
-| Scope 2 | 350 | 140 | 60% |
-| Scope 3 | 200 | 80 | 60% |
+| Scope 1 | - | 225 | 50% |
+| Scope 2 | - | 140 | 60% |
+| Scope 3 | - | 80 | 60% |
 
 ### Water Usage
 | Metric | Current | Target | Industry Avg |
 |--------|---------|--------|--------------|
-| WUE | 1.15 | 1.10 | 1.80 |
-| Recycling Rate | 85% | 95% | 60% |
-| Consumption | 1500L/day | 1000L/day | 5000L/day |
+| WUE | - | 1.10 | 1.80 |
+| Recycling Rate | - | 95% | 60% |
+| Consumption | - | 1000L/day | 5000L/day |
 
 ## Operational Metrics 🔬
 
@@ -68,10 +68,10 @@ pie title "Resource Distribution"
 ### Efficiency Metrics
 | Component | Utilization | Target | Improvement |
 |-----------|------------|--------|-------------|
-| CPU | 85% | 90% | +5% |
-| GPU | 80% | 88% | +8% |
-| Memory | 75% | 85% | +10% |
-| Storage | 70% | 80% | +10% |
+| CPU | - | 90% | +5% |
+| GPU | - | 88% | +8% |
+| Memory | - | 85% | +10% |
+| Storage | - | 80% | +10% |
 
 ## Financial Impact 🔬
 
@@ -100,16 +100,16 @@ gantt
     title Reporting Schedule
     dateFormat YYYY-MM
     section Daily
-    Operations    :2024-01, 2024-12
+    Operations    :2025-01, 2025-12
     section Weekly
-    Performance   :2024-01, 2024-12
+    Performance   :2025-01, 2025-12
     section Monthly
-    Sustainability:2024-01, 2024-12
+    Sustainability:2025-01, 2025-12
     section Quarterly
-    Compliance    :2024-01, 2024-12
+    Compliance    :2025-01, 2025-12
 ```
 
-### Compliance Standards
+### Compliance Standards Planned for implementation
 - ISO 14001:2015
 - GHG Protocol
 - Energy Star
