@@ -103,9 +103,9 @@ gantt
 
 ## Get Involved
 
-- Join our [Green Computing Initiative](https://vortx.ai/green-computing)
-- Contribute to our [Open Sustainability Projects](https://github.com/vortx-ai/green-initiatives)
-- Participate in our [Carbon Offset Program](https://vortx.ai/carbon-offset)
+- Join our [Green Computing Initiative](https://vortx.ai/green-computing) - Coming Soon.
+- Contribute to our [Open Sustainability Projects](https://github.com/vortx-ai/green-initiatives) - Coming Soon.
+- Participate in our [Carbon Offset Program](https://vortx.ai/carbon-offset) - Coming Soon.
 
 ## References
 
