@@ -3,13 +3,13 @@ version: '3.8'
 services:
   api:
     build:
-      context: ..
-      dockerfile: deployment/Dockerfile
+      context: .
+      dockerfile: docker/api/Dockerfile
     image: vortx/vortx-api:latest
     ports:
       - "8000:8000"
     volumes:
-      - ..:/app
+      - .:/app
       - data:/app/data
     environment:
       - VORTX_ENV=development
