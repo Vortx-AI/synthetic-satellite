@@ -10,7 +10,7 @@ import sys
 def load_notebook_content():
     """Load notebook content from content modules"""
     content = {}
-    content_dir = "content"
+    content_dir = "examples/notebooks/content"
     
     # Create content directory if it doesn't exist
     os.makedirs(content_dir, exist_ok=True)
@@ -97,7 +97,6 @@ def update_notebook_metadata(notebook):
 
 def update_notebook_content(notebook, content):
     """Update notebook cells with rich content and modern features"""
-    # Update existing cells or add new ones
     new_cells = []
     
     # Add setup and import cell with expanded dependencies
@@ -192,6 +191,28 @@ def update_notebook_content(notebook, content):
     carbon_tracker = CarbonTracker()
     energy_monitor.start()
     carbon_tracker.start()
+    
+    # Apply notebook styling
+    from IPython.core.display import HTML, display
+    
+    # Initialize styling
+    display(HTML('''
+        <script>
+            // Function to periodically check and reapply styles
+            function ensureStyles() {
+                var styleElements = document.querySelectorAll('.section-header, .example-header, .visualization-header');
+                styleElements.forEach(function(el) {
+                    if (!el.style.background) {
+                        el.style.cssText = window.getComputedStyle(el).cssText;
+                    }
+                });
+            }
+            
+            // Run initially and every 2 seconds
+            ensureStyles();
+            setInterval(ensureStyles, 2000);
+        </script>
+    '''))
     """)
     new_cells.append(setup_cell)
     
@@ -354,117 +375,157 @@ def update_notebook_content(notebook, content):
 
 def update_notebook_style(notebook):
     """Add modern styling and formatting to the notebook"""
-    style_cell = nbf.v4.new_markdown_cell("""
+    style_cell = nbf.v4.new_code_cell("""
+    from IPython.core.display import HTML
+
+    HTML('''
     <style>
     /* Modern color scheme */
-    :root {
-        --primary-color: #2c3e50;
-        --secondary-color: #3498db;
-        --accent-color: #e74c3c;
-        --text-color: #34495e;
-        --light-bg: #ecf0f1;
+    div.cell.code_cell {
+        background-color: #f8f9fa !important;
+        border-radius: 8px !important;
+        padding: 1em !important;
+        margin: 1em 0 !important;
     }
     
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        color: var(--primary-color);
+    div.output_area {
+        padding: 1em !important;
+        border-radius: 8px !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
     }
     
-    h1 {
-        font-size: 2.5em;
-        border-bottom: 3px solid var(--secondary-color);
-        padding-bottom: 0.5em;
-        margin-bottom: 1em;
+    div.inner_cell {
+        padding: 1em !important;
     }
     
-    h2 {
-        font-size: 2em;
-        border-bottom: 2px solid var(--secondary-color);
-        padding-bottom: 0.3em;
-        margin: 1.5em 0 1em;
+    .rendered_html h1, .rendered_html h2, .rendered_html h3, 
+    .rendered_html h4, .rendered_html h5, .rendered_html h6 {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+        color: #2c3e50 !important;
     }
     
-    h3 {
-        font-size: 1.5em;
-        color: var(--text-color);
-        margin: 1em 0;
+    .rendered_html h1 {
+        font-size: 2.5em !important;
+        border-bottom: 3px solid #3498db !important;
+        padding-bottom: 0.5em !important;
+        margin-bottom: 1em !important;
+    }
+    
+    .rendered_html h2 {
+        font-size: 2em !important;
+        border-bottom: 2px solid #3498db !important;
+        padding-bottom: 0.3em !important;
+        margin: 1.5em 0 1em !important;
+    }
+    
+    .rendered_html h3 {
+        font-size: 1.5em !important;
+        color: #34495e !important;
+        margin: 1em 0 !important;
     }
     
     /* Section styling */
     .section-header {
-        background: var(--light-bg);
-        padding: 1em;
-        border-radius: 8px;
-        margin: 1.5em 0;
+        background: #ecf0f1 !important;
+        padding: 1em !important;
+        border-radius: 8px !important;
+        margin: 1.5em 0 !important;
+        border-left: 4px solid #3498db !important;
     }
     
     .example-header, .visualization-header {
-        background: linear-gradient(to right, var(--light-bg), transparent);
-        padding: 0.8em;
-        border-left: 4px solid var(--accent-color);
-        margin: 1em 0;
-    }
-    
-    /* Code cells */
-    .jp-CodeCell {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 1em;
-    }
-    
-    /* Output styling */
-    .jp-OutputArea-output {
-        padding: 1em;
-        border-radius: 8px;
-        background: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background: linear-gradient(to right, #ecf0f1, transparent) !important;
+        padding: 0.8em !important;
+        border-left: 4px solid #e74c3c !important;
+        margin: 1em 0 !important;
     }
     
     /* Interactive elements */
     .widget-slider {
-        width: 100%;
-        margin: 1em 0;
+        width: 100% !important;
+        margin: 1em 0 !important;
     }
     
     .widget-button {
-        background: var(--secondary-color);
-        color: white;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 4px;
-        cursor: pointer;
+        background: #3498db !important;
+        color: white !important;
+        border: none !important;
+        padding: 0.5em 1em !important;
+        border-radius: 4px !important;
+        cursor: pointer !important;
     }
     
     /* Alerts and info boxes */
     .alert {
-        padding: 1em;
-        margin: 1em 0;
-        border-radius: 4px;
-        border-left: 4px solid;
+        padding: 1em !important;
+        margin: 1em 0 !important;
+        border-radius: 4px !important;
+        border-left: 4px solid !important;
     }
     
     .alert-info {
-        background: #d9edf7;
-        border-color: var(--secondary-color);
+        background: #d9edf7 !important;
+        border-color: #3498db !important;
     }
     
     .alert-warning {
-        background: #fcf8e3;
-        border-color: var(--accent-color);
+        background: #fcf8e3 !important;
+        border-color: #e74c3c !important;
     }
     
     /* Sustainability indicator */
     .sustainability-indicator {
-        position: fixed;
-        top: 1em;
-        right: 1em;
-        background: var(--light-bg);
-        padding: 0.5em;
-        border-radius: 4px;
-        font-size: 0.8em;
+        position: fixed !important;
+        top: 1em !important;
+        right: 1em !important;
+        background: #ecf0f1 !important;
+        padding: 0.5em !important;
+        border-radius: 4px !important;
+        font-size: 0.8em !important;
+        z-index: 1000 !important;
+    }
+    
+    /* Code cell improvements */
+    .highlight {
+        background: #f8f9fa !important;
+        border-radius: 4px !important;
+        padding: 0.5em !important;
+    }
+    
+    .highlight pre {
+        font-family: 'Fira Code', 'Source Code Pro', monospace !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* Table styling */
+    .rendered_html table {
+        border-collapse: collapse !important;
+        margin: 1em 0 !important;
+        width: 100% !important;
+    }
+    
+    .rendered_html th, .rendered_html td {
+        padding: 0.5em 1em !important;
+        border: 1px solid #ddd !important;
+    }
+    
+    .rendered_html th {
+        background: #f8f9fa !important;
+        font-weight: bold !important;
+    }
+    
+    /* Markdown cell improvements */
+    div.text_cell_render {
+        padding: 1em !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        color: #2c3e50 !important;
     }
     </style>
+    ''')
     """)
     notebook.cells.insert(0, style_cell)
     return notebook
