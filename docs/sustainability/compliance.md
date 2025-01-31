@@ -48,12 +48,7 @@ graph TD
 ```
 
 ### Energy Star Certification 🔬
-| Requirement | Current Status | Target | Deadline |
-|------------|----------------|--------|----------|
-| PUE | 1.12 | 1.08 | Q4 2024 |
-| Energy Efficiency | 85% | 90% | Q3 2024 |
-| Power Management | Compliant | Enhanced | Q2 2024 |
-| Documentation | 90% | 100% | Q2 2024 |
+Coming Soon.
 
 ## Data Center Standards
 
@@ -119,13 +114,13 @@ gantt
     title Certification Timeline
     dateFormat YYYY-MM
     section ISO 14001
-    Documentation    :2024-01, 2024-03
-    Implementation   :2024-02, 2024-06
-    Audit           :2024-07, 2024-08
+    Documentation    :2025-01, 2025-03
+    Implementation   :2025-03, 2025-06
+    Audit           :2025-07, 2025-08
     section Energy Star
-    Assessment      :2024-03, 2024-05
-    Improvements    :2024-04, 2024-08
-    Certification   :2024-09, 2024-10
+    Assessment      :2025-03, 2025-05
+    Improvements    :2025-05, 2025-08
+    Certification   :2025-09, 2025-10
 ```
 
 ### Requirements Checklist 🔬
