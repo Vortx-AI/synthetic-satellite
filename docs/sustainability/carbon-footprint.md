@@ -245,7 +245,7 @@ gantt
 
 ## Additional Resources
 
-- [Sustainability Report](sustainability-report.md)
-- [Energy Efficiency Guide](energy-efficiency.md)
-- [Carbon Calculation Methodology](carbon-calculation.md)
-- [Offset Project Details](offset-projects.md) 
+- [Sustainability Report](sustainability-report.md) - Coming Soon.
+- [Energy Efficiency Guide](energy-efficiency.md) - Coming Soon.
+- [Carbon Calculation Methodology](carbon-calculation.md) - Coming Soon.
+- [Offset Project Details](offset-projects.md) - Coming Soon.
