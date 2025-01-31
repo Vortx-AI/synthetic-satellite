@@ -302,20 +302,20 @@ Comprehensive documentation is available in the [docs](docs/) directory:
 ## Community
 
 Join our growing community:
-- 💬 [Discord Community](https://discord.gg/vortx)
-- 📝 [GitHub Discussions](https://github.com/vortx-ai/synthetic-satellite/discussions)
-- 🐦 [Twitter](https://twitter.com/vortxai)
-- 📧 [Email Newsletter](https://vortx.ai/newsletter)
+- 💬 [Discord Community](https://discord.gg/vortx) - Coming Soon.
+- 📝 [GitHub Discussions](https://github.com/vortx-ai/synthetic-satellite/discussions) - Coming Soon.
+- 🐦 [Twitter](https://twitter.com/vortxai) - Coming Soon.
+- 📧 [Email Newsletter](https://vortx.ai/newsletter) - Coming Soon.
 
 ### Support Channels
-- 📚 [Documentation](docs/)
-- 🤝 [Stack Overflow - Coming Soon](https://stackoverflow.com/questions/tagged/vortx)
-- 🐛 [Issue Tracker](https://github.com/vortx-ai/synthetic-satellite/issues)
-- 📧 [Email Support](mailto:support@vortx.ai)
+- 📚 [Documentation](docs/) 
+- 🤝 [Stack Overflow - Coming Soon](https://stackoverflow.com/questions/tagged/vortx) - Coming Soon.
+- 🐛 [Issue Tracker](https://github.com/vortx-ai/synthetic-satellite/issues) 
+- 📧 [Email Support](mailto:avijeet@vortx.ai).
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](docs/meta/contributing.md) for details.
+We welcome contributions! Please see our [Contributing Guide](docs/meta/contributing.md) for details. 
 
 ### Development Setup
 ```bash
