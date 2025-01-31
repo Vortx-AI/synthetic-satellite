@@ -38,16 +38,16 @@ graph TD
 
 ## Power Management 🔬
 
-### Energy Distribution
+### Simulated Energy Distribution
 ```mermaid
-pie title "Power Usage Distribution"
+pie title "Simulated Power Usage Distribution"
     "Computing" : 45
     "Cooling" : 30
     "Network" : 15
     "Other" : 10
 ```
 
-### Power Optimization
+### Simulated Power Optimization
 | Component | Base Load | Peak Load | Efficiency |
 |-----------|-----------|-----------|------------|
 | Servers | 60% | 85% | 92% |
@@ -121,13 +121,13 @@ gantt
     title Maintenance Schedule
     dateFormat YYYY-MM
     section Hardware
-    Server Maintenance   :2024-01, 2024-12
-    Network Checks      :2024-02, 2024-12
-    Storage Audit       :2024-03, 2024-12
+    Server Maintenance   :2025-01, 2025-12
+    Network Checks      :2025-02, 2025-12
+    Storage Audit       :2025-03, 2025-12
     section Systems
-    Cooling Service     :2024-01, 2024-12
-    Power Systems       :2024-02, 2024-12
-    Security Audit      :2024-03, 2024-12
+    Cooling Service     :2025-01, 2025-12
+    Power Systems       :2025-02, 2025-12
+    Security Audit      :2025-03, 2025-12
 ```
 
 ### Emergency Procedures
