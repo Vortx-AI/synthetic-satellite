@@ -259,7 +259,7 @@ mindmap
 
 ## Additional Resources
 
-- [Detailed Implementation Guide](implementation-guide.md)
-- [Monitoring Setup Guide](monitoring-guide.md)
-- [Optimization Cookbook](optimization-cookbook.md)
-- [Compliance Checklist](compliance-checklist.md) 
+- [Detailed Implementation Guide](implementation-guide.md) - Coming Soon.
+- [Monitoring Setup Guide](monitoring-guide.md) - Coming Soon.
+- [Optimization Cookbook](optimization-cookbook.md) - Coming Soon.
+- [Compliance Checklist](compliance-checklist.md) - Coming Soon.
