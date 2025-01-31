@@ -799,11 +799,6 @@ def locen():
         secret_key = request.args.get("Secret-Key")
         userId = request.args.get("user_id", '')
 
-        expected_secret = app.config.get("SECRET_KEY")
-        if secret_key != expected_secret:
-            logger.warning("Invalid secret key provided")
-            return jsonify({"status": 401, "message": "Unauthorized"}), 401
-
         # === Image Validation ===
         if "image" not in request.files:
             logger.warning("No image part in the request")
