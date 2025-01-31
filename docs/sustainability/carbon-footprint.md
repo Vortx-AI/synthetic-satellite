@@ -73,12 +73,12 @@ gantt
     title Renewable Energy Transition
     dateFormat YYYY-MM
     section Solar
-    Implementation    :2023-01, 2023-12
-    Expansion        :2024-01, 2024-12
+    Implementation    :2025-01, 2025-12
+    Expansion        :2026-01, 2026-12
     section Wind
-    Implementation    :2023-06, 2024-06
+    Implementation    :2025-06, 2026-06
     section Grid
-    Reduction        :2023-01, 2024-12
+    Reduction        :2025-01, 2026-12
 ```
 
 ### 3. Value Chain Emissions (Scope 3)
@@ -178,10 +178,10 @@ graph LR
 
 | Metric | Current | Target | Industry Avg |
 |--------|---------|--------|--------------|
-| Carbon Intensity | 45 gCO2e/kWh | 30 gCO2e/kWh | 100 gCO2e/kWh |
-| Energy Efficiency | 85% | 90% | 60% |
-| Renewable Mix | 75% | 95% | 40% |
-| Water Usage | 1.15 WUE | 1.10 WUE | 1.80 WUE |
+| Carbon Intensity | - | 30 gCO2e/kWh | 100 gCO2e/kWh |
+| Energy Efficiency | - | 90% | 60% |
+| Renewable Mix | - | 95% | 40% |
+| Water Usage | - | 1.10 WUE | 1.80 WUE |
 
 ## Carbon Offset Program
 
@@ -215,11 +215,11 @@ gantt
     title Carbon Reporting Timeline
     dateFormat YYYY-MM
     section Internal
-    Monthly Reports    :2024-01, 2024-12
-    Quarterly Reviews  :2024-03, 2024-12
+    Monthly Reports    :2025-01, 2025-12
+    Quarterly Reviews  :2025-03, 2025-12
     section External
-    CDP Submission     :2024-05, 2024-06
-    Annual Report      :2024-11, 2024-12
+    CDP Submission     :2025-05, 2025-06
+    Annual Report      :2025-11, 2025-12
 ```
 
 ## Future Initiatives
