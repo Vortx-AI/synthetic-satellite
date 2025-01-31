@@ -8,6 +8,7 @@ import sentinelhub  # Sentinel Hub
 from datetime import datetime, timedelta
 from pathlib import Path
 from .synthesis import DataSource
+import os
 service_account_path = os.getenv("GOOGLE_EARTH_CREDENTIALS")
 
 
