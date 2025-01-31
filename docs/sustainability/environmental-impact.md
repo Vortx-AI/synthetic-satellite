@@ -209,5 +209,5 @@ class SustainableOperation:
 
 - [Detailed Metrics](metrics.md)
 - [Implementation Guide](implementation.md) - Coming Soon.
-- [Case Studies](case-studies.md) - Coming Soon.
+- [Case Studies](case-studies.md) 
 - [Future Roadmap](roadmap.md) - Coming Soon.
