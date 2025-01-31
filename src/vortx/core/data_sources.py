@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from .synthesis import DataSource
 import os
+import json
 
 class WeatherDataSource(DataSource):
     """Handler for weather and climate data."""
