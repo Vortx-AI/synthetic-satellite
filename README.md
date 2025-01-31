@@ -31,6 +31,25 @@ Vortx is a cutting-edge Earth Memory System designed for AGI and advanced geospa
 - ⚡ **High Performance**: GPU-accelerated processing with distributed computing
 - 🔒 **Privacy**: Advanced privacy-preserving techniques for sensitive data
 
+## System Architecture
+
+```mermaid
+graph TD
+    A[Earth Memory System] --> B[Memory Formation]
+    A --> C[Runtime Inference]
+    A --> D[Privacy Engine]
+    
+    B --> E[Multi-modal Integration]
+    C --> F[Real-time Analysis]
+    D --> G[Security Layer]
+    
+    H[Resource Manager] --> B
+    H --> C
+    
+    I[Sustainability Monitor] --> B
+    I --> C
+```
+
 ## Installation
 
 ### From Source (Current Method)
