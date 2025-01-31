@@ -25,7 +25,7 @@ FastLanguageModel.for_inference(model)
 # Function to run inference
 def run_inference(instruction, input_text):
     alpaca_prompt = (
-        "Create a scene that can be used with stable diffusion: Tomato field with bees flying"
+        "Create a scene that can be used with stable diffusion: "
     )
 
     prompt = alpaca_prompt.format(instruction, input_text, "")
@@ -36,6 +36,6 @@ def run_inference(instruction, input_text):
 
 # Example usage
 instruction = "Create a scene that can be used with stable diffusion"
-input_text = "Tomato field with bees flying"
+input_text = ""
 result = run_inference(instruction, input_text)
 print(result)

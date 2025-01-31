@@ -851,7 +851,7 @@ def locen():
 
         # === Authentication ===
         secret_key = request.args.get("Secret-Key")
-        userId = request.args.get("user_id", '')
+
 
         # === Image Validation ===
         if "image" not in request.files:
@@ -2615,7 +2615,7 @@ def query_memories_endpoint():
         logger.error(f"Error in query_memories_endpoint: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/memory/process', methods=['POST'])
+@app.route('/memory/process', methods=['POST'])
 @limiter.limit("10 per minute")
 @require_api_key('generate')
 def process_location_endpoint():
@@ -2862,7 +2862,7 @@ def process_time_series_endpoint():
         logger.error(f"Error in process_time_series_endpoint: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/v1/memory/health', methods=['GET'])
+@app.route('/memory/health', methods=['GET'])
 @limiter.exempt
 def memory_health_check():
     """
