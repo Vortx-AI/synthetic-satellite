@@ -1,265 +1,241 @@
+#!/usr/bin/env python3
 """
-Real-time Earth Monitoring with Vortx
-===================================
-
-This example demonstrates real-time Earth observation monitoring capabilities using the Vortx Earth Memory System.
-It showcases:
-1. Real-time data streaming
-2. Live visualization
-3. Anomaly detection
-4. Alert generation
-5. Performance optimization
-
-Author: Vortx Team
-License: MIT
+Example demonstrating real-time monitoring with AGI memory integration.
 """
 
 import os
 import time
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-from threading import Thread, Event
 from queue import Queue
+from threading import Thread, Event
 
-from vortx import EarthMemorySystem
+from vortx import AGIMemorySystem
 from vortx.utils import setup_environment
-from vortx.streaming import DataStreamer
-from vortx.monitoring import (
-    RealTimeMonitor,
-    AlertManager,
-    PerformanceTracker
+from vortx.memory import (
+    StreamingMemory,
+    WorkingMemory,
+    EpisodicMemory
 )
-from vortx.viz import DynamicVisualizer
+from vortx.processors import (
+    StreamProcessor,
+    AnomalyDetector,
+    PatternMatcher
+)
+from vortx.sustainability import (
+    EnergyMonitor,
+    ResourceOptimizer
+)
 
-class RealTimeMonitoringExample:
-    def __init__(self):
-        """Initialize the real-time monitoring system."""
-        self.system = self._setup_system()
-        self.streamer = DataStreamer()
-        self.monitor = RealTimeMonitor()
-        self.alert_manager = AlertManager()
-        self.visualizer = DynamicVisualizer()
-        self.performance_tracker = PerformanceTracker()
+class RealTimeMonitor:
+    """Real-time monitoring system with AGI memory integration."""
+    
+    def __init__(self, system):
+        self.system = system
+        self.streaming = StreamingMemory(system)
+        self.working = WorkingMemory(system)
+        self.episodic = EpisodicMemory(system)
         
-        # Data management
-        self.data_queue = Queue(maxsize=1000)
-        self.alert_queue = Queue(maxsize=100)
+        self.processor = StreamProcessor()
+        self.anomaly_detector = AnomalyDetector()
+        self.pattern_matcher = PatternMatcher()
+        
+        self.data_queue = Queue()
         self.stop_event = Event()
         
-        # Visualization
-        self.fig, self.axes = plt.subplots(2, 2, figsize=(15, 12))
-        plt.ion()  # Enable interactive mode
+        # Configure memory windows
+        self.memory_config = {
+            "stream_window": "5m",
+            "working_window": "1h",
+            "episodic_interval": "1d"
+        }
     
-    def _setup_system(self):
-        """Configure the Earth Memory System for real-time monitoring."""
-        setup_environment(
-            api_key=os.getenv("VORTX_API_KEY", "demo-key"),
-            log_level="INFO"
-        )
+    def start_data_collection(self):
+        """Simulate real-time data collection."""
+        def generate_data():
+            while not self.stop_event.is_set():
+                # Simulate sensor data
+                data = {
+                    "timestamp": datetime.now(),
+                    "temperature": np.random.normal(25, 2),
+                    "humidity": np.random.uniform(40, 60),
+                    "pressure": np.random.normal(1013, 5),
+                    "air_quality": np.random.uniform(0, 100)
+                }
+                
+                self.data_queue.put(data)
+                time.sleep(1)  # 1 second interval
         
-        return EarthMemorySystem(
-            memory_config={
-                "compression_level": "low",  # Optimize for speed
-                "cache_size": "8GB",
-                "precision": "float32"
-            },
-            compute_config={
-                "device": "auto",
-                "num_threads": -1,
-                "optimize_memory": True,
-                "stream_processing": True
-            }
-        )
+        self.collector_thread = Thread(target=generate_data)
+        self.collector_thread.start()
     
-    def start_data_stream(self):
-        """Initialize and start the data streaming process."""
-        def stream_worker():
-            try:
-                while not self.stop_event.is_set():
-                    # Get real-time Earth observation data
-                    data = self.streamer.get_next_observation(
-                        variables=[
-                            "temperature",
-                            "precipitation",
-                            "cloud_cover",
-                            "vegetation"
-                        ],
-                        region="global",
-                        resolution="medium"
-                    )
-                    
-                    # Add timestamp
-                    data['timestamp'] = datetime.now()
-                    
-                    # Put data in queue
-                    if not self.data_queue.full():
-                        self.data_queue.put(data)
-                    
-                    # Control streaming rate
-                    time.sleep(1)  # 1 second interval
-                    
-            except Exception as e:
-                print(f"Error in stream worker: {e}")
-                self.stop_event.set()
-        
-        # Start streaming thread
-        stream_thread = Thread(target=stream_worker)
-        stream_thread.daemon = True
-        stream_thread.start()
-    
-    def process_data(self):
+    def process_stream(self):
         """Process incoming data stream."""
-        def process_worker():
-            try:
-                while not self.stop_event.is_set():
-                    # Get data from queue
-                    if not self.data_queue.empty():
-                        data = self.data_queue.get()
-                        
-                        # Process data
-                        processed_data = self.monitor.process_observation(
-                            data,
-                            analysis_types=[
-                                "anomaly_detection",
-                                "trend_analysis",
-                                "pattern_recognition"
-                            ]
-                        )
-                        
-                        # Check for alerts
-                        alerts = self.alert_manager.check_alerts(
-                            processed_data,
-                            alert_types=[
-                                "anomaly",
-                                "threshold",
-                                "trend"
-                            ]
-                        )
-                        
-                        # Add alerts to queue
-                        for alert in alerts:
-                            if not self.alert_queue.full():
-                                self.alert_queue.put(alert)
-                        
-                        # Track performance
-                        self.performance_tracker.update(
-                            data_size=len(data),
-                            processing_time=time.time() - data['timestamp'].timestamp()
-                        )
+        def process_data():
+            while not self.stop_event.is_set():
+                if not self.data_queue.empty():
+                    data = self.data_queue.get()
                     
-                    time.sleep(0.1)  # Small delay to prevent CPU overload
+                    # Process streaming data
+                    processed = self.processor.process(data)
                     
-            except Exception as e:
-                print(f"Error in process worker: {e}")
-                self.stop_event.set()
+                    # Store in streaming memory
+                    stream_id = self.streaming.store(
+                        processed,
+                        window=self.memory_config["stream_window"]
+                    )
+                    
+                    # Check for anomalies
+                    anomalies = self.anomaly_detector.check(
+                        self.streaming.get_window(stream_id)
+                    )
+                    
+                    if anomalies:
+                        self.handle_anomalies(anomalies)
+                    
+                    # Update working memory
+                    self.update_working_memory(processed)
+                    
+                    # Periodically update episodic memory
+                    self.update_episodic_memory()
+                
+                time.sleep(0.1)  # Prevent CPU overload
         
-        # Start processing thread
-        process_thread = Thread(target=process_worker)
-        process_thread.daemon = True
-        process_thread.start()
+        self.processor_thread = Thread(target=process_data)
+        self.processor_thread.start()
     
-    def update_visualization(self):
-        """Update the real-time visualization."""
-        def viz_worker():
-            try:
-                while not self.stop_event.is_set():
-                    # Clear previous plots
-                    for ax in self.axes.flat:
-                        ax.clear()
-                    
-                    # Get latest monitoring data
-                    monitoring_data = self.monitor.get_latest_data()
-                    
-                    # 1. Real-time observations
-                    self.visualizer.plot_realtime_data(
-                        data=monitoring_data,
-                        ax=self.axes[0, 0],
-                        variables=['temperature', 'precipitation']
-                    )
-                    self.axes[0, 0].set_title("Real-time Observations")
-                    
-                    # 2. Anomaly detection
-                    self.visualizer.plot_anomalies(
-                        data=monitoring_data,
-                        ax=self.axes[0, 1],
-                        threshold=0.95
-                    )
-                    self.axes[0, 1].set_title("Anomaly Detection")
-                    
-                    # 3. Alert timeline
-                    alerts = list(self.alert_queue.queue)
-                    self.visualizer.plot_alert_timeline(
-                        alerts=alerts,
-                        ax=self.axes[1, 0]
-                    )
-                    self.axes[1, 0].set_title("Recent Alerts")
-                    
-                    # 4. Performance metrics
-                    performance_metrics = self.performance_tracker.get_metrics()
-                    self.visualizer.plot_performance(
-                        metrics=performance_metrics,
-                        ax=self.axes[1, 1]
-                    )
-                    self.axes[1, 1].set_title("System Performance")
-                    
-                    # Update display
-                    plt.tight_layout()
-                    plt.draw()
-                    plt.pause(0.1)
-                    
-                    time.sleep(1)  # Update every second
-                    
-            except Exception as e:
-                print(f"Error in visualization worker: {e}")
-                self.stop_event.set()
+    def handle_anomalies(self, anomalies):
+        """Handle detected anomalies."""
+        for anomaly in anomalies:
+            # Create anomaly context
+            context = {
+                "type": anomaly["type"],
+                "severity": anomaly["severity"],
+                "timestamp": datetime.now(),
+                "affected_metrics": anomaly["metrics"]
+            }
+            
+            # Store anomaly in episodic memory
+            self.episodic.store(
+                data=anomaly["data"],
+                context=context,
+                priority="high"
+            )
+            
+            # Log anomaly
+            print(f"Anomaly detected: {context}")
+    
+    def update_working_memory(self, data):
+        """Update working memory with recent data."""
+        # Get current working memory window
+        working_data = self.working.get_window(
+            self.memory_config["working_window"]
+        )
         
-        # Start visualization thread
-        viz_thread = Thread(target=viz_worker)
-        viz_thread.daemon = True
-        viz_thread.start()
+        # Update patterns
+        patterns = self.pattern_matcher.update(
+            working_data,
+            new_data=data
+        )
+        
+        # Store in working memory
+        self.working.store(
+            data=data,
+            patterns=patterns,
+            window=self.memory_config["working_window"]
+        )
     
-    def run_monitoring(self, duration_seconds=60):
-        """Run the real-time monitoring system."""
-        try:
-            print("Starting real-time Earth monitoring...")
+    def update_episodic_memory(self):
+        """Periodically update episodic memory."""
+        current_time = datetime.now()
+        last_update = getattr(self, '_last_episodic_update', None)
+        
+        if (not last_update or 
+            current_time - last_update > 
+            timedelta(days=1)):
             
-            # Start all components
-            self.start_data_stream()
-            self.process_data()
-            self.update_visualization()
+            # Get working memory data
+            working_data = self.working.get_window(
+                self.memory_config["working_window"]
+            )
             
-            # Run for specified duration
-            start_time = time.time()
-            while time.time() - start_time < duration_seconds:
-                if self.stop_event.is_set():
-                    break
-                time.sleep(1)
+            # Create episodic memory
+            self.episodic.store(
+                data=working_data,
+                context={
+                    "timestamp": current_time,
+                    "patterns": self.pattern_matcher.get_patterns(),
+                    "statistics": self.processor.compute_statistics(working_data)
+                }
+            )
             
-            # Print summary
-            performance_metrics = self.performance_tracker.get_summary()
-            print("\nMonitoring Summary:")
-            print(f"Total Observations: {performance_metrics['total_observations']}")
-            print(f"Average Processing Time: {performance_metrics['avg_processing_time']:.2f}ms")
-            print(f"Alert Count: {performance_metrics['alert_count']}")
-            print(f"System Uptime: {performance_metrics['uptime']:.1f}s")
-            
-        except KeyboardInterrupt:
-            print("\nMonitoring stopped by user.")
-        except Exception as e:
-            print(f"Error in monitoring: {e}")
-        finally:
-            # Cleanup
-            self.stop_event.set()
-            plt.ioff()
-            plt.close('all')
-            self.system.cleanup()
+            self._last_episodic_update = current_time
+    
+    def stop(self):
+        """Stop monitoring."""
+        self.stop_event.set()
+        self.collector_thread.join()
+        self.processor_thread.join()
+        
+        # Final memory update
+        self.update_episodic_memory()
 
 def main():
-    """Main execution function."""
-    monitor = RealTimeMonitoringExample()
-    monitor.run_monitoring(duration_seconds=300)  # Run for 5 minutes
+    # Initialize environment
+    setup_environment(
+        api_key=os.getenv("VORTX_API_KEY", "demo-key"),
+        log_level="INFO"
+    )
+    
+    # Create AGI memory system
+    system = AGIMemorySystem(
+        config={
+            "architecture": "streaming_optimized",
+            "sustainability": {
+                "enabled": True,
+                "mode": "efficient"
+            }
+        }
+    )
+    
+    # Initialize monitoring
+    monitor = EnergyMonitor(system)
+    optimizer = ResourceOptimizer()
+    
+    # Configure system for streaming
+    optimizer.optimize_for_streaming(
+        system,
+        config={
+            "memory_allocation": "dynamic",
+            "stream_processing": "real_time",
+            "power_mode": "balanced"
+        }
+    )
+    
+    # Create and start monitor
+    print("Starting real-time monitoring...")
+    rtm = RealTimeMonitor(system)
+    rtm.start_data_collection()
+    rtm.process_stream()
+    
+    try:
+        # Run for some time
+        time.sleep(300)  # 5 minutes
+        
+        # Get monitoring metrics
+        metrics = monitor.get_metrics()
+        print("\nMonitoring Metrics:")
+        for key, value in metrics.items():
+            print(f"{key}: {value}")
+    
+    except KeyboardInterrupt:
+        print("\nStopping monitoring...")
+    
+    finally:
+        # Cleanup
+        rtm.stop()
+        system.cleanup()
 
 if __name__ == "__main__":
     main() 

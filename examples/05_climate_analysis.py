@@ -1,230 +1,204 @@
+#!/usr/bin/env python3
 """
-Climate Analysis with Vortx Earth Memory System
-============================================
-
-This example demonstrates advanced climate analysis capabilities using the Vortx Earth Memory System.
-It showcases:
-1. Loading and processing climate data
-2. Temperature trend analysis
-3. Extreme weather event detection
-4. Climate pattern visualization
-5. Predictive modeling
-
-Author: Vortx Team
-License: MIT
+Example demonstrating climate data analysis with AGI memory integration.
 """
 
 import os
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import xarray as xr
 from datetime import datetime, timedelta
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestRegressor
 
-from vortx import EarthMemorySystem
-from vortx.utils import setup_environment, ClimateDataLoader
-from vortx.analysis import ClimateAnalyzer
-from vortx.viz import ClimateVisualizer
-from vortx.models import ClimatePredictor
+from vortx import AGIMemorySystem
+from vortx.utils import setup_environment
+from vortx.memory import (
+    EpisodicMemory,
+    SemanticMemory,
+    TemporalMemory
+)
+from vortx.processors import (
+    ClimateProcessor,
+    PatternDetector,
+    AnomalyDetector
+)
+from vortx.sustainability import (
+    EnergyMonitor,
+    ResourceOptimizer
+)
 
-class ClimateAnalysisExample:
-    def __init__(self):
-        """Initialize the climate analysis example."""
-        self.system = self._setup_system()
-        self.analyzer = ClimateAnalyzer()
-        self.visualizer = ClimateVisualizer()
-        self.predictor = ClimatePredictor()
+def load_climate_data(data_path):
+    """Load and preprocess climate data."""
+    # Load data using xarray
+    ds = xr.open_dataset(data_path)
+    
+    # Basic preprocessing
+    ds = ds.sel(time=slice("2000", "2024"))  # Select time range
+    ds = ds.resample(time="1M").mean()  # Monthly averages
+    
+    return ds
+
+def create_climate_memories(system, data):
+    """Create memories from climate data with cognitive processing."""
+    processor = ClimateProcessor()
+    pattern_detector = PatternDetector()
+    anomaly_detector = AnomalyDetector()
+    
+    # Initialize memory components
+    episodic = EpisodicMemory(system)
+    semantic = SemanticMemory(system)
+    temporal = TemporalMemory(system)
+    
+    memories = []
+    
+    # Process data in temporal chunks
+    for year in data.time.dt.year.unique():
+        year_data = data.sel(time=str(year))
         
-    def _setup_system(self):
-        """Configure the Earth Memory System for climate analysis."""
-        setup_environment(
-            api_key=os.getenv("VORTX_API_KEY", "demo-key"),
-            log_level="INFO"
+        # Process climate patterns
+        patterns = pattern_detector.detect(year_data)
+        anomalies = anomaly_detector.detect(year_data)
+        
+        # Create cognitive context
+        context = processor.create_context(
+            data=year_data,
+            patterns=patterns,
+            anomalies=anomalies
         )
         
-        return EarthMemorySystem(
-            memory_config={
-                "compression_level": "high",
-                "cache_size": "4GB",
-                "precision": "float32"
-            },
-            compute_config={
-                "device": "auto",
-                "num_threads": -1,
-                "optimize_memory": True
+        # Store as episodic memory
+        memory_id = episodic.store(
+            data=year_data,
+            context=context,
+            encoding_config={
+                "compression": "efficient",
+                "precision": "climate_optimized"
             }
         )
-    
-    def load_climate_data(self):
-        """Load historical climate data for analysis."""
-        loader = ClimateDataLoader()
         
-        # Load temperature, precipitation, and weather events data
-        climate_data = loader.load_climate_data(
-            variables=["temperature", "precipitation", "pressure"],
-            region="north_america",
-            time_range=["2000-01-01", "2024-01-01"],
-            resolution="daily"
+        # Create semantic associations
+        semantic.process_climate_patterns(
+            memory_id,
+            patterns,
+            anomalies
         )
         
-        # Load extreme weather events
-        events_data = loader.load_weather_events(
-            event_types=["hurricane", "drought", "flood"],
-            region="north_america",
-            time_range=["2000-01-01", "2024-01-01"]
+        # Index in temporal memory
+        temporal.index_memory(
+            memory_id,
+            year_data.time.values
         )
         
-        return climate_data, events_data
+        memories.append(memory_id)
     
-    def analyze_temperature_trends(self, climate_data):
-        """Analyze long-term temperature trends."""
-        return self.analyzer.analyze_temperature(
-            data=climate_data,
-            analysis_types=[
-                "trend",
-                "seasonality",
-                "anomalies"
-            ],
-            baseline_period=["2000-01-01", "2010-01-01"]
+    return memories
+
+def analyze_climate_trends(system, memory_ids):
+    """Analyze climate trends using stored memories."""
+    episodic = EpisodicMemory(system)
+    semantic = SemanticMemory(system)
+    
+    trends = {
+        "temperature": [],
+        "precipitation": [],
+        "extreme_events": [],
+        "patterns": []
+    }
+    
+    for memory_id in memory_ids:
+        # Retrieve memory
+        memory = episodic.get(memory_id)
+        
+        # Extract climate indicators
+        trends["temperature"].extend(
+            memory.get_temperature_trends()
         )
+        trends["precipitation"].extend(
+            memory.get_precipitation_patterns()
+        )
+        trends["extreme_events"].extend(
+            memory.get_extreme_events()
+        )
+        
+        # Get semantic patterns
+        patterns = semantic.get_patterns(memory_id)
+        trends["patterns"].extend(patterns)
     
-    def detect_extreme_events(self, climate_data, events_data):
-        """Detect and analyze extreme weather events."""
-        # Configure detection parameters
-        detection_params = {
-            "temperature_threshold": 95,  # 95th percentile
-            "precipitation_threshold": 90,  # 90th percentile
-            "min_duration": "3D",
-            "spatial_extent": "100km"
+    return trends
+
+def optimize_processing(system, optimizer):
+    """Optimize system for climate data processing."""
+    config = {
+        "memory_config": {
+            "climate_data_compression": True,
+            "temporal_indexing": "efficient",
+            "pattern_cache_size": "2GB"
+        },
+        "processing_config": {
+            "batch_size": "adaptive",
+            "precision": "mixed",
+            "parallel_processing": True
+        },
+        "sustainability": {
+            "power_mode": "efficient",
+            "storage_optimization": True,
+            "compute_scheduling": "green"
         }
-        
-        # Detect events
-        detected_events = self.analyzer.detect_extreme_events(
-            climate_data=climate_data,
-            known_events=events_data,
-            params=detection_params
-        )
-        
-        return detected_events
+    }
     
-    def predict_climate_patterns(self, climate_data, forecast_horizon="1Y"):
-        """Predict future climate patterns."""
-        return self.predictor.forecast_climate(
-            historical_data=climate_data,
-            horizon=forecast_horizon,
-            variables=["temperature", "precipitation"],
-            uncertainty=True
-        )
-    
-    def visualize_analysis(self, temp_trends, events, predictions):
-        """Create comprehensive visualizations of the analysis results."""
-        fig = plt.figure(figsize=(20, 15))
-        
-        # 1. Temperature Trends
-        ax1 = plt.subplot(3, 2, 1)
-        self.visualizer.plot_temperature_trends(
-            trends=temp_trends,
-            ax=ax1,
-            include_confidence=True
-        )
-        
-        # 2. Temperature Anomalies
-        ax2 = plt.subplot(3, 2, 2)
-        self.visualizer.plot_anomalies(
-            anomalies=temp_trends["anomalies"],
-            ax=ax2,
-            cmap="RdBu_r"
-        )
-        
-        # 3. Extreme Events Timeline
-        ax3 = plt.subplot(3, 2, (3, 4))
-        self.visualizer.plot_event_timeline(
-            events=events,
-            ax=ax3,
-            include_intensity=True
-        )
-        
-        # 4. Climate Predictions
-        ax4 = plt.subplot(3, 2, 5)
-        self.visualizer.plot_predictions(
-            predictions=predictions,
-            variable="temperature",
-            ax=ax4,
-            include_uncertainty=True
-        )
-        
-        # 5. Prediction Uncertainty
-        ax5 = plt.subplot(3, 2, 6)
-        self.visualizer.plot_prediction_uncertainty(
-            predictions=predictions,
-            ax=ax5,
-            include_scenarios=True
-        )
-        
-        plt.tight_layout()
-        return fig
-    
-    def run_analysis(self):
-        """Execute the complete climate analysis workflow."""
-        try:
-            # 1. Load Data
-            print("Loading climate data...")
-            climate_data, events_data = self.load_climate_data()
-            
-            # 2. Analyze Temperature Trends
-            print("Analyzing temperature trends...")
-            temp_trends = self.analyze_temperature_trends(climate_data)
-            
-            # 3. Detect Extreme Events
-            print("Detecting extreme events...")
-            detected_events = self.detect_extreme_events(climate_data, events_data)
-            
-            # 4. Predict Future Patterns
-            print("Predicting future patterns...")
-            predictions = self.predict_climate_patterns(climate_data)
-            
-            # 5. Visualize Results
-            print("Creating visualizations...")
-            fig = self.visualize_analysis(temp_trends, detected_events, predictions)
-            
-            # Save results
-            output_dir = "examples/output"
-            os.makedirs(output_dir, exist_ok=True)
-            
-            # Save visualization
-            fig.savefig(f"{output_dir}/climate_analysis_results.png")
-            print(f"Results saved to {output_dir}/climate_analysis_results.png")
-            
-            # Save numerical results
-            results = {
-                "temperature_trends": temp_trends,
-                "extreme_events": detected_events,
-                "predictions": predictions
-            }
-            
-            pd.to_pickle(results, f"{output_dir}/climate_analysis_results.pkl")
-            print(f"Analysis results saved to {output_dir}/climate_analysis_results.pkl")
-            
-            # Print summary statistics
-            print("\nAnalysis Summary:")
-            print(f"Temperature Trend: {temp_trends['trend_magnitude']:.2f}°C/decade")
-            print(f"Extreme Events Detected: {len(detected_events)}")
-            print(f"Prediction Confidence: {predictions['confidence_score']:.2%}")
-            
-        except Exception as e:
-            print(f"Error in analysis: {e}")
-            raise
-        finally:
-            # Cleanup
-            plt.close('all')
-            self.system.cleanup()
+    return optimizer.optimize_for_climate(system, config)
 
 def main():
-    """Main execution function."""
-    analyzer = ClimateAnalysisExample()
-    analyzer.run_analysis()
+    # Initialize environment
+    setup_environment(
+        api_key=os.getenv("VORTX_API_KEY", "demo-key"),
+        log_level="INFO"
+    )
+    
+    # Create AGI memory system
+    system = AGIMemorySystem(
+        config={
+            "architecture": "climate_optimized",
+            "sustainability": {
+                "enabled": True,
+                "mode": "efficient"
+            }
+        }
+    )
+    
+    # Initialize components
+    monitor = EnergyMonitor(system)
+    optimizer = ResourceOptimizer()
+    
+    # Optimize system
+    print("Optimizing system for climate analysis...")
+    optimize_processing(system, optimizer)
+    
+    # Load and process data
+    print("Loading climate data...")
+    data = load_climate_data("path/to/climate_data.nc")
+    
+    print("Creating climate memories...")
+    memory_ids = create_climate_memories(system, data)
+    
+    # Analyze trends
+    print("\nAnalyzing climate trends...")
+    trends = analyze_climate_trends(system, memory_ids)
+    
+    # Print results
+    print("\nAnalysis Results:")
+    print(f"Temperature trends analyzed: {len(trends['temperature'])}")
+    print(f"Precipitation patterns found: {len(trends['precipitation'])}")
+    print(f"Extreme events detected: {len(trends['extreme_events'])}")
+    print(f"Climate patterns identified: {len(trends['patterns'])}")
+    
+    # Get sustainability metrics
+    metrics = monitor.get_metrics()
+    print("\nSustainability Metrics:")
+    for key, value in metrics.items():
+        print(f"{key}: {value}")
+    
+    # Cleanup
+    system.cleanup()
 
 if __name__ == "__main__":
     main() 
