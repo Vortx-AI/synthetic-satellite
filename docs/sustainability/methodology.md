@@ -33,20 +33,20 @@ graph TD
     class B,C,D secondary
 ```
 
-### Measurement Tools
-1. **Power Monitoring**
+### Simulated Measurement Tools
+1. **Simulated Power Monitoring**
    - Schneider Electric PowerLogic™ ION9000
    - Fluke 435 Series II Power Quality Analyzers
    - Custom power monitoring software
 
-2. **Environmental Sensors**
+2. **Simulated Environmental Sensors**
    - Temperature: Nest Temperature Sensors
    - Humidity: Honeywell HumidIcon™
    - Airflow: TSI VelociCalc®
 
 ## Calculation Methods
 
-### 1. Power Usage Effectiveness (PUE)
+### 1. Simulated Power Usage Effectiveness (PUE)
 ```python
 def calculate_pue(total_facility_power, it_equipment_power):
     """
@@ -63,7 +63,7 @@ def calculate_pue(total_facility_power, it_equipment_power):
     return round(pue, 2)
 ```
 
-### 2. Carbon Emissions
+### 2. Simulated Carbon Emissions
 ```python
 def calculate_carbon_emissions(energy_consumption, grid_factor):
     """
@@ -161,12 +161,12 @@ gantt
     title Reporting Timeline
     dateFormat YYYY-MM
     section Internal
-    Daily Reports     :2024-01, 2024-12
-    Weekly Reviews    :2024-01, 2024-12
-    Monthly Analysis  :2024-01, 2024-12
+    Daily Reports     :2025-02, 2025-12
+    Weekly Reviews    :2025-01, 2025-12
+    Monthly Analysis  :2025-01, 2025-12
     section External
-    Quarterly Reports :2024-03, 2024-12
-    Annual Report     :2024-11, 2024-12
+    Quarterly Reports :2025-03, 2025-12
+    Annual Report     :2025-11, 2025-12
 ```
 
 ## Standards Compliance
