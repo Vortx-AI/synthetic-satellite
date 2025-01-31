@@ -35,19 +35,80 @@ Vortx is a cutting-edge Earth Memory System designed for AGI and advanced geospa
 
 ```mermaid
 graph TD
-    A[Earth Memory System] --> B[Memory Formation]
-    A --> C[Runtime Inference]
-    A --> D[Privacy Engine]
+    %% Main System Components
+    A[Earth Memory System] --> B[Memory Formation Engine]
+    A --> C[Runtime Intelligence Core]
+    A --> D[Privacy & Security Layer]
     
-    B --> E[Multi-modal Integration]
-    C --> F[Real-time Analysis]
-    D --> G[Security Layer]
+    %% Memory Formation Components
+    B --> B1[Multi-modal Integration]
+    B --> B2[Temporal-Spatial Processor]
+    B --> B3[Context Synthesizer]
+    B1 --> B4[Memory Encoder]
+    B2 --> B4
+    B3 --> B4
+    B4 --> B5[Memory Store]
     
-    H[Resource Manager] --> B
-    H --> C
+    %% Runtime Intelligence Components
+    C --> C1[Pattern Recognition]
+    C --> C2[Causal Reasoning]
+    C --> C3[Temporal Analysis]
+    C1 & C2 & C3 --> C4[Dynamic Memory Access]
+    C4 --> C5[Real-time Inference]
     
-    I[Sustainability Monitor] --> B
-    I --> C
+    %% Memory Enhancement Loop
+    C5 --> E[Memory Enhancement]
+    E --> B4
+    
+    %% Privacy & Security Components
+    D --> D1[Encryption Engine]
+    D --> D2[Access Control]
+    D --> D3[Audit System]
+    
+    %% Resource Management
+    F[Resource Orchestrator] --> F1[GPU Accelerator]
+    F --> F2[Memory Optimizer]
+    F --> F3[Load Balancer]
+    F1 & F2 & F3 -.-> B
+    F1 & F2 & F3 -.-> C
+    
+    %% Sustainability System
+    G[Sustainability Monitor] --> G1[Energy Optimizer]
+    G --> G2[Resource Monitor]
+    G --> G3[Impact Analyzer]
+    G1 & G2 & G3 -.-> F
+    
+    %% External Interfaces
+    H[API Gateway] --> H1[REST Interface]
+    H --> H2[GraphQL Engine]
+    H --> H3[Stream Processor]
+    H1 & H2 & H3 --> I[Rate Limiter]
+    I --> J[Authentication]
+    J --> K[Request Router]
+    K --> B & C
+    
+    %% AGI Enhancement Components
+    L[AGI Enhancement] --> L1[Knowledge Synthesis]
+    L --> L2[Reasoning Amplifier]
+    L --> L3[Context Expansion]
+    L1 & L2 & L3 --> C5
+    
+    %% Synthetic Data Integration
+    M[Synthetic Data Engine] --> M1[Scenario Generator]
+    M --> M2[Pattern Synthesizer]
+    M --> M3[Validation System]
+    M1 & M2 & M3 --> B4
+    M1 & M2 & M3 -.-> C4
+
+    %% Style Definitions
+    classDef primary fill:#f9f,stroke:#333,stroke-width:2px
+    classDef secondary fill:#bbf,stroke:#333,stroke-width:1px
+    classDef tertiary fill:#ddf,stroke:#333,stroke-width:1px
+    
+    %% Apply Styles
+    class A,B,C,D primary
+    class B1,B2,B3,B4,B5,C1,C2,C3,C4,C5,D1,D2,D3 secondary
+    class E,F,G,H,I,J,K,L,M tertiary
 ```
 
 ## Installation
