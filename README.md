@@ -376,9 +376,9 @@ If you use Vortx in your research, please cite:
 
 ## Acknowledgments
 
-Vortx builds upon several open-source projects and research papers. See our [Acknowledgments](docs/meta/acknowledgments.md) for details.
+Vortx builds upon several open-source projects and research papers. Thanks to the entire FOSS ecosystem.
 
 ---
 <p align="center">
-  Made with ❤️ by the Vortx Team
+Vortx empowers bias-free AGI — made with ❤️, open to all.
 </p> 
