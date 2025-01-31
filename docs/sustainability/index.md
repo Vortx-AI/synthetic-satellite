@@ -91,7 +91,7 @@ gantt
     title Sustainability Goals 2025-2026
     dateFormat  YYYY-MM
     section Energy
-    100% Renewable Energy    :2025-01, 2025-12
+    100% Renewable Energy    :2026-01, 2025-12
     PUE Optimization        :2025-03, 2025-09
     section Carbon
     Carbon Neutral Operations :2025-01, 2025-12
