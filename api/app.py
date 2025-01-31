@@ -716,7 +716,7 @@ def locen():
     Handle Generation of Synthetic Images with Geo-Privacy Protection
     ---
     tags:
-      - Plant Operations
+      - Location Retraction
     consumes:
       - multipart/form-data
     parameters:
