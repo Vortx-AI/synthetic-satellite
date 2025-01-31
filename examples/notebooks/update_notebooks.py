@@ -10,7 +10,7 @@ import sys
 def load_notebook_content():
     """Load notebook content from content modules"""
     content = {}
-    content_dir = "notebook_content"
+    content_dir = "content"
     
     # Create content directory if it doesn't exist
     os.makedirs(content_dir, exist_ok=True)

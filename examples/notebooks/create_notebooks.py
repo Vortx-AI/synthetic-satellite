@@ -190,7 +190,7 @@ def create_notebook(notebook_name, structure):
 
 def main():
     """Main function to create all notebooks"""
-    notebooks_dir = "examples/notebooks"
+    notebooks_dir = "."
     os.makedirs(notebooks_dir, exist_ok=True)
     
     # Get notebook structure
