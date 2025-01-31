@@ -226,7 +226,7 @@ graph LR
 
 ## Additional Resources
 
-- [Audit Procedures](audit-procedures.md)
-- [Training Materials](training-materials.md)
-- [Risk Management](risk-management.md)
-- [Documentation Templates](documentation-templates.md) 
+- [Audit Procedures](audit-procedures.md) - Coming Soon.
+- [Training Materials](training-materials.md) - Coming Soon.
+- [Risk Management](risk-management.md) - Coming Soon.
+- [Documentation Templates](documentation-templates.md) - Coming Soon.
