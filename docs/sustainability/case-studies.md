@@ -178,7 +178,7 @@ Coming Soon
 
 ## Additional Resources
 
-- [Detailed Technical Specifications](technical-specs.md)
-- [Implementation Guidelines](implementation.md)
-- [Performance Benchmarks](benchmarks.md)
-- [Environmental Compliance](compliance.md) 
+- [Detailed Technical Specifications](technical-specs.md) - Coming Soon.
+- [Implementation Guidelines](implementation.md) - Coming Soon.
+- [Performance Benchmarks](benchmarks.md) - Coming Soon.
+- [Environmental Compliance](compliance.md) - Coming Soon.
