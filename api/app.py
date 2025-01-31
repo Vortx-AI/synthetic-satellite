@@ -302,25 +302,79 @@ def generate_synthetic():
               example: "Failed to generate image"
     """
     try:
-        data = request.get_json()
-        if not data or 'image_parameters' not in data:
-            return jsonify({"error": "Missing 'image_parameters' in request body"}), 400
+        if 'image' not in request.files:
+            return jsonify({'error': 'No image file provided'}), 400
 
-        # Extract parameters
-        image_params = data['image_parameters']
-        resolution = image_params.get('resolution', 1024)
-        format_ = image_params.get('format', 'png')
+        file = request.files['image']
+        prompt = request.form.get('prompt', 'A satellite view of terrain')
+        negative_prompt = request.form.get('negative_prompt', '')
+        protection_level = request.form.get('protection_level', 'high')
+        layout_type = request.form.get('layout_type', 'grid')
+        fractal_type = request.form.get('fractal_type')
 
-        # Your implementation to generate the synthetic image
-        # For example:
-        # image_url = generator.generate_image(resolution, format_)
-        image_url = "http://34.45.181.99:5000/api/v1/download/generated_image.png"  # Placeholder
+        # Save uploaded file temporarily
+        with tempfile.NamedTemporaryFile(suffix='.tif', delete=False) as temp:
+            file.save(temp.name)
 
-        return jsonify({"image_url": image_url}), 200
+        # Process image
+        result = generator.process_large_image(
+            input_path=temp.name,
+            output_path=None,  # Don't save to disk
+            prompt=prompt,
+            negative_prompt=negative_prompt,
+            return_array=True  # Return numpy array instead of saving
+        )
+
+        # Get geometry from input image
+        with rasterio.open(temp.name) as src:
+            bounds = src.bounds
+            geometry = shape({
+                'type': 'Polygon',
+                'coordinates': [[
+                    [bounds.left, bounds.bottom],
+                    [bounds.right, bounds.bottom],
+                    [bounds.right, bounds.top],
+                    [bounds.left, bounds.top],
+                    [bounds.left, bounds.bottom]
+                ]]
+            })
+
+        # Cleanup
+        os.unlink(temp.name)
+
+        if result is None:
+            return jsonify({'error': 'Failed to generate image'}), 500
+
+        # Encode with geo-privacy protection
+        encrypted_data, secure_metadata = secure_api.encode_tile_with_geo_privacy(
+            result['image'],
+            geometry,
+            {
+                'prompt': prompt,
+                'negative_prompt': negative_prompt,
+                'timestamp': datetime.utcnow().isoformat()
+            },
+            protection_level,
+            layout_type,
+            fractal_type
+        )
+
+        # Save encrypted result
+        output_path = Path('outputs') / f"{uuid.uuid4()}.enc"
+        output_path.parent.mkdir(exist_ok=True)
+        with open(output_path, 'wb') as f:
+            f.write(encrypted_data)
+
+        return jsonify({
+            'status': 'success',
+            'output_path': str(output_path),
+            'metadata': secure_metadata
+        })
 
     except Exception as e:
-        logger.error(f"Error in generate_synthetic: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error in generation: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/api/v1/tiles/<int:z>/<int:x>/<int:y>.png', methods=['GET'])
 @require_api_key('read')
