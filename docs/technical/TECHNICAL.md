@@ -1,9 +1,9 @@
-# TileFormer Technical Documentation
+# Vortx Synthetic Satellite Technical Documentation
 
 ## System Architecture
 
 ### Overview
-TileFormer implements a layered architecture for privacy-preserving synthetic map generation:
+Vortx Synthetic Satellite implements a layered architecture for privacy-preserving synthetic map generation:
 
 ```
 ┌─────────────────┐
