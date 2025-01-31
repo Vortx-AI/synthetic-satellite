@@ -12,6 +12,8 @@ import threading
 from werkzeug.utils import secure_filename
 import torch
 from io import BytesIO
+# Cache for tile results
+from cachetools import TTLCache
 
 # Import model load functions
 
@@ -95,7 +97,7 @@ swagger_template = {
         "version": "1.0.0",
         "contact": {
             "name": "API Support",
-            "url": "http://www.yourwebsite.com",
+            "url": "https://vortx.ai",
         }
     },
     "basePath": "/api/v1",
@@ -180,8 +182,8 @@ limiter = Limiter(
 config = SyntheticConfig.from_yaml('config.yaml')
 generator = SyntheticDataGenerator(config)
 
-# Cache for tile results
-from cachetools import TTLCache
+
+
 tile_cache = TTLCache(
     maxsize=int(os.getenv('TILE_CACHE_SIZE', 1000)),
     ttl=int(os.getenv('TILE_CACHE_TTL', 3600))
@@ -204,23 +206,8 @@ def index():
 @app.route('/health')
 @limiter.exempt
 def health_check():
-    """
-    Health Check Endpoint
-    ---
-    responses:
-      200:
-        description: Returns the health status of the application
-        schema:
-          type: object
-          properties:
-            status:
-              type: string
-              example: healthy
-            timestamp:
-              type: string
-              format: date-time
-    """
-    return jsonify({
+    
+  return jsonify({
         'status': 'healthy',
         'timestamp': datetime.utcnow().isoformat()
     })
@@ -229,501 +216,222 @@ def health_check():
 @limiter.limit("10 per minute")
 @require_api_key('generate')
 def generate_synthetic():
-    """
-    Generate Synthetic Satellite Image
-    ---
-    consumes:
-      - application/json
-    parameters:
-      - in: body
-        name: body
-        required: true
-        schema:
-          type: object
-          required:
-            - image_parameters
-          properties:
-            image_parameters:
-              type: object
-              required:
-                - resolution
-                - format
-              properties:
-                resolution:
-                  type: integer
-                  example: 1024
-                format:
-                  type: string
-                  example: png
-                # Add other relevant parameters as needed
-    responses:
-      200:
-        description: Successfully generated synthetic image
-        schema:
-          type: object
-          properties:
-            image_url:
-              type: string
-              example: http://34.45.181.99:5000/api/v1/download/generated_image.png
-      400:
-        description: Invalid input parameters
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Missing 'image_parameters' in request body"
-      401:
-        description: Unauthorized - Invalid or missing API key
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing API key"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
-    try:
-        data = request.get_json()
-        if not data or 'image_parameters' not in data:
-            return jsonify({"error": "Missing 'image_parameters' in request body"}), 400
+   
+  try:
+    data = request.get_json()
+    if not data or 'image_parameters' not in data:
+      return jsonify({"error": "Missing 'image_parameters' in request body"}), 400
 
-        # Extract parameters
-        image_params = data['image_parameters']
-        resolution = image_params.get('resolution', 1024)
-        format_ = image_params.get('format', 'png')
+    # Extract parameters
+    image_params = data['image_parameters']
+    resolution = image_params.get('resolution', 1024)
+    format_ = image_params.get('format', 'png')
 
-        # Your implementation to generate the synthetic image
-        # For example:
-        # image_url = generator.generate_image(resolution, format_)
-        image_url = "http://34.45.181.99:5000/api/v1/download/generated_image.png"  # Placeholder
+    # Your implementation to generate the synthetic image
+    # For example:
+    # image_url = generator.generate_image(resolution, format_)
+    image_url = "http://34.45.181.99:5000/api/v1/download/generated_image.png"  # Placeholder
 
-        return jsonify({"image_url": image_url}), 200
+    return jsonify({"image_url": image_url}), 200
 
-    except Exception as e:
-        logger.error(f"Error in generate_synthetic: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+  except Exception as e:
+    logger.error(f"Error in generate_synthetic: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 @app.route('/api/v1/tiles/<int:z>/<int:x>/<int:y>.png')
 @require_api_key('read')
 def get_tile(z: int, x: int, y: int):
-    """
-    Retrieve Encrypted XYZ Tile
-    ---
-    parameters:
-      - name: z
-        in: path
-        type: integer
-        required: true
-        description: Zoom level
-      - name: x
-        in: path
-        type: integer
-        required: true
-        description: Tile's X coordinate
-      - name: y
-        in: path
-        type: integer
-        required: true
-        description: Tile's Y coordinate
-    responses:
-      200:
-        description: Returns the encrypted tile image
-        content:
-          image/png:
-            schema:
-              type: string
-              format: binary
-      401:
-        description: Unauthorized - Invalid or missing API key
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing API key"
-      404:
-        description: Tile not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Tile not found"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
-    try:
-        # Your implementation to retrieve the tile
-        # For example:
-        # tile_data = generator.get_tile(z, x, y)
-        # if not tile_data:
-        #     return jsonify({"error": "Tile not found"}), 404
-        # return send_file(tile_data, mimetype='image/png')
-        return send_file(io.BytesIO(b''), mimetype='image/png')  # Placeholder
+    
+  try:
+    # Your implementation to retrieve the tile
+    # For example:
+    # tile_data = generator.get_tile(z, x, y)
+    # if not tile_data:
+    #     return jsonify({"error": "Tile not found"}), 404
+    # return send_file(tile_data, mimetype='image/png')
+    return send_file(io.BytesIO(b''), mimetype='image/png')  # Placeholder
 
-    except Exception as e:
-        logger.error(f"Error in get_tile: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+  except Exception as e:
+    logger.error(f"Error in get_tile: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 @app.route('/api/v1/map')
 def map_viewer():
-    """
-    Serve Map Viewer HTML
-    ---
-    responses:
-      200:
-        description: Returns the map viewer HTML page
-        content:
-          text/html:
-            schema:
-              type: string
-              example: "<!DOCTYPE html>..."
-      404:
-        description: HTML template not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Template not found"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
-    try:
-        return send_from_directory('templates', 'map.html')
-    except Exception as e:
-        logger.error(f"Error in map_viewer: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    
+  try:
+    return send_from_directory('templates', 'map.html')
+  except Exception as e:
+    logger.error(f"Error in map_viewer: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 @app.route('/api/v1/capabilities')
 def get_capabilities():
-    """
-    Get Server Capabilities and Configuration
-    ---
-    responses:
-      200:
-        description: Returns the server capabilities and configuration
-        schema:
-          type: object
-          properties:
-            version:
-              type: string
-              example: "1.0.0"
-            supported_formats:
-              type: array
-              items:
-                type: string
-              example: ["png", "tiff"]
-            max_image_size:
-              type: integer
-              example: 100000000
-            tile_size:
-              type: integer
-              example: 256
-            models:
-              type: object
-              properties:
-                stable_diffusion:
-                  type: string
-                  example: "stable_diffusion_model_v1"
-                controlnet:
-                  type: string
-                  example: "controlnet_model_v2"
-                segmentation:
-                  type: string
-                  example: "segmentation_model_v3"
-            endpoints:
-              type: object
-              properties:
-                generate:
-                  type: string
-                  example: "/api/v1/generate"
-                tiles:
-                  type: string
-                  example: "/api/v1/tiles/{z}/{x}/{y}.png"
-                map:
-                  type: string
-                  example: "/api/v1/map"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
-    try:
-        return jsonify({
-            'version': '1.0.0',
-            'supported_formats': ['png', 'tiff'],
-            'max_image_size': 10000 * 10000,
-            'tile_size': config.tile_size,
-            'models': {
-                'stable_diffusion': config.stable_diffusion_model,
-                'controlnet': config.controlnet_model,
-                'segmentation': config.segmentation_model
-            },
-            'endpoints': {
-                'generate': '/api/v1/generate',
-                'tiles': '/api/v1/tiles/{z}/{x}/{y}.png',
-                'map': '/api/v1/map'
-            }
-        })
-    except Exception as e:
-        logger.error(f"Error in get_capabilities: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    
+  try:
+    return jsonify({
+      'version': '1.0.0',
+      'supported_formats': ['png', 'tiff'],
+      'max_image_size': 10000 * 10000,
+      'tile_size': config.tile_size,
+      'models': {
+        'stable_diffusion': config.stable_diffusion_model,
+        'controlnet': config.controlnet_model,
+        'segmentation': config.segmentation_model
+        },
+      'endpoints': {
+        'generate': '/api/v1/generate',
+        'tiles': '/api/v1/tiles/{z}/{x}/{y}.png',
+        'map': '/api/v1/map'
+        }
+      })
+  except Exception as e:
+    logger.error(f"Error in get_capabilities: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 @app.route('/api/v1/download/<path:filename>')
 @require_api_key('read')
 def download_result(filename):
-    """
-    Download Encrypted Results with Geo-Privacy Protection
-    ---
-    parameters:
-      - name: filename
-        in: path
-        type: string
-        required: true
-        description: Name of the file to download
-    responses:
-      200:
-        description: Returns the encrypted file for download
-        content:
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-      401:
-        description: Unauthorized - Invalid or missing API key
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing API key"
-      404:
-        description: File not found
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "File not found"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
-    try:
-        # Your implementation to handle file download
-        # For example:
-        # file_path = os.path.join('outputs', filename)
-        # if not os.path.exists(file_path):
-        #     return jsonify({"error": "File not found"}), 404
-        # return send_file(file_path, as_attachment=True)
-        return send_file(io.BytesIO(b''), mimetype='application/octet-stream')  # Placeholder
-    except Exception as e:
-        logger.error(f"Error in download_result: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    
+  try:
+    # Your implementation to handle file download
+    # For example:
+    # file_path = os.path.join('outputs', filename)
+    # if not os.path.exists(file_path):
+    #     return jsonify({"error": "File not found"}), 404
+    # return send_file(file_path, as_attachment=True)
+      return send_file(io.BytesIO(b''), mimetype='application/octet-stream')  # Placeholder
+  except Exception as e:
+    logger.error(f"Error in download_result: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 @app.route('/locen', methods=['POST'])
 @limiter.limit("10 per minute")
 @require_api_key('generate')
 def locen():
-    """
-    Handle Generation of Synthetic Images with Geo-Privacy Protection
-    ---
-    responses:
-      200:
-        description: Successfully processed location
-        schema:
-          type: object
-          properties:
-            status:
-              type: string
-              example: success
-            message:
-              type: string
-            description:
-              type: string
-            text1:
-              type: string
-            scene:
-              type: string
-            image:
-              type: string
-            uploaded_image_url:
-              type: string
-      400:
-        description: Invalid input parameters
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-      401:
-        description: Unauthorized - Invalid or missing API key
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-    """
-    try:
-        data = request.get_json()
-        if not data or 'flow_parameters' not in data:
-            return jsonify({"error": "Missing 'flow_parameters' in request body"}), 400
+    
+  try:
+    data = request.get_json()
+    if not data or 'flow_parameters' not in data:
+      return jsonify({"error": "Missing 'flow_parameters' in request body"}), 400
 
-        flow_params = data['flow_parameters']
-        input_data = flow_params.get('input_data')
-        if not input_data:
-            return jsonify({"error": "Missing 'input_data' in 'flow_parameters'"}), 400
+    flow_params = data['flow_parameters']
+    input_data = flow_params.get('input_data')
+    if not input_data:
+      return jsonify({"error": "Missing 'input_data' in 'flow_parameters'"}), 400
 
-        # Handle image upload if present
-        image = request.files.get('image')
-        if image:
-            upload_folder = app.config['UPLOAD_FOLDER']
-            os.makedirs(upload_folder, exist_ok=True)
+    # Handle image upload if present
+    image = request.files.get('image')
+    if image:
+      upload_folder = app.config['UPLOAD_FOLDER']
+      os.makedirs(upload_folder, exist_ok=True)
 
-            filename = secure_filename(image.filename)
-            upload_path = os.path.join(upload_folder, filename)
-            image.save(upload_path)
-        else:
-            upload_path = None  # Handle accordingly
+      filename = secure_filename(image.filename)
+      upload_path = os.path.join(upload_folder, filename)
+      image.save(upload_path)
+    else:
+      upload_path = None  # Handle accordingly
 
-        # === Load Models ===
-        load_stable_diffusion_model()  # Load Stable Diffusion model
-        load_llama_model()
+    # === Load Models ===
+    load_stable_diffusion_model()  # Load Stable Diffusion model
+    load_llama_model()
 
-        # === Image Description (BLIP Model) ===
-        if upload_path:
-            description = extract_image_details(upload_path)
-            logger.info(f"Extracted description: {description}")
-        else:
-            description = "No image provided."
-            logger.info("No image uploaded for description extraction.")
+    # === Image Description (BLIP Model) ===
+    if upload_path:
+      description = extract_image_details(upload_path)
+      logger.info(f"Extracted description: {description}")
+    else:
+      description = "No image provided."
+      logger.info("No image uploaded for description extraction.")
 
-        # === Generate Response (LLaMA Model) ===
-        prompt = (
-            f"From the sentence: \"{description}\", extract all living objects such as plants, animals, or any living entities. "
-            f"Respond ONLY with JSON containing comma-separated living object names, without any additional text or examples."
-        )
-        generated_text = generate_prompt_from_caption(prompt)
-        logger.info(f"Generated text: {generated_text}")
+    # === Generate Response (LLaMA Model) ===
+    prompt = (
+      f"From the sentence: \"{description}\", extract all living objects such as plants, animals, or any living entities. "
+      f"Respond ONLY with JSON containing comma-separated living object names, without any additional text or examples."
+      )
+    generated_text = generate_prompt_from_caption(prompt)
+    logger.info(f"Generated text: {generated_text}")
 
-        # Extract JSON portion
-        json_start = generated_text.find("{")
-        if json_start == -1:
-            raise ValueError("No JSON found in generated text")
+    # Extract JSON portion
+    json_start = generated_text.find("{")
+    if json_start == -1:
+      raise ValueError("No JSON found in generated text")
 
-        # Parse the JSON
-        json_part = generated_text[json_start:].strip()
-        response_dict = json.loads(json_part)
+    # Parse the JSON
+    json_part = generated_text[json_start:].strip()
+    response_dict = json.loads(json_part)
 
-        # Extract based on the structure of the JSON
-        living_objects = []
-        for key, value in response_dict.items():
-            if isinstance(value, str) and key.strip():  # Extract value if it's a string
-                living_objects.append(key.strip())  # Extract the key (e.g., "tomatoes")
-            elif isinstance(value, list):  # Handle lists if present
-                living_objects.extend([item.strip() for item in value if isinstance(item, str)])
+    # Extract based on the structure of the JSON
+    living_objects = []
+    for key, value in response_dict.items():
+      if isinstance(value, str) and key.strip():  # Extract value if it's a string
+        living_objects.append(key.strip())  # Extract the key (e.g., "tomatoes")
+      elif isinstance(value, list):  # Handle lists if present
+        living_objects.extend([item.strip() for item in value if isinstance(item, str)])
 
-        # Ensure unique items
-        living_objects = list(set(living_objects))
+      # Ensure unique items
+    living_objects = list(set(living_objects))
 
-        logger.info(f"Extracted living objects: {living_objects}")
+    logger.info(f"Extracted living objects: {living_objects}")
 
         # Create a description for Stable Diffusion
-        prompt1 = (
+    prompt1 = (
             f"Create a description for a stable diffusion prompt where \"{', '.join(living_objects)}\" are seen in a farm. "
             f"Respond with only a descriptive sentence suitable for generating an image, without any extra text."
-        )
-        scene = generate_prompt_from_caption(prompt1)
+      )
+    scene = generate_prompt_from_caption(prompt1)
 
-        logger.info(f"Scene description for Stable Diffusion: {scene}")
+    logger.info(f"Scene description for Stable Diffusion: {scene}")
 
-        # Handle potential extra content
-        content_start = scene.find("\n\n")
-        if content_start != -1:
-            extracted_content = scene[content_start + 2:].strip()
-        else:
-            extracted_content = scene
+    # Handle potential extra content
+    content_start = scene.find("\n\n")
+    if content_start != -1:
+      extracted_content = scene[content_start + 2:].strip()
+    else:
+      extracted_content = scene
 
-        # === Generate Image (Stable Diffusion Model) ===
-        generated_image = generate_image_from_text(extracted_content, None)
+    # === Generate Image (Stable Diffusion Model) ===
+    generated_image = generate_image_from_text(extracted_content, None)
 
-        # === Save Generated Image ===
-        image_byte_array = io.BytesIO()
-        generated_image.save(image_byte_array, format='PNG', optimize=True, quality=85)
+    # === Save Generated Image ===
+    image_byte_array = io.BytesIO()
+    generated_image.save(image_byte_array, format='PNG', optimize=True, quality=85)
 
-        image_byte_array.seek(0)
-        now = datetime.now()
-        timestamp = now.strftime("%Y%m%d_%H%M%S")
-        unique_filename = f"geni1_{timestamp}.png"
-        unique_filename1 = f"up1_{timestamp}.png"
+    image_byte_array.seek(0)
+    now = datetime.now()
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    unique_filename = f"geni1_{timestamp}.png"
+    unique_filename1 = f"up1_{timestamp}.png"
 
-        # === Set Up Google Cloud Storage ===
-        service_account_path = os.getenv("SERVICE_ACCOUNT")
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = service_account_path
+    # === Set Up Google Cloud Storage ===
+    service_account_path = os.getenv("SERVICE_ACCOUNT")
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = service_account_path
 
-        bucket_name = os.getenv("BUCKET_NAME")
-        client = storage.Client()
-        bucket = client.get_bucket(bucket_name)
+    bucket_name = os.getenv("BUCKET_NAME")
+    client = storage.Client()
+    bucket = client.get_bucket(bucket_name)
 
-        # Upload original image if provided
-        if upload_path:
-            blob = bucket.blob(unique_filename1)
-            with open(upload_path, "rb") as image_file:
-                blob.upload_from_file(image_file, content_type='image/png')
+    # Upload original image if provided
+    if upload_path:
+      blob = bucket.blob(unique_filename1)
+      with open(upload_path, "rb") as image_file:
+        blob.upload_from_file(image_file, content_type='image/png')
 
-            image_url1 = f"https://storage.cloud.google.com/{bucket_name}/{unique_filename1}"
-        else:
-            image_url1 = None
+        image_url1 = f"https://storage.cloud.google.com/{bucket_name}/{unique_filename1}"
+    else:
+      image_url1 = None
 
         # === Upload Generated Image to Google Cloud Storage ===
-        blob = bucket.blob(unique_filename)
-        blob.upload_from_string(image_byte_array.getvalue(), content_type='image/png')
+    blob = bucket.blob(unique_filename)
+    blob.upload_from_string(image_byte_array.getvalue(), content_type='image/png')
 
         # Generate public URL
-        image_url = f"https://storage.cloud.google.com/{bucket_name}/{unique_filename}"
+    image_url = f"https://storage.cloud.google.com/{bucket_name}/{unique_filename}"
 
-        # Unload models after use to free memory
-        unload_stable_diffusion_model()
-        unload_llama_model()
+    # Unload models after use to free memory
+    unload_stable_diffusion_model()
+    unload_llama_model()
 
-        return jsonify({
+    return jsonify({
             "status": 200,
             "message": "Success",
             "description": description,
@@ -731,144 +439,57 @@ def locen():
             "scene": scene,
             "image": image_url,
             "uploaded_image_url": image_url1
-        }), 200
+      }), 200
 
-    except Exception as e:
-        logger.error(f"Error in locen: {str(e)}")
-        return jsonify({"error": str(e)}), 500  
+  except Exception as e:
+    logger.error(f"Error in locen: {str(e)}")
+    return jsonify({"error": str(e)}), 500  
 
 @app.route("/tileformer", methods=['POST'])
 @limiter.limit("10 per minute")
 @require_api_key('generate')
 def tileformer():
-    """
-    Generate Tile from B04 and B08 Band Images
-    ---
-    consumes:
-      - application/json
-    parameters:
-      - in: body
-        name: body
-        required: true
-        schema:
-          type: object
-          required:
-            - band_images
-            - bounding_box
-          properties:
-            band_images:
-              type: object
-              required:
-                - B04
-                - B08
-              properties:
-                B04:
-                  type: string
-                  format: url
-                  example: "http://example.com/image_b04.png"
-                B08:
-                  type: string
-                  format: url
-                  example: "http://example.com/image_b08.png"
-            bounding_box:
-              type: object
-              required:
-                - minx
-                - miny
-                - maxx
-                - maxy
-              properties:
-                minx:
-                  type: number
-                  example: -180.0
-                miny:
-                  type: number
-                  example: -90.0
-                maxx:
-                  type: number
-                  example: 180.0
-                maxy:
-                  type: number
-                  example: 90.0
-            tile_size:
-              type: integer
-              example: 256
-            algorithm:
-              type: string
-              example: "transformer"
-    responses:
-      200:
-        description: Successfully generated tile image
-        content:
-          image/png:
-            schema:
-              type: string
-              format: binary
-      400:
-        description: Invalid input parameters
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Missing required parameters"
-      401:
-        description: Unauthorized - Invalid or missing API key
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing API key"
-      500:
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Detailed error message"
-    """
+
+  try:
+    data = request.get_json()
+    if not data:
+      return jsonify({"error": "Request payload must be in JSON format"}), 400
+
+    # Validate band image URLs
+    band_images = data.get("band_images")
+    if not band_images or 'B04' not in band_images or 'B08' not in band_images:
+      return jsonify({"error": "Both 'B04' and 'B08' image URLs are required"}), 400
+
+    b04_url = band_images['B04']
+    b08_url = band_images['B08']
+
+    # Validate and parse bounding box parameters
+    bounding_box = data.get("bounding_box", {})
     try:
-        data = request.get_json()
-        if not data:
-            return jsonify({"error": "Request payload must be in JSON format"}), 400
+      minx = float(bounding_box.get("minx", -180))
+      miny = float(bounding_box.get("miny", -90))
+      maxx = float(bounding_box.get("maxx", 180))
+      maxy = float(bounding_box.get("maxy", 90))
+    except ValueError:
+      return jsonify({"error": "Bounding box parameters must be numeric"}), 400
 
-        # Validate band image URLs
-        band_images = data.get("band_images")
-        if not band_images or 'B04' not in band_images or 'B08' not in band_images:
-            return jsonify({"error": "Both 'B04' and 'B08' image URLs are required"}), 400
+    tile_size = int(data.get('tile_size', 256))
+    algorithm = data.get('algorithm', 'transformer')
 
-        b04_url = band_images['B04']
-        b08_url = band_images['B08']
+    bbox = [minx, miny, maxx, maxy]
 
-        # Validate and parse bounding box parameters
-        bounding_box = data.get("bounding_box", {})
-        try:
-            minx = float(bounding_box.get("minx", -180))
-            miny = float(bounding_box.get("miny", -90))
-            maxx = float(bounding_box.get("maxx", 180))
-            maxy = float(bounding_box.get("maxy", 90))
-        except ValueError:
-            return jsonify({"error": "Bounding box parameters must be numeric"}), 400
+    # Generate and serve the tile
+    img_byte_arr = generate_tile(b04_url, b08_url, bbox, tile_size, algorithm)
 
-        tile_size = int(data.get('tile_size', 256))
-        algorithm = data.get('algorithm', 'transformer')
+    if img_byte_arr:
+      img_byte_arr.seek(0)
+      return send_file(img_byte_arr, mimetype='image/png')
+    else:
+      return jsonify({"error": f"Unsupported algorithm '{algorithm}'"}), 400
 
-        bbox = [minx, miny, maxx, maxy]
-
-        # Generate and serve the tile
-        img_byte_arr = generate_tile(b04_url, b08_url, bbox, tile_size, algorithm)
-
-        if img_byte_arr:
-            img_byte_arr.seek(0)
-            return send_file(img_byte_arr, mimetype='image/png')
-        else:
-            return jsonify({"error": f"Unsupported algorithm '{algorithm}'"}), 400
-
-    except Exception as e:
-        logger.error(f"Error in tileformer: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+  except Exception as e:
+    logger.error(f"Error in tileformer: {str(e)}")
+    return jsonify({"error": str(e)}), 500
 
 # ====================
 # + New Advanced Analysis Endpoints
