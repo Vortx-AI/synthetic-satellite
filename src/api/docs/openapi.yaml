@@ -1,0 +1,402 @@
+openapi: 3.0.3
+info:
+  title: Vortx Earth Memory System API
+  description: |
+    API for the Vortx Earth Memory System, providing access to satellite data processing,
+    analysis, and memory system capabilities.
+  version: 0.1.0
+  contact:
+    name: Vortx AI Team
+    url: https://vortx.ai
+    email: support@vortx.ai
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+  - url: https://api.vortx.ai
+    description: Production server
+
+tags:
+  - name: Analysis
+    description: Basic and advanced analysis endpoints
+  - name: Memory
+    description: Memory system operations
+  - name: Processing
+    description: Data processing operations
+  - name: System
+    description: System information and management
+
+paths:
+  /analyze:
+    post:
+      tags:
+        - Analysis
+      summary: Perform advanced analysis on satellite data
+      description: |
+        Analyzes satellite data using advanced techniques and optionally stores results in memory.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisRequest'
+      responses:
+        '200':
+          description: Analysis completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /analysis-types:
+    get:
+      tags:
+        - Analysis
+      summary: Get available analysis types
+      description: Returns a list of available analysis types and their parameters
+      responses:
+        '200':
+          description: List of analysis types
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  types:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AnalysisType'
+
+  /process:
+    post:
+      tags:
+        - Processing
+      summary: Process satellite data
+      description: Process satellite data with basic analysis capabilities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessingRequest'
+      responses:
+        '200':
+          description: Processing completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+
+  /upload:
+    post:
+      tags:
+        - Processing
+      summary: Upload file for processing
+      description: Upload a satellite data file for processing
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+
+  /parameters:
+    get:
+      tags:
+        - Processing
+      summary: Get processing parameters
+      description: Returns available processing parameters and options
+      responses:
+        '200':
+          description: Processing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingParameters'
+
+  /memory/store:
+    post:
+      tags:
+        - Memory
+      summary: Store data in memory
+      description: Store processed data in the memory system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemoryEntry'
+      responses:
+        '200':
+          description: Data stored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryResponse'
+
+  /memory/retrieve/{memory_id}:
+    get:
+      tags:
+        - Memory
+      summary: Retrieve data from memory
+      description: Retrieve stored data by memory ID
+      parameters:
+        - name: memory_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryData'
+        '404':
+          description: Memory not found
+
+  /memory/search:
+    get:
+      tags:
+        - Memory
+      summary: Search memory system
+      description: Search for stored data using text queries and tags
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: tags
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MemoryData'
+
+  /memory/delete/{memory_id}:
+    delete:
+      tags:
+        - Memory
+      summary: Delete memory entry
+      description: Delete a stored memory entry
+      parameters:
+        - name: memory_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Memory deleted successfully
+        '404':
+          description: Memory not found
+
+  /memory/stats:
+    get:
+      tags:
+        - Memory
+      summary: Get memory system statistics
+      description: Returns statistics about the memory system
+      responses:
+        '200':
+          description: Memory system statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryStats'
+
+components:
+  schemas:
+    AnalysisRequest:
+      type: object
+      required:
+        - data_path
+        - analysis_type
+        - parameters
+      properties:
+        data_path:
+          type: string
+          description: Path to the data file to analyze
+        analysis_type:
+          type: string
+          description: Type of analysis to perform
+        parameters:
+          type: object
+          description: Analysis-specific parameters
+        use_memory:
+          type: boolean
+          default: true
+          description: Whether to store results in memory
+
+    AnalysisResponse:
+      type: object
+      properties:
+        results:
+          type: object
+          description: Analysis results
+        metadata:
+          type: object
+          description: Analysis metadata
+        memory_id:
+          type: string
+          description: ID of stored memory entry if applicable
+
+    AnalysisType:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        parameters:
+          type: array
+          items:
+            type: string
+
+    ProcessingRequest:
+      type: object
+      required:
+        - input_path
+        - output_path
+      properties:
+        input_path:
+          type: string
+        output_path:
+          type: string
+        parameters:
+          type: object
+
+    ProcessingResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        output_path:
+          type: string
+        metadata:
+          type: object
+
+    UploadResponse:
+      type: object
+      properties:
+        filename:
+          type: string
+        temp_path:
+          type: string
+        content_type:
+          type: string
+
+    ProcessingParameters:
+      type: object
+      properties:
+        parameters:
+          type: object
+          properties:
+            preprocessing:
+              type: array
+              items:
+                type: string
+            analysis:
+              type: array
+              items:
+                type: string
+            output_formats:
+              type: array
+              items:
+                type: string
+
+    MemoryEntry:
+      type: object
+      required:
+        - data
+        - metadata
+      properties:
+        data:
+          type: object
+        metadata:
+          type: object
+        tags:
+          type: array
+          items:
+            type: string
+
+    MemoryResponse:
+      type: object
+      properties:
+        memory_id:
+          type: string
+        metadata:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+
+    MemoryData:
+      type: object
+      properties:
+        data:
+          type: object
+        metadata:
+          type: object
+        score:
+          type: number
+          description: Search relevance score
+
+    MemoryStats:
+      type: object
+      properties:
+        total_memories:
+          type: integer
+        indexed_memories:
+          type: integer
+        storage_size_bytes:
+          type: integer
+        index_dimension:
+          type: integer
+        index_size:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error message 
