@@ -243,7 +243,7 @@ graph LR
 
 ## Additional Resources
 
-- [Performance Tuning Guide](performance-tuning.md)
-- [Optimization Cookbook](optimization-cookbook.md)
-- [Benchmarking Tools](benchmarking-tools.md)
+- [Performance Tuning Guide](performance-tuning.md) - Coming Soon.
+- [Optimization Cookbook](optimization-cookbook.md) - Coming Soon.
+- [Benchmarking Tools](benchmarking-tools.md) - Coming Soon.
 - [Case Studies](case-studies.md) 
