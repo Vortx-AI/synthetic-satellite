@@ -62,6 +62,6 @@ Vortx AI Research Division.
 
 For technical inquiries and collaboration opportunities:
 - **Research:** Kumari Jaya (jaya@vortx.ai)
-- **Deployment:** avijeet@vortx.ai
+- **Deployment:** Avijeet Singh (avijeet@vortx.ai)
 
 Each whitepaper provides comprehensive technical specifications, rigorous performance benchmarks, and detailed implementation guidelines that represent the cutting edge of AI technology. 
