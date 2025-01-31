@@ -224,6 +224,9 @@ class NightLightDataSource(DataSource):
             try:
                 credentials = ee.ServiceAccountCredentials(None, service_account_path)
                 ee.Initialize(credentials, project=project_id)
+                print(f"✅ Google Earth Engine initialized with project: {project_id}")
+            except Exception as e:
+                raise RuntimeError(f"Google Earth Engine Initialization failed: {e}")
 
 
     def load_data(
