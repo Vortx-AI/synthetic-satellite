@@ -8,6 +8,8 @@ import sentinelhub  # Sentinel Hub
 from datetime import datetime, timedelta
 from pathlib import Path
 from .synthesis import DataSource
+import os
+service_account_path = os.getenv("GOOGLE_EARTH_CREDENTIALS")
 
 class WeatherDataSource(DataSource):
     """Handler for weather and climate data."""
@@ -205,8 +207,11 @@ class NightLightDataSource(DataSource):
         super().__init__(name, resolution)
         self.data_path = data_path
         self.use_gee = use_gee
+
+        
         if use_gee:
-            ee.Initialize()
+            credentials = ee.ServiceAccountCredentials(None, service_account_path)
+            ee.Initialize(credentials)
     
     def load_data(
         self,

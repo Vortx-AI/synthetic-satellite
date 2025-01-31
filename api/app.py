@@ -79,6 +79,8 @@ from werkzeug.utils import secure_filename
 from google.cloud import storage
 import base64
 
+service_account_path = os.getenv("GOOGLE_EARTH_CREDENTIALS")
+
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)
