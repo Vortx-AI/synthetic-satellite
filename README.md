@@ -280,11 +280,6 @@ Comprehensive documentation is available in the [docs](docs/) directory:
 | Medium (10GB)| 8m      | 2m       | 8GB         |
 | Large (100GB)| 1.5h    | 25m      | 32GB        |
 
-### Model Performance
-| Model        | Accuracy | Inference Time | Memory |
-|--------------|----------|----------------|---------|
-| DeepSeek-R1  | 99.9%   | 0.1s          | 4GB    |
-| DeepSeek-V3  | 99.5%   | 0.2s          | 8GB    |
 
 ## Use Cases
 
