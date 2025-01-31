@@ -1,14 +1,26 @@
 # Sustainability Documentation
 
-This directory contains average case simulated documentation about the environmental impact and sustainability features of the Vortx Earth Memory System.
+This directory contains comprehensive documentation about the environmental impact and sustainability features of the Vortx Earth Memory System.
 
-## Contents
+## Core Documentation
 
 ### [Environmental Impact](environmental-impact.md)
-- Energy efficiency
-- Carbon footprint reduction
-- Water conservation
-- Resource optimization
+- Energy efficiency metrics
+- Carbon footprint analysis
+- Water conservation strategies
+- Resource optimization techniques
+
+### [Resource Optimization](resource-optimization.md)
+- Compute resource management
+- Memory optimization
+- Storage efficiency
+- Network optimization
+
+### [Operations](operations.md)
+- Infrastructure management
+- Power optimization
+- Cooling systems
+- Maintenance procedures
 
 ### [Metrics & Reporting](metrics.md)
 - Performance tracking
@@ -16,41 +28,46 @@ This directory contains average case simulated documentation about the environme
 - Compliance reporting
 - Impact assessment
 
-### [Operations](operations.md)
-- Green infrastructure
-- Efficient processing
-- Smart resource management
-- Waste reduction
+### [Compliance](compliance.md)
+- Environmental standards
+- Data center standards
+- Security compliance
+- Certification processes
+
+### [Benchmarks](benchmarks.md)
+- Performance metrics
+- Energy efficiency
+- Resource utilization
+- Cost analysis
 
 ## Sustainability Architecture
 
 ```mermaid
 graph TD
-    A[Traditional Operations] --> B[High Resource Usage]
-    B --> C[Environmental Impact]
+    A[Vortx Sustainability] --> B[Resource Optimization]
+    A --> C[Environmental Impact]
+    A --> D[Compliance]
     
-    D[Vortx System] --> E[Optimized Operations]
-    E --> F[Minimal Impact]
+    B --> B1[Compute]
+    B --> B2[Memory]
+    B --> B3[Storage]
     
-    G[Sustainability Goals] --> H[Continuous Improvement]
-    H --> I[Environmental Protection]
+    C --> C1[Energy]
+    C --> C2[Carbon]
+    C --> C3[Water]
+    
+    D --> D1[Standards]
+    D --> D2[Reporting]
+    D --> D3[Auditing]
+    
+    classDef primary fill:#9f9,stroke:#333,stroke-width:2px
+    classDef secondary fill:#ff9,stroke:#333,stroke-width:1px
+    
+    class A primary
+    class B,C,D secondary
 ```
 
-## Resource Optimization
-
-```mermaid
-graph LR
-    A[Workload] --> B[Resource Manager]
-    B --> C[Power Optimization]
-    B --> D[Memory Optimization]
-    B --> E[CPU/GPU Optimization]
-    
-    C --> F[Energy Savings]
-    D --> G[Resource Savings]
-    E --> H[Performance Gains]
-```
-
-## Impact Metrics
+## Impact Metrics 🔬
 
 | Resource | Traditional | Vortx | Savings |
 |----------|------------|-------|----------|
@@ -58,6 +75,8 @@ graph LR
 | Water | 5000 L/day | 1500 L/day | 70% |
 | Carbon | 500 kg/day | 75 kg/day | 85% |
 | Hardware | 100 units/year | 20 units/year | 80% |
+
+*Note: All metrics are synthetic and for demonstration purposes*
 
 ## Best Practices
 
@@ -79,9 +98,16 @@ graph LR
    - Regular reporting
    - Continuous improvement
 
-## Quick Links
+## Additional Resources
 
-- [Environmental Impact](environmental-impact.md)
-- [Metrics & Reporting](metrics.md)
-- [Operations Guide](operations.md)
-- [Case Studies](case-studies.md) 
+- [Methodology](methodology.md)
+- [Best Practices Guide](best-practices.md)
+- [Case Studies](case-studies.md)
+
+## References
+
+1. Green Grid Data Center Maturity Model
+2. ISO 14001:2015 Environmental Management Systems
+3. ASHRAE TC 9.9 Thermal Guidelines
+4. Energy Star Data Center Requirements
+5. Uptime Institute Data Center Standards 
