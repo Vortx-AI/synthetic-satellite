@@ -2,9 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 
+### Changed
+- Reorganized project structure for better maintainability
+  - Moved `config.yaml` into `config/` directory
+  - Moved root `Dockerfile` into `docker/` directory
+  - Moved root `utils/` into `src/utils`
+  - Consolidated API directories under `src/api`
+  - Removed redundant `vortx/` directory from `src/`
+- Enhanced CLI functionality
+  - Added robust error handling and logging
+  - Improved configuration management with default config support
+  - Added detailed version information output
+  - Enhanced process command with GPU and batch size options
+  - Added dependency checking and setup functionality
+
 ### Added
+- Created proper CLI module structure
+  - Added `src/cli/main.py` with Click-based command line interface
+  - Added `src/cli/__init__.py`
+  - Implemented core CLI commands: serve, process, version
+  - Added new CLI commands:
+    - `analyze`: Directory analysis for satellite data
+    - `setup`: Environment verification and setup
 - Comprehensive system architecture diagram with detailed AGI memory components
 - New documentation structure with organized subdirectories
 - Advanced Earth Memory System integration with DeepSeek-R1/V3
@@ -18,15 +42,6 @@ All notable changes to this project will be documented in this file.
 - GraphQL support in API Gateway
 - Stream processing capabilities
 - Advanced benchmarking metrics
-
-### Changed
-- Reorganized project structure for better maintainability
-- Updated documentation with comprehensive examples
-- Enhanced README with detailed system architecture
-- Improved installation instructions with optional dependencies
-- Restructured API documentation
-- Updated contributing guidelines
-- Enhanced security documentation
 
 ### Fixed
 - Documentation navigation and cross-references
