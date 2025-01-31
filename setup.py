@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 # Read requirements from file
-with open('requirements.txt') as f:
+with open('config/requirements.txt') as f:
     requirements = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
 # Define optional dependencies
