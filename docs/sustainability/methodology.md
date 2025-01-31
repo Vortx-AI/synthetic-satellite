@@ -216,7 +216,7 @@ graph LR
 
 ## Additional Resources
 
-- [Calibration Procedures](calibration.md)
-- [Error Handling Guide](error-handling.md)
-- [Audit Protocols](audit-protocols.md)
-- [Training Materials](training.md) 
+- [Calibration Procedures](calibration.md) - Coming Soon.
+- [Error Handling Guide](error-handling.md) - Coming Soon.
+- [Audit Protocols](audit-protocols.md) - Coming Soon.
+- [Training Materials](training.md) - Coming Soon.
