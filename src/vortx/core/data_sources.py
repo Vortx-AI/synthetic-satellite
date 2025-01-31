@@ -9,8 +9,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from .synthesis import DataSource
 import os
-service_account_path = os.getenv("GOOGLE_EARTH_CREDENTIALS")
-
 
 class WeatherDataSource(DataSource):
     """Handler for weather and climate data."""
@@ -209,8 +207,24 @@ class NightLightDataSource(DataSource):
         self.data_path = data_path
         self.use_gee = use_gee
         if use_gee:
-            credentials = ee.ServiceAccountCredentials(None, service_account_path)
-            ee.Initialize(credentials)
+            # Load service account credentials
+            service_account_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+            if not service_account_path or not os.path.exists(service_account_path):
+                raise RuntimeError(f"Service account file not found: {service_account_path}")
+
+            # Extract project ID from JSON
+            with open(service_account_path, "r") as f:
+                service_account_data = json.load(f)
+                project_id = service_account_data.get("project_id", None)
+
+            if not project_id:
+                raise RuntimeError("No project ID found in the service account JSON.")
+
+            # Authenticate with Google Earth Engine
+            try:
+                credentials = ee.ServiceAccountCredentials(None, service_account_path)
+                ee.Initialize(credentials, project=project_id)
+
 
     def load_data(
         self,
