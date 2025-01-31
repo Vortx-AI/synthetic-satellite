@@ -1,6 +1,6 @@
 # Sustainability Documentation
 
-This directory contains documentation about the environmental impact and sustainability features of the Vortx Earth Memory System.
+This directory contains average case simulated documentation about the environmental impact and sustainability features of the Vortx Earth Memory System.
 
 ## Contents
 
