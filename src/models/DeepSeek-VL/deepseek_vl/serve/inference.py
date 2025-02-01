@@ -29,8 +29,15 @@ from transformers import (
     TextIteratorStreamer,
 )
 
-from deepseek_vl.models import MultiModalityCausalLM, VLChatProcessor
-from deepseek_vl.utils.conversation import Conversation
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from models import MultiModalityCausalLM, VLChatProcessor
+from utils.conversation import Conversation
 
 
 def load_model(model_path):

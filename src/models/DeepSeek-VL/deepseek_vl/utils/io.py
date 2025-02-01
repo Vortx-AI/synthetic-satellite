@@ -26,7 +26,14 @@ import base64
 import io
 from transformers import AutoModelForCausalLM
 
-from deepseek_vl.models import MultiModalityCausalLM, VLChatProcessor
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from models import MultiModalityCausalLM, VLChatProcessor
 
 
 def load_pretrained_model(model_path: str):

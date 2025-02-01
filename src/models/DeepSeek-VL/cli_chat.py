@@ -28,7 +28,14 @@ import torch
 from PIL import Image
 from transformers import TextIteratorStreamer
 
-from deepseek_vl.utils.io import load_pretrained_model
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from utils.io import load_pretrained_model
 
 
 def load_image(image_file):

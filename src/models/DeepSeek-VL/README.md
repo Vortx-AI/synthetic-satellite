@@ -120,8 +120,15 @@ pip install -e .
 import torch
 from transformers import AutoModelForCausalLM
 
-from deepseek_vl.models import VLChatProcessor, MultiModalityCausalLM
-from deepseek_vl.utils.io import load_pil_images
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from models import VLChatProcessor, MultiModalityCausalLM
+from utils.io import load_pil_images
 
 
 # specify the path to the model

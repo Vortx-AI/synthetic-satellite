@@ -24,9 +24,16 @@ import torch
 from PIL.Image import Image
 from transformers import LlamaTokenizerFast
 from transformers.processing_utils import ProcessorMixin
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
 
-from deepseek_vl.models.image_processing_vlm import VLMImageProcessor
-from deepseek_vl.utils.conversation import get_conv_template
+sys.path.append(deepseek_vl_root)
+
+
+from models.image_processing_vlm import VLMImageProcessor
+from utils.conversation import get_conv_template
 
 
 class DictOutput(object):

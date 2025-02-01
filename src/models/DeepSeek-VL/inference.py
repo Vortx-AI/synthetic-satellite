@@ -20,8 +20,17 @@
 import torch
 from transformers import AutoModelForCausalLM
 
-from deepseek_vl.models import MultiModalityCausalLM, VLChatProcessor
-from deepseek_vl.utils.io import load_pil_images
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from models import MultiModalityCausalLM, VLChatProcessor
+from utils.io import load_pil_images
+
+
 
 # specify the path to the model
 model_path = "deepseek-ai/deepseek-vl-7b-chat"

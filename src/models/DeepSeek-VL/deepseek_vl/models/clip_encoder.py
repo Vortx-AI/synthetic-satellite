@@ -24,8 +24,15 @@ import torch.nn as nn
 import torchvision.transforms
 from einops import rearrange
 
-from deepseek_vl.models.sam import create_sam_vit
-from deepseek_vl.models.siglip_vit import create_siglip_vit
+import os,sys
+from dotenv import load_dotenv
+load_dotenv()
+deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
+
+sys.path.append(deepseek_vl_root)
+
+from models.sam import create_sam_vit
+from models.siglip_vit import create_siglip_vit
 
 
 class CLIPVisionTower(nn.Module):
