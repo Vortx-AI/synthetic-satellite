@@ -1,7 +1,7 @@
 API Reference
 =============
 
-This section provides detailed API documentation for TileFormer's modules and classes.
+This section provides detailed API documentation for vortx's modules and classes.
 
 .. toctree::
    :maxdepth: 2
@@ -14,7 +14,7 @@ This section provides detailed API documentation for TileFormer's modules and cl
 Data Acquisition
 ---------------
 
-.. automodule:: tileformer.data_acquisition
+.. automodule:: vortx.data_acquisition
    :members:
    :undoc-members:
    :show-inheritance:
@@ -22,7 +22,7 @@ Data Acquisition
 Data Sources
 -----------
 
-.. automodule:: tileformer.data_acquisition.sources
+.. automodule:: vortx.data_acquisition.sources
    :members:
    :undoc-members:
    :show-inheritance:
@@ -30,7 +30,7 @@ Data Sources
 Earth Engine API
 ~~~~~~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.sources.earth_engine_api
+.. automodule:: vortx.data_acquisition.sources.earth_engine_api
    :members:
    :undoc-members:
    :show-inheritance:
@@ -38,7 +38,7 @@ Earth Engine API
 COG/STAC API
 ~~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.sources.cog_stac_api
+.. automodule:: vortx.data_acquisition.sources.cog_stac_api
    :members:
    :undoc-members:
    :show-inheritance:
@@ -46,7 +46,7 @@ COG/STAC API
 Planetary Computer API
 ~~~~~~~~~~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.sources.planetary_compute
+.. automodule:: vortx.data_acquisition.sources.planetary_compute
    :members:
    :undoc-members:
    :show-inheritance:
@@ -54,7 +54,7 @@ Planetary Computer API
 Processors
 ---------
 
-.. automodule:: tileformer.data_acquisition.processors
+.. automodule:: vortx.data_acquisition.processors
    :members:
    :undoc-members:
    :show-inheritance:
@@ -62,7 +62,7 @@ Processors
 Advanced Processor
 ~~~~~~~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.processors.advanced_processor
+.. automodule:: vortx.data_acquisition.processors.advanced_processor
    :members:
    :undoc-members:
    :show-inheritance:
@@ -70,7 +70,7 @@ Advanced Processor
 Image Processor
 ~~~~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.processors.image_processor
+.. automodule:: vortx.data_acquisition.processors.image_processor
    :members:
    :undoc-members:
    :show-inheritance:
@@ -78,7 +78,7 @@ Image Processor
 Data Fusion
 ~~~~~~~~~
 
-.. automodule:: tileformer.data_acquisition.processors.data_fusion
+.. automodule:: vortx.data_acquisition.processors.data_fusion
    :members:
    :undoc-members:
    :show-inheritance:
@@ -86,7 +86,7 @@ Data Fusion
 Mobile/Metaverse API
 -----------------
 
-.. automodule:: tileformer.data_acquisition.sources.mobile_metaverse_api
+.. automodule:: vortx.data_acquisition.sources.mobile_metaverse_api
    :members:
    :undoc-members:
    :show-inheritance:
@@ -94,7 +94,7 @@ Mobile/Metaverse API
 Utilities
 --------
 
-.. automodule:: tileformer.utils
+.. automodule:: vortx.utils
    :members:
    :undoc-members:
    :show-inheritance: 
