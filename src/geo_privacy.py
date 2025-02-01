@@ -279,7 +279,31 @@ class GeoPrivacyEncoder:
     def _gaussian_noise(self, data: np.ndarray) -> np.ndarray:
         """Gaussian noise transformation"""
         return data + np.random.normal(0, self.config.noise_factor, data.shape)
+    
+    def _laplacian_noise(self, data: np.ndarray) -> np.ndarray:
+        """Laplacian noise transformation"""
+        return data + np.random.laplace(0, self.config.noise_factor, data.shape)
+    
+    def _grid_masking(self, data: np.ndarray) -> np.ndarray:
+        """Grid masking transformation"""
+        return self._layout_transform_box(data, self.config.grid_spacing)
+    
+    def _voronoi_masking(self, data: np.ndarray) -> np.ndarray:
+        """Voronoi masking transformation"""
+        return self._layout_transform_box(data, self.config.voronoi_spacing)
+    
+    def _differential_privacy(self, data: np.ndarray) -> np.ndarray:
+        """Differential privacy transformation"""
+        return self._apply_advanced_privacy(data)
         
+    def _k_anonymity(self, data: np.ndarray) -> np.ndarray:
+        """K-anonymity transformation"""
+        return self._cluster_points_gpu(data, self.config.k_anonymity)
+    
+    def _l_diversity(self, data: np.ndarray) -> np.ndarray:
+        """L-diversity transformation"""
+        return self._diversify_attributes_gpu(data, self.config.l_diversity)
+    
     def _initialize_temporal_transforms(self):
         """Initialize temporal transformation algorithms"""
         return {
