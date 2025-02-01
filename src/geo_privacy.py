@@ -275,6 +275,10 @@ class GeoPrivacyEncoder:
             'k_anonymity': self._k_anonymity,
             'l_diversity': self._l_diversity
         }
+    
+    def _gaussian_noise(self, data: np.ndarray) -> np.ndarray:
+        """Gaussian noise transformation"""
+        return data + np.random.normal(0, self.config.noise_factor, data.shape)
         
     def _initialize_temporal_transforms(self):
         """Initialize temporal transformation algorithms"""
