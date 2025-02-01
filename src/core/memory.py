@@ -10,6 +10,19 @@ import numpy as np
 import faiss
 import pickle
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+import sys
+
+class NumpyEncoder(json.JSONEncoder):
+    """Custom JSON encoder for NumPy types"""
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        return super().default(obj)
 
 class MemorySystem:
     """Memory system for storing and retrieving processed data"""
@@ -21,6 +34,9 @@ class MemorySystem:
         # Initialize storage paths
         self.storage_path = Path(self.config.get("storage_path", "data/memory"))
         self.storage_path.mkdir(parents=True, exist_ok=True)
+        
+        # Get JSON encoder
+        self.json_encoder = self.config.get("json_encoder", None)
         
         # Initialize index
         self.index_path = self.storage_path / "index"
@@ -54,7 +70,7 @@ class MemorySystem:
             
             # Store data
             data_path = self.storage_path / f"{memory_id}.json"
-            with open(data_path, "w") as f:
+            with open(data_path, "w", cls=self.json_encoder) as f:
                 json.dump({
                     "data": data,
                     "metadata": metadata

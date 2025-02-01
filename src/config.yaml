@@ -1,0 +1,28 @@
+
+
+stable_diffusion_model: "runwayml/stable-diffusion-v1-5"
+controlnet_model: "lllyasviel/control-v11-depth"
+segmentation_model: "mit_b5"
+device: "cuda"
+fp16: true
+
+batch_size: 1
+num_inference_steps: 50
+strength: 0.75
+guidance_scale: 7.5
+
+image_size: 512
+tile_size: 256
+overlap: 32
+
+enhance_contrast: true
+denoise: true
+preserve_colors: true
+
+enable_augmentation: true
+aug_brightness_range: [0.8, 1.2]
+aug_contrast_range: [0.8, 1.2]
+
+output_format: "png"
+save_intermediates: false
+
