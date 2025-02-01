@@ -126,7 +126,7 @@ def get_blip_model():
     global blip_model
     if blip_model is None:
         # Load the BLIP model when needed
-        from vision.process_vis import load_blip_model  # Import function to load BLIP model
+        from processors.process_vis import load_blip_model  # Import function to load BLIP model
         blip_model = load_blip_model()
     return blip_model
 

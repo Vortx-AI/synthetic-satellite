@@ -16,7 +16,7 @@ from torch.multiprocessing import Pool, set_start_method
 import segmentation_models_pytorch as smp
 import urllib.parse
 
-from vision.process_vis import unload_blip_model
+from processors.process_vis import unload_blip_model
 from syndrella.process_imgen import unload_stable_diffusion_model
 
 import geopandas as gpd

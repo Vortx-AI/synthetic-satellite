@@ -26,18 +26,18 @@ src_path = os.path.join(project_root, 'src')
 sys.path.append(src_path)
 
 # Use preloaded models directly
-from vision.process_vis import extract_image_details
+from processors.process_vis import extract_image_details
 from pompei.process_pr import generate_prompt_from_caption
 from syndrella.process_imgen import generate_image_from_text
 from geo.helper import tile_coords_to_bbox, generate_tile
 
-from vision.process_vis import load_blip_model, unload_blip_model, unload_transformer_model
+from processors.process_vis import load_blip_model, unload_blip_model, unload_transformer_model
 from syndrella.process_imgen import load_stable_diffusion_model, unload_stable_diffusion_model
 from pompei.process_pr import load_llama_model, unload_llama_model
 from pathlib import Path
 
 from privacy.secure_encoding import SecureAPILayer  # Ensure this exists in src/privacy/secure_encoding.py
-from synthetic_data_generator import SyntheticConfig, SyntheticDataGenerator  # Ensure correct path
+from scripts.synthetic_data_generator import SyntheticConfig, SyntheticDataGenerator  # Ensure correct path
 from geo.helper import generate_tile, tile_coords_to_bbox  # Ensure correct path
 
 # Additional Imports for New Endpoints

@@ -13,7 +13,7 @@ import jwt
 from PIL import Image
 import io
 from shapely.geometry import shape, mapping
-from geo_privacy import GeoPrivacyEncoder
+from privacy.geo_privacy import GeoPrivacyEncoder
 
 class SecureImageEncoder:
     """Secure image encoding with multiple protection layers"""
