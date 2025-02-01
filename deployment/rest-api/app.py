@@ -21,7 +21,7 @@ from cachetools import TTLCache
 from typing import Dict, Any, List, Optional, Tuple
 
 # Add the project root to Python path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 src_path = os.path.join(project_root, 'src')
 sys.path.append(src_path)
 
