@@ -23,8 +23,8 @@ Advanced Earth Memory System for AGI and Geospatial Intelligence
 Vortx is a cutting-edge Earth Memory System designed for AGI and advanced geospatial analysis. It combines state-of-the-art ML models (including DeepSeek-R1/V3 and other SOTA models) with synthetic data generation to create rich, contextual memories of Earth observations. Key capabilities include:
 
 - 🧠 **AGI Memory Formation**: Create and retrieve complex Earth memories for AGI systems
-- 🌍 **Earth Observation**: Process and analyze multi-modal Earth data at scale
-- 🤖 **Advanced ML Models**: Integrated DeepSeek-R1/V3 and other SOTA models for superior understanding
+- 🌍 **Earth Memory Retractor**: Link Earth data at scale 
+- 🤖 **Model Deployments**: Integrated DeepSeek-R1/V3 and other SOTA models for superior understanding
 - 🎯 **Synthetic Data**: Generate high-quality synthetic data for training and simulation
 - ⚡ **High Performance**: GPU-accelerated processing with distributed computing
 - 🔒 **Privacy**: Advanced privacy-preserving techniques for sensitive data
