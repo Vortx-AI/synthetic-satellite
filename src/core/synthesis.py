@@ -144,12 +144,15 @@ class KnowledgeSynthesis:
         features = []
         for var in ds.data_vars:
             data = ds[var].values
+            # Flatten percentiles into separate features
             features.extend([
                 data.mean(),
                 data.std(),
                 data.min(),
                 data.max(),
-                np.percentile(data, [25, 50, 75])
+                np.percentile(data, 25),  # Split percentiles into separate values
+                np.percentile(data, 50),
+                np.percentile(data, 75)
             ])
         
         metadata = {
@@ -158,7 +161,9 @@ class KnowledgeSynthesis:
             "time_range": [str(ds.time[0].values), str(ds.time[-1].values)]
         }
         
-        return np.array(features).reshape(-1, 1), metadata
+        # Convert features to 2D array
+        features_array = np.array(features, dtype=np.float32).reshape(-1, 1)
+        return features_array, metadata
     
     def _analyze_patterns(self,
                          features: np.ndarray,
