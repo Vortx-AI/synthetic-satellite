@@ -2,6 +2,7 @@
 
 This document provides technical details about the source code organization, architecture, and workflows of the synthetic-satellite project.
 
+
 ## Folder Structure
 
 ```
@@ -27,7 +28,6 @@ src/
    - Handles data fusion and analysis
    - Implements feature extraction for different data types
    - Provides pattern analysis and insight generation
-   - Uses scikit-learn for machine learning operations
 
 2. **Memory System Architecture**
    ```

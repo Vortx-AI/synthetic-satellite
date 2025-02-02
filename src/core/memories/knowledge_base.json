@@ -1,0 +1,20 @@
+{
+    "documents": [
+        {
+            "content": "Python is a high-level programming language...",
+            "metadata": {
+                "source": "python_docs",
+                "type": "documentation",
+                "date": "2024-02-02"
+            }
+        },
+        {
+            "content": "FAISS (Facebook AI Similarity Search) is a library...",
+            "metadata": {
+                "source": "faiss_docs",
+                "type": "documentation",
+                "date": "2024-02-02"
+            }
+        }
+    ]
+}
