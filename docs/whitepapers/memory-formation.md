@@ -1,4 +1,4 @@
-# Memory Formation and Retrieval: Technical Whitepaper
+# Memory Formation and Retrieval: Planning Whitepaper
 
 **Authors:**  
 Kumari Jaya¹, Vortx Neural Agent¹  
