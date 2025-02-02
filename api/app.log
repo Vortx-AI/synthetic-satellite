@@ -1,0 +1,15 @@
+2025-01-31 09:44:52,679 - __main__ - INFO - Received a request to /locen
+2025-01-31 09:44:52,680 - __main__ - WARNING - Invalid secret key provided
+2025-01-31 09:45:11,095 - __main__ - INFO - Received a request to /locen
+2025-01-31 09:45:11,095 - __main__ - WARNING - Invalid secret key provided
+2025-01-31 10:35:07,578 - app - INFO - Received a request to /locen
+2025-01-31 10:35:07,579 - app - WARNING - Invalid secret key provided
+2025-01-31 10:36:04,451 - app - INFO - Received a request to /locen
+2025-01-31 10:36:22,029 - app - ERROR - Error processing /locen: Failed to load LLaMA model.
+2025-01-31 13:24:30,619 - app - ERROR - Error in process_location_endpoint: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-01-31 13:25:30,234 - app - ERROR - Error in process_location_endpoint: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-01-31 13:26:01,958 - app - ERROR - Error in process_location_endpoint: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-01-31 13:26:20,487 - app - ERROR - Error in process_location_endpoint: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-01-31 13:26:54,394 - app - ERROR - Error in process_location_endpoint: No data could be processed from any source
+2025-01-31 13:31:15,924 - app - ERROR - Error in process_location_endpoint: No data could be processed from any source
+2025-01-31 16:37:47,312 - app - ERROR - Error in process_location_endpoint: No data could be processed from any source

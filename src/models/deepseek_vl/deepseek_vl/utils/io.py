@@ -26,16 +26,18 @@ import base64
 import io
 from transformers import AutoModelForCausalLM
 
-import os,sys
+import sys
+import os
 from dotenv import load_dotenv
 load_dotenv()
 deepseek_vl_root = os.getenv("DEEPSEEK_PROJECT_ROOT")
 
 sys.path.append(deepseek_vl_root)
 
+#from deepseek_vl.models import MultiModalityCausalLM, VLChatProcessor
+
 from models.processing_vlm import VLChatProcessor
 from models.modeling_vlm import MultiModalityCausalLM
-
 
 def load_pretrained_model(model_path: str):
     vl_chat_processor: VLChatProcessor = VLChatProcessor.from_pretrained(model_path)
