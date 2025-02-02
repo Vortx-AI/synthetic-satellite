@@ -301,11 +301,11 @@ REWARD_MECHANISM = {
 graph TD
     subgraph Token Ecosystem
         V1[$VORTX] -->|Powers| D[Data Services]
-        V2[$VORTX] -->|Enables| C[Compute Services]
-        V3[$VORTX] -->|Drives| I[Intelligence Services]
+        V1 -->|Enables| C[Compute Services]
+        V1 -->|Drives| I[Intelligence Services]
         
-        D -->|Generates| V2
-        C -->|Produces| V3
+        D -->|Generates| V1
+        C -->|Produces| V1
         I -->|Requires| V1
     end
     
@@ -317,15 +317,15 @@ graph TD
     
     subgraph Liquidity Pools
         L1[$VORTX/USDC] -->|Market Making| V1
-        L2[$VORTX/ETH] -->|Market Making| V2
-        L3[$VORTX/BTC] -->|Market Making| V3
+        L2[$VORTX/ETH] -->|Market Making| V1
+        L3[$VORTX/BTC] -->|Market Making| V1
     end
     
     classDef token fill:#f9f,stroke:#333
     classDef service fill:#9f9,stroke:#333
     classDef pool fill:#ff9,stroke:#333
     
-    class V1,V2,V3 token
+    class V1,V1,V1 token
     class D,C,I service
     class L1,L2,L3 pool
 ```
@@ -333,7 +333,7 @@ graph TD
 ### Token Specifications
 ```python
 TOKEN_SPECIFICATIONS = {
-    'vdata': {
+    'vortx': {
         'total_supply': '1,000,000,000',
         'initial_distribution': {
             'ecosystem_rewards': '40%',
@@ -590,6 +590,13 @@ graph TD
         P2 -->|Generation| P3[Insights]
     end
     
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Access Rights| P1
+        T1 -->|Processing Power| P2
+        P3 -->|Intelligence Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
     subgraph Applications
         P3 -->|Powers| A1[Decision Support]
         P3 -->|Enables| A2[Automation]
@@ -598,10 +605,12 @@ graph TD
     
     classDef source fill:#f9f,stroke:#333
     classDef process fill:#9f9,stroke:#333
+    classDef token fill:#ff9,stroke:#333
     classDef application fill:#ff9,stroke:#333
     
     class E1,E2,E3 source
     class P1,P2,P3 process
+    class T1,T2 token
     class A1,A2,A3 application
 ```
 
@@ -619,6 +628,13 @@ graph TD
         P2 -->|Generation| P3[New Knowledge]
     end
     
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Research Access| P1
+        T1 -->|Compute Power| P2
+        P3 -->|Discovery Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
     subgraph Impact
         P3 -->|Enables| I1[Publications]
         P3 -->|Drives| I2[Patents]
@@ -627,10 +643,12 @@ graph TD
     
     classDef data fill:#f9f,stroke:#333
     classDef analysis fill:#9f9,stroke:#333
+    classDef token fill:#ff9,stroke:#333
     classDef impact fill:#ff9,stroke:#333
     
     class S1,S2,S3 data
     class P1,P2,P3 analysis
+    class T1,T2 token
     class I1,I2,I3 impact
 ```
 
@@ -648,6 +666,13 @@ graph TD
         P2 -->|Generation| P3[Environmental Insights]
     end
     
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Sensor Access| P1
+        T1 -->|Prediction Power| P2
+        P3 -->|Environmental Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
     subgraph Actions
         P3 -->|Informs| A1[Policy Making]
         P3 -->|Guides| A2[Conservation]
@@ -656,10 +681,12 @@ graph TD
     
     classDef sensor fill:#f9f,stroke:#333
     classDef process fill:#9f9,stroke:#333
+    classDef token fill:#ff9,stroke:#333
     classDef action fill:#ff9,stroke:#333
     
     class M1,M2,M3 sensor
     class P1,P2,P3 process
+    class T1,T2 token
     class A1,A2,A3 action
 ```
 
@@ -707,7 +734,7 @@ graph TD
 
 ## 🔗 Advanced Token Utilities
 
-### Data Token (VDATA) Use Cases
+### Data Services Use Cases
 ```mermaid
 graph TD
     subgraph Data Quality
@@ -736,7 +763,7 @@ graph TD
     class G1,G2,G3 gov
 ```
 
-### Compute Token (VCPU) Applications
+### Compute Services Applications
 ```mermaid
 graph TD
     subgraph Resource Allocation
@@ -763,7 +790,7 @@ graph TD
     class S1,S2,S3 service
 ```
 
-### Intelligence Token (VAGI) Utilities
+### Intelligence Services Utilities
 ```mermaid
 graph TD
     subgraph Model Access
@@ -790,549 +817,6 @@ graph TD
     class E1,E2,E3 eco
 ```
 
-## 🔒 Enhanced Security Framework
-
-### Multi-Layer Security Architecture
-```mermaid
-graph TD
-    subgraph Protocol Security
-        P1[Zero Knowledge Proofs] -->|Validates| P2[Transactions]
-        P2 -->|Ensures| P3[Privacy]
-        
-        P4[Homomorphic Encryption] -->|Enables| P5[Secure Computation]
-        P5 -->|Maintains| P6[Data Privacy]
-    end
-    
-    subgraph Network Security
-        N1[Consensus Mechanism] -->|Secures| N2[Network State]
-        N2 -->|Prevents| N3[Attacks]
-        
-        N4[Validator Network] -->|Monitors| N5[Operations]
-        N5 -->|Ensures| N6[Integrity]
-    end
-    
-    subgraph Application Security
-        A1[Access Control] -->|Manages| A2[Permissions]
-        A2 -->|Enforces| A3[Policies]
-        
-        A4[Audit System] -->|Tracks| A5[Activities]
-        A5 -->|Enables| A6[Compliance]
-    end
-    
-    classDef protocol fill:#f9f,stroke:#333
-    classDef network fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
-    
-    class P1,P2,P3,P4,P5,P6 protocol
-    class N1,N2,N3,N4,N5,N6 network
-    class A1,A2,A3,A4,A5,A6 app
-```
-
-### Security Specifications
-```python
-SECURITY_FRAMEWORK = {
-    'cryptographic_layer': {
-        'encryption': {
-            'symmetric': 'AES-256-GCM',
-            'asymmetric': 'RSA-4096',
-            'quantum_resistant': 'Lattice-based'
-        },
-        'zero_knowledge_proofs': {
-            'protocol': 'zk-SNARKs',
-            'setup': 'Trusted',
-            'verification_time': '< 1ms'
-        },
-        'homomorphic_encryption': {
-            'type': 'Fully Homomorphic',
-            'library': 'SEAL',
-            'performance_overhead': '< 100x'
-        }
-    },
-    'consensus_security': {
-        'mechanism': 'Hybrid PoS/PoI',
-        'validator_requirements': {
-            'min_stake': '100,000 tokens',
-            'reputation_score': '> 90%',
-            'uptime': '> 99.9%'
-        },
-        'slashing_conditions': {
-            'double_signing': '50% stake',
-            'downtime': '10% stake',
-            'malicious_behavior': '100% stake'
-        }
-    },
-    'access_control': {
-        'authentication': {
-            'method': 'Multi-factor',
-            'token_based': True,
-            'biometric_support': True
-        },
-        'authorization': {
-            'model': 'RBAC + ABAC',
-            'granularity': 'Resource-level',
-            'dynamic_policies': True
-        }
-    }
-}
-```
-
-## 🌐 Cross-Chain Integration
-
-### Interoperability Architecture
-```mermaid
-graph TD
-    subgraph Vortx Network
-        V1[$VORTX Chain] -->|Bridge| B1[Bridge Protocol]
-        V2[$VORTX Chain] -->|Bridge| B1
-        V3[$VORTX Chain] -->|Bridge| B1
-    end
-    
-    subgraph External Networks
-        B1 -->|Connect| E1[Ethereum]
-        B1 -->|Connect| E2[Polkadot]
-        B1 -->|Connect| E3[Cosmos]
-    end
-    
-    subgraph Bridge Operations
-        B1 -->|Execute| O1[Asset Transfer]
-        B1 -->|Manage| O2[State Sync]
-        B1 -->|Handle| O3[Cross-chain Calls]
-    end
-    
-    classDef vortx fill:#f9f,stroke:#333
-    classDef external fill:#9f9,stroke:#333
-    classDef bridge fill:#ff9,stroke:#333
-    
-    class V1,V2,V3 vortx
-    class E1,E2,E3 external
-    class O1,O2,O3 bridge
-```
-
-### Cross-Chain Protocol
-```python
-CROSS_CHAIN_SPEC = {
-    'bridge_protocol': {
-        'architecture': 'Multi-signature',
-        'consensus': 'Threshold Signature',
-        'security': {
-            'validator_set': '21 nodes',
-            'threshold': '15 signatures',
-            'rotation_period': '24 hours'
-        }
-    },
-    'supported_networks': {
-        'ethereum': {
-            'smart_contracts': True,
-            'asset_types': ['ERC20', 'ERC721'],
-            'finality': '64 blocks'
-        },
-        'polkadot': {
-            'parachain': True,
-            'xcmp': True,
-            'finality': 'deterministic'
-        },
-        'cosmos': {
-            'ibc': True,
-            'interchain_accounts': True,
-            'finality': 'instant'
-        }
-    },
-    'operations': {
-        'asset_transfer': {
-            'confirmation_time': '< 5 minutes',
-            'fee_model': 'Dynamic',
-            'security_deposit': 'Required'
-        },
-        'state_sync': {
-            'frequency': 'Per block',
-            'validation': 'Multi-layer',
-            'dispute_resolution': 'Automated'
-        },
-        'cross_chain_calls': {
-            'latency': '< 30 seconds',
-            'atomicity': 'Guaranteed',
-            'rollback': 'Automatic'
-        }
-    }
-}
-```
-
-### Additional Implementation Scenarios
-
-### Healthcare Intelligence
-```mermaid
-graph TD
-    subgraph Medical Data
-        H1[Patient Records] -->|Privacy Preserved| P1
-        H2[Research Data] -->|Anonymized| P1
-        H3[Real-time Monitoring] -->|Secure| P1
-    end
-    
-    subgraph Processing
-        P1[HIPAA Compliant Pipeline] -->|Analysis| P2[Medical AGI]
-        P2 -->|Generation| P3[Healthcare Insights]
-    end
-    
-    subgraph Applications
-        P3 -->|Enables| A1[Diagnosis Support]
-        P3 -->|Powers| A2[Treatment Planning]
-        P3 -->|Drives| A3[Drug Discovery]
-    end
-    
-    classDef data fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
-    
-    class H1,H2,H3 data
-    class P1,P2,P3 process
-    class A1,A2,A3 app
-```
-
-### Financial Intelligence
-```mermaid
-graph TD
-    subgraph Market Data
-        F1[Trading Data] -->|Real-time| P1
-        F2[Economic Indicators] -->|Analysis| P1
-        F3[News Feed] -->|Sentiment| P1
-    end
-    
-    subgraph Analysis
-        P1[Data Fusion] -->|Processing| P2[Financial AGI]
-        P2 -->|Generation| P3[Market Intelligence]
-    end
-    
-    subgraph Services
-        P3 -->|Powers| S1[Trading Strategies]
-        P3 -->|Enables| S2[Risk Management]
-        P3 -->|Supports| S3[Portfolio Optimization]
-    end
-    
-    classDef data fill:#f9f,stroke:#333
-    classDef analysis fill:#9f9,stroke:#333
-    classDef service fill:#ff9,stroke:#333
-    
-    class F1,F2,F3 data
-    class P1,P2,P3 analysis
-    class S1,S2,S3 service
-```
-
-## 📞 Contact
-
-For technical inquiries and collaboration opportunities:
-- **Research:** Kumari Jaya (jaya@vortx.ai)
-- **Deployment:** Avijeet Singh (avijeet@vortx.ai)
-- **Partnerships:** partnerships@vortx.ai
-
-## 📚 Citation
-
-When referencing these whitepapers, please use:
-```
-Jaya, K., et al. (2024). "Earth Memory System: A Decentralized AGI Exchange."
-Vortx Technical Whitepapers Series, v2.0.0. Vortx Research Division.
-```
-
-## 🔮 Emerging Technology Token Utilities
-
-### Quantum Computing Integration
-```mermaid
-graph TD
-    subgraph Quantum Resources
-        Q1[Quantum Hardware] -->|Access| Q2[Quantum Pool]
-        Q2 -->|Allocation| Q3[Quantum Tasks]
-    end
-    
-    subgraph Token Mechanics
-        T1[$VORTX Staking] -->|Secures| Q2
-        T1 -->|Prioritizes| Q3
-        Q3 -->|Rewards| T2[Token Distribution]
-    end
-    
-    subgraph Applications
-        Q3 -->|Powers| A1[Cryptography]
-        Q3 -->|Enables| A2[Optimization]
-        Q3 -->|Drives| A3[Simulation]
-    end
-    
-    classDef quantum fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
-    
-    class Q1,Q2,Q3 quantum
-    class T1,T2 token
-    class A1,A2,A3 app
-```
-
-### Biotechnology Integration
-```mermaid
-graph TD
-    subgraph Bio Resources
-        B1[Genomic Data] -->|Processing| B2[Bio AGI]
-        B2 -->|Analysis| B3[Bio Insights]
-    end
-    
-    subgraph Token Utilities
-        T1[$VORTX Staking] -->|Accesses| B2
-        T1 -->|Validates| B3
-        B3 -->|Rewards| T2[Token Distribution]
-    end
-    
-    subgraph Applications
-        B3 -->|Enables| A1[Drug Discovery]
-        B3 -->|Powers| A2[Gene Therapy]
-        B3 -->|Supports| A3[Personalized Medicine]
-    end
-    
-    classDef bio fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
-    
-    class B1,B2,B3 bio
-    class T1,T2 token
-    class A1,A2,A3 app
-```
-
-### Space Technology Integration
-```mermaid
-graph TD
-    subgraph Space Resources
-        S1[Satellite Data] -->|Processing| S2[Space AGI]
-        S2 -->|Analysis| S3[Space Insights]
-    end
-    
-    subgraph Token Mechanics
-        T1[$VORTX Staking] -->|Accesses| S2
-        T1 -->|Validates| S3
-        S3 -->|Rewards| T2[Token Distribution]
-    end
-    
-    subgraph Applications
-        S3 -->|Enables| A1[Earth Observation]
-        S3 -->|Powers| A2[Space Exploration]
-        S3 -->|Supports| A3[Asteroid Mining]
-    end
-    
-    classDef space fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
-    
-    class S1,S2,S3 space
-    class T1,T2 token
-    class A1,A2,A3 app
-```
-
-## 🔒 Quantum-Resistant Security Framework
-
-### Post-Quantum Cryptography
-```python
-QUANTUM_SECURITY = {
-    'lattice_based': {
-        'algorithm': 'CRYSTALS-Kyber',
-        'key_size': '3072-bit equivalent',
-        'implementation': {
-            'key_exchange': True,
-            'digital_signatures': True,
-            'encryption': True
-        }
-    },
-    'hash_based': {
-        'algorithm': 'SPHINCS+',
-        'security_level': '256-bit quantum',
-        'implementation': {
-            'signatures': True,
-            'message_authentication': True
-        }
-    },
-    'multivariate': {
-        'algorithm': 'Rainbow',
-        'security_level': 'Category 5',
-        'implementation': {
-            'signatures': True,
-            'authentication': True
-        }
-    },
-    'isogeny_based': {
-        'algorithm': 'SIKE',
-        'key_size': '751-bit',
-        'implementation': {
-            'key_exchange': True,
-            'encryption': True
-        }
-    }
-}
-```
-
-### Quantum-Safe Network Architecture
-```mermaid
-graph TD
-    subgraph Quantum Protection
-        Q1[Classical Channel] -->|Upgrade| Q2[Quantum-Safe Channel]
-        Q2 -->|Protects| Q3[Network Communications]
-    end
-    
-    subgraph Security Layers
-        S1[Post-Quantum Crypto] -->|Secures| Q2
-        S2[Quantum Key Distribution] -->|Enhances| Q2
-        S3[Hybrid Cryptography] -->|Backs Up| Q2
-    end
-    
-    subgraph Validation
-        V1[Security Proofs] -->|Verifies| S1
-        V2[Quantum Resistance] -->|Tests| S2
-        V3[Classical Security] -->|Validates| S3
-    end
-    
-    classDef quantum fill:#f9f,stroke:#333
-    classDef security fill:#9f9,stroke:#333
-    classDef validation fill:#ff9,stroke:#333
-    
-    class Q1,Q2,Q3 quantum
-    class S1,S2,S3 security
-    class V1,V2,V3 validation
-```
-
-## 🌐 Extended Cross-Chain Integration
-
-### Additional Network Support
-```python
-EXTENDED_NETWORK_SUPPORT = {
-    'solana': {
-        'integration': {
-            'program_accounts': True,
-            'spl_tokens': True,
-            'serum_dex': True
-        },
-        'performance': {
-            'tps': '50,000+',
-            'finality': '< 1 second',
-            'cost': 'Ultra low'
-        }
-    },
-    'cardano': {
-        'features': {
-            'native_tokens': True,
-            'plutus_smart_contracts': True,
-            'hydra_scaling': True
-        },
-        'security': {
-            'formal_verification': True,
-            'ouroboros_consensus': True
-        }
-    },
-    'avalanche': {
-        'subnets': {
-            'custom_vm': True,
-            'private_networks': True,
-            'interop': True
-        },
-        'performance': {
-            'finality': '< 2 seconds',
-            'subnet_tps': '4,500+'
-        }
-    },
-    'near': {
-        'features': {
-            'sharding': True,
-            'rainbow_bridge': True,
-            'aurora_evm': True
-        },
-        'performance': {
-            'tps': '100,000+',
-            'cost': 'Predictable'
-        }
-    }
-}
-```
-
-## 🎯 Additional Industry Scenarios
-
-### Smart City Implementation
-```mermaid
-graph TD
-    subgraph City Data
-        C1[IoT Sensors] -->|Collection| P1
-        C2[Traffic Systems] -->|Monitoring| P1
-        C3[Utility Grids] -->|Integration| P1
-    end
-    
-    subgraph Processing
-        P1[Urban AGI] -->|Analysis| P2[City Intelligence]
-        P2 -->|Optimization| P3[Smart Services]
-    end
-    
-    subgraph Services
-        P3 -->|Manages| S1[Traffic Flow]
-        P3 -->|Optimizes| S2[Energy Usage]
-        P3 -->|Controls| S3[Public Services]
-    end
-    
-    classDef data fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef service fill:#ff9,stroke:#333
-    
-    class C1,C2,C3 data
-    class P1,P2,P3 process
-    class S1,S2,S3 service
-```
-
-### Advanced Manufacturing
-```mermaid
-graph TD
-    subgraph Factory Data
-        F1[Production Lines] -->|Monitoring| P1
-        F2[Quality Control] -->|Inspection| P1
-        F3[Supply Chain] -->|Tracking| P1
-    end
-    
-    subgraph Intelligence
-        P1[Industrial AGI] -->|Processing| P2[Manufacturing Intelligence]
-        P2 -->|Optimization| P3[Smart Manufacturing]
-    end
-    
-    subgraph Optimization
-        P3 -->|Improves| O1[Efficiency]
-        P3 -->|Reduces| O2[Waste]
-        P3 -->|Ensures| O3[Quality]
-    end
-    
-    classDef data fill:#f9f,stroke:#333
-    classDef intel fill:#9f9,stroke:#333
-    classDef opt fill:#ff9,stroke:#333
-    
-    class F1,F2,F3 data
-    class P1,P2,P3 intel
-    class O1,O2,O3 opt
-```
-
-### Defense and Security
-```mermaid
-graph TD
-    subgraph Security Data
-        S1[Threat Intel] -->|Analysis| P1
-        S2[Network Traffic] -->|Monitoring| P1
-        S3[Behavioral Data] -->|Profiling| P1
-    end
-    
-    subgraph Processing
-        P1[Security AGI] -->|Analysis| P2[Threat Assessment]
-        P2 -->|Response| P3[Security Actions]
-    end
-    
-    subgraph Actions
-        P3 -->|Prevents| A1[Attacks]
-        P3 -->|Mitigates| A2[Risks]
-        P3 -->|Ensures| A3[Compliance]
-    end
-    
-    classDef data fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef action fill:#ff9,stroke:#333
-    
-    class S1,S2,S3 data
-    class P1,P2,P3 process
-    class A1,A2,A3 action
-```
-
 ### Token Flow Architecture
 ```mermaid
 graph TD
@@ -1355,7 +839,7 @@ graph TD
     end
     
     subgraph Token Flow
-        T1[$VORTX Token Pool] -->|Staking| T2[Provider Staking]
+        T1[$VORTX Pool] -->|Staking| T2[Service Staking]
         T2 -->|Data Staking| D1
         T2 -->|Compute Staking| C1
         T2 -->|Intelligence Staking| I1
