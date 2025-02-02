@@ -1,4 +1,4 @@
-# Sustainable Computing in Vortx: Technical Whitepaper
+# Sustainable Computing in Vortx: Planning Whitepaper
 
 **Authors:**  
 Kumari Jaya¹, Vortx Sustainability Agent¹  
