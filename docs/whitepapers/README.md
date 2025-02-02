@@ -62,9 +62,9 @@ graph TD
 ```mermaid
 graph LR
     subgraph Token Economics
-        T1[VortxData Token] -->|Data Rewards| DP
-        T2[VortxCompute Token] -->|Compute Rewards| CN
-        T3[VortxAGI Token] -->|Intelligence Rewards| AI
+        T1[$VORTX Token] -->|Data Rewards| DP
+        T2[$VORTX Token] -->|Compute Rewards| CN
+        T3[$VORTX Token] -->|Intelligence Rewards| AI
     end
     
     subgraph Stakeholders
@@ -262,7 +262,7 @@ REWARD_MECHANISM = {
             'timeliness': '0.3'
         },
         'token_distribution': {
-            'base_rate': '100 VDATA/TB',
+            'base_rate': '100 VORTX/TB',
             'quality_multiplier': '1.0-2.0',
             'network_contribution': '10-30%'
         }
@@ -274,7 +274,7 @@ REWARD_MECHANISM = {
             'efficiency': '0.3'
         },
         'token_distribution': {
-            'base_rate': '100 VCPU/PFLOP',
+            'base_rate': '100 VORTX/PFLOP',
             'performance_multiplier': '1.0-2.0',
             'network_contribution': '10-30%'
         }
@@ -286,7 +286,7 @@ REWARD_MECHANISM = {
             'sustainability': '0.3'
         },
         'token_distribution': {
-            'base_rate': '100 VAGI/service',
+            'base_rate': '100 VORTX/service',
             'value_multiplier': '1.0-3.0',
             'network_contribution': '10-30%'
         }
@@ -300,9 +300,9 @@ REWARD_MECHANISM = {
 ```mermaid
 graph TD
     subgraph Token Ecosystem
-        V1[VDATA] -->|Powers| D[Data Services]
-        V2[VCPU] -->|Enables| C[Compute Services]
-        V3[VAGI] -->|Drives| I[Intelligence Services]
+        V1[$VORTX] -->|Powers| D[Data Services]
+        V2[$VORTX] -->|Enables| C[Compute Services]
+        V3[$VORTX] -->|Drives| I[Intelligence Services]
         
         D -->|Generates| V2
         C -->|Produces| V3
@@ -316,9 +316,9 @@ graph TD
     end
     
     subgraph Liquidity Pools
-        L1[VDATA/USDC] -->|Market Making| V1
-        L2[VCPU/USDC] -->|Market Making| V2
-        L3[VAGI/USDC] -->|Market Making| V3
+        L1[$VORTX/USDC] -->|Market Making| V1
+        L2[$VORTX/ETH] -->|Market Making| V2
+        L3[$VORTX/BTC] -->|Market Making| V3
     end
     
     classDef token fill:#f9f,stroke:#333
@@ -365,14 +365,14 @@ TOKEN_SPECIFICATIONS = {
     'vcpu': {
         'total_supply': '500,000,000',
         'emission_schedule': {
-            'initial_rate': '100 VCPU/block',
+            'initial_rate': '100 VORTX/block',
             'halving_period': '2 years',
-            'minimum_rate': '1 VCPU/block'
+            'minimum_rate': '1 VORTX/block'
         },
         'staking_requirements': {
-            'validator_node': '50,000 VCPU',
-            'compute_node': '10,000 VCPU',
-            'storage_node': '5,000 VCPU'
+            'validator_node': '50,000 VORTX',
+            'compute_node': '10,000 VORTX',
+            'storage_node': '5,000 VORTX'
         }
     },
     'vagi': {
@@ -882,9 +882,9 @@ SECURITY_FRAMEWORK = {
 ```mermaid
 graph TD
     subgraph Vortx Network
-        V1[VDATA Chain] -->|Bridge| B1[Bridge Protocol]
-        V2[VCPU Chain] -->|Bridge| B1
-        V3[VAGI Chain] -->|Bridge| B1
+        V1[$VORTX Chain] -->|Bridge| B1[Bridge Protocol]
+        V2[$VORTX Chain] -->|Bridge| B1
+        V3[$VORTX Chain] -->|Bridge| B1
     end
     
     subgraph External Networks
@@ -1331,4 +1331,306 @@ graph TD
     class S1,S2,S3 data
     class P1,P2,P3 process
     class A1,A2,A3 action
+```
+
+### Token Flow Architecture
+```mermaid
+graph TD
+    subgraph Data Network
+        D1[Data Providers] -->|Submit| D2[Data Pool]
+        D2 -->|Validate| D3[Quality Check]
+        D3 -->|Mint| D4[$VORTX Rewards]
+    end
+    
+    subgraph Compute Network
+        C1[Compute Providers] -->|Process| C2[Compute Pool]
+        C2 -->|Validate| C3[Performance Check]
+        C3 -->|Mint| C4[$VORTX Rewards]
+    end
+    
+    subgraph Intelligence Network
+        I1[AGI Providers] -->|Serve| I2[Intelligence Pool]
+        I2 -->|Validate| I3[Value Check]
+        I3 -->|Mint| I4[$VORTX Rewards]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Token Pool] -->|Staking| T2[Provider Staking]
+        T2 -->|Data Staking| D1
+        T2 -->|Compute Staking| C1
+        T2 -->|Intelligence Staking| I1
+        
+        D4 -->|Rewards| T3[Reward Distribution]
+        C4 -->|Rewards| T3
+        I4 -->|Rewards| T3
+        
+        T3 -->|Distribution| T1
+    end
+    
+    classDef network fill:#f9f,stroke:#333,stroke-width:2px
+    classDef pool fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class D1,D2,D3,D4 network
+    class C1,C2,C3,C4 network
+    class I1,I2,I3,I4 network
+    class T1,T2,T3 token
+```
+
+### Reward Mechanisms
+```python
+REWARD_MECHANISM = {
+    'data_rewards': {
+        'quality_score': {
+            'accuracy': '0.4',
+            'relevance': '0.3',
+            'timeliness': '0.3'
+        },
+        'token_distribution': {
+            'base_rate': '100 VORTX/TB',
+            'quality_multiplier': '1.0-2.0',
+            'network_contribution': '10-30%'
+        }
+    },
+    'compute_rewards': {
+        'performance_score': {
+            'processing_power': '0.4',
+            'availability': '0.3',
+            'efficiency': '0.3'
+        },
+        'token_distribution': {
+            'base_rate': '100 VORTX/PFLOP',
+            'performance_multiplier': '1.0-2.0',
+            'network_contribution': '10-30%'
+        }
+    },
+    'intelligence_rewards': {
+        'value_score': {
+            'accuracy': '0.4',
+            'innovation': '0.3',
+            'sustainability': '0.3'
+        },
+        'token_distribution': {
+            'base_rate': '100 VORTX/service',
+            'value_multiplier': '1.0-3.0',
+            'network_contribution': '10-30%'
+        }
+    }
+}
+```
+
+### Token Utility Model
+```mermaid
+graph TD
+    subgraph Service Layer
+        V1[$VORTX] -->|Powers| D[Data Services]
+        V1 -->|Enables| C[Compute Services]
+        V1 -->|Drives| I[Intelligence Services]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Staking| T2[Service Staking]
+        T2 -->|Data Staking| V1
+        T2 -->|Compute Staking| V1
+        T2 -->|Intelligence Staking| V1
+        
+        D -->|Service Rewards| T3[Reward Pool]
+        C -->|Performance Rewards| T3
+        I -->|Value Rewards| T3
+        
+        T3 -->|Distribution| T1
+    end
+    
+    classDef service fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    
+    class D,C,I service
+    class V1,T1,T2,T3 token
+```
+
+### Liquidity Model
+```mermaid
+graph TD
+    subgraph Market Making
+        L1[$VORTX/USDC] -->|Market Making| V1[$VORTX Pool]
+        L2[$VORTX/ETH] -->|Market Making| V1
+        L3[$VORTX/BTC] -->|Market Making| V1
+    end
+    
+    subgraph Token Flow
+        V1 -->|Staking| S1[Service Staking]
+        V1 -->|Rewards| S2[Reward Distribution]
+        S1 -->|Returns| V1
+        S2 -->|Returns| V1
+    end
+    
+    classDef market fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    
+    class L1,L2,L3 market
+    class V1,S1,S2 token
+```
+
+### Token Distribution
+```python
+TOKEN_DISTRIBUTION = {
+    'total_supply': 1_000_000_000,  # 1 billion $VORTX
+    'distribution': {
+        'ecosystem_rewards': {
+            'percentage': 40,
+            'vesting': '10 years linear',
+            'initial_rate': '100 VORTX/block',
+            'halving_period': '2 years',
+            'minimum_rate': '1 VORTX/block'
+        },
+        'staking_requirements': {
+            'validator_node': '50,000 VORTX',
+            'compute_node': '10,000 VORTX',
+            'storage_node': '5,000 VORTX'
+        },
+        'development': {
+            'percentage': 20,
+            'vesting': '5 years linear',
+            'cliff': '1 year'
+        },
+        'foundation': {
+            'percentage': 15,
+            'vesting': '5 years linear',
+            'cliff': '1 year'
+        },
+        'team': {
+            'percentage': 15,
+            'vesting': '4 years linear',
+            'cliff': '1 year'
+        },
+        'advisors': {
+            'percentage': 5,
+            'vesting': '2 years linear',
+            'cliff': '6 months'
+        },
+        'community': {
+            'percentage': 5,
+            'vesting': 'None',
+            'purpose': 'Initial community incentives'
+        }
+    }
+}
+```
+
+### Data Services
+```mermaid
+graph TD
+    subgraph Data Layer
+        D1[Data Sources] -->|Ingest| D2[Data Pool]
+        D2 -->|Process| D3[Data Quality]
+        D3 -->|Validate| D4[Data Value]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Data Staking| D1
+        T1 -->|Quality Power| D3
+        D4 -->|Data Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Applications
+        D4 -->|Powers| A1[Analytics]
+        D4 -->|Enables| A2[Research]
+        D4 -->|Drives| A3[Intelligence]
+    end
+    
+    classDef data fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class D1,D2,D3,D4 data
+    class T1,T2 token
+    class A1,A2,A3 app
+```
+
+### Compute Services
+```mermaid
+graph TD
+    subgraph Compute Layer
+        C1[Compute Nodes] -->|Process| C2[Compute Pool]
+        C2 -->|Validate| C3[Performance]
+        C3 -->|Optimize| C4[Efficiency]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Compute Staking| C1
+        T1 -->|Performance Power| C3
+        C4 -->|Compute Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Applications
+        C4 -->|Powers| A1[Processing]
+        C4 -->|Enables| A2[Training]
+        C4 -->|Drives| A3[Inference]
+    end
+    
+    classDef compute fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class C1,C2,C3,C4 compute
+    class T1,T2 token
+    class A1,A2,A3 app
+```
+
+### Intelligence Services
+```mermaid
+graph TD
+    subgraph Intelligence Layer
+        I1[AGI Services] -->|Process| I2[Intelligence Pool]
+        I2 -->|Validate| I3[Value Analysis]
+        I3 -->|Optimize| I4[Service Quality]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Intelligence Staking| I1
+        T1 -->|Service Power| I3
+        I4 -->|Intelligence Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Applications
+        I4 -->|Powers| A1[Reasoning]
+        I4 -->|Enables| A2[Learning]
+        I4 -->|Drives| A3[Creation]
+    end
+    
+    classDef intelligence fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class I1,I2,I3,I4 intelligence
+    class T1,T2 token
+    class A1,A2,A3 app
+```
+
+### Cross-Chain Architecture
+```mermaid
+graph TD
+    subgraph Chains
+        V1[$VORTX Chain] -->|Bridge| B1[Bridge Protocol]
+        E1[Ethereum] -->|Bridge| B1
+        S1[Solana] -->|Bridge| B1
+    end
+    
+    subgraph Token Flow
+        B1 -->|Lock| T1[$VORTX Pool]
+        T1 -->|Mint| T2[Wrapped $VORTX]
+        T2 -->|Burn| T1
+        T1 -->|Release| B1
+    end
+    
+    classDef chain fill:#f9f,stroke:#333,stroke-width:2px
+    classDef bridge fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class V1,E1,S1 chain
+    class B1 bridge
+    class T1,T2 token
 ```

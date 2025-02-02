@@ -265,3 +265,114 @@ SCALING_SPECS = {
 - v2.1.0 (Planned): Enhanced quantum integration
 - v2.2.0 (Planned): Advanced scaling capabilities
 
+### System Architecture
+```mermaid
+graph TD
+    subgraph Memory Layer
+        M1[Memory Formation] -->|Process| M2[Memory Index]
+        M2 -->|Optimize| M3[Memory Store]
+        M3 -->|Access| M4[Memory Retrieval]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Memory Power| M1
+        T1 -->|Index Power| M2
+        T1 -->|Storage Power| M3
+        M4 -->|Memory Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Network Layer
+        N1[Processing Network] -->|Compute| N2[Storage Network]
+        N2 -->|Store| N3[Access Network]
+        N3 -->|Retrieve| N4[Distribution Network]
+    end
+    
+    M4 -->|Serve| N1
+    N4 -->|Update| M1
+    
+    classDef memory fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef network fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class M1,M2,M3,M4 memory
+    class T1,T2 token
+    class N1,N2,N3,N4 network
+```
+
+### Network Architecture
+```mermaid
+graph TD
+    subgraph Core Network
+        C1[Validator Nodes] -->|Validate| C2[Consensus Layer]
+        C2 -->|Process| C3[State Machine]
+        C3 -->|Update| C4[State Store]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Validator Staking| C1
+        T1 -->|Processing Power| C2
+        C4 -->|Network Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Processing Network
+        P1[Compute Nodes] -->|Process| P2[Task Queue]
+        P2 -->|Execute| P3[Results]
+        P3 -->|Validate| P4[State Update]
+    end
+    
+    subgraph Storage Network
+        S1[Storage Nodes] -->|Store| S2[Data Shards]
+        S2 -->|Replicate| S3[Redundancy]
+        S3 -->|Verify| S4[Integrity]
+    end
+    
+    P4 -->|Commit| C3
+    S4 -->|Commit| C3
+    
+    classDef core fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef process fill:#9f9,stroke:#333,stroke-width:2px
+    classDef storage fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class C1,C2,C3,C4 core
+    class T1,T2 token
+    class P1,P2,P3,P4 process
+    class S1,S2,S3,S4 storage
+```
+
+### Quantum Integration
+```mermaid
+graph TD
+    subgraph Quantum Layer
+        Q1[Quantum Processing] -->|Execute| Q2[Quantum Circuit]
+        Q2 -->|Measure| Q3[Quantum State]
+        Q3 -->|Collapse| Q4[Classical Result]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Quantum Power| Q1
+        T1 -->|Circuit Power| Q2
+        Q4 -->|Quantum Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Classical Layer
+        C1[Classical Processing] -->|Prepare| C2[Circuit Design]
+        C2 -->|Optimize| C3[Error Correction]
+        C3 -->|Validate| C4[Result Verification]
+    end
+    
+    C3 -->|Control| Q2
+    Q4 -->|Verify| C4
+    
+    classDef quantum fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef classical fill:#9f9,stroke:#333,stroke-width:2px
+    
+    class Q1,Q2,Q3,Q4 quantum
+    class T1,T2 token
+    class C1,C2,C3,C4 classical
+```
+
