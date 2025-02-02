@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 import jwt
 from PIL import Image
 import io
+from shapely.geometry import shape, mapping
+from privacy.geo_privacy import GeoPrivacyEncoder
 
 class SecureImageEncoder:
     """Secure image encoding with multiple protection layers"""
@@ -20,6 +22,7 @@ class SecureImageEncoder:
         """Initialize with master key for derivation"""
         self.master_key = master_key.encode()
         self._initialize_keys()
+        self.geo_encoder = GeoPrivacyEncoder(master_key)
         
     def _initialize_keys(self):
         """Initialize encryption keys"""
@@ -46,6 +49,15 @@ class SecureImageEncoder:
     ) -> Tuple[bytes, Dict[str, Any]]:
         """
         Encode image with multiple protection layers
+        
+        Args:
+            image: numpy array image
+            metadata: dict of metadata
+            protection_level: 'low', 'medium', or 'high'
+            
+        Returns:
+            encoded_data: encrypted and encoded image data
+            secure_metadata: encrypted metadata with access info
         """
         # 1. Image preprocessing
         if protection_level == 'high':
@@ -80,6 +92,14 @@ class SecureImageEncoder:
     ) -> Optional[np.ndarray]:
         """
         Decode encrypted image data
+        
+        Args:
+            encrypted_data: encrypted image bytes
+            secure_metadata: metadata with access info
+            access_token: valid access token
+            
+        Returns:
+            numpy array image if successful, None if unauthorized
         """
         try:
             # 1. Verify access token
@@ -129,7 +149,7 @@ class SecureImageEncoder:
     def _image_to_bytes(self, image: np.ndarray) -> bytes:
         """Convert numpy array to bytes"""
         img_bytes = io.BytesIO()
-        Image.fromarray(image.astype('uint8')).save(img_bytes, format='PNG')
+        Image.fromarray(image).save(img_bytes, format='PNG')
         return img_bytes.getvalue()
         
     def _bytes_to_image(self, img_bytes: bytes) -> np.ndarray:
@@ -151,6 +171,91 @@ class SecureImageEncoder:
             return True
         except:
             return False
+
+    def encode_with_geo_privacy(
+        self,
+        image: np.ndarray,
+        geometry: Any,
+        metadata: Dict[str, Any],
+        protection_level: str = 'high',
+        layout_type: str = 'grid',
+        fractal_type: Optional[str] = None
+    ) -> Tuple[bytes, Dict[str, Any]]:
+        """
+        Encode image with geo-privacy protection
+        
+        Args:
+            image: numpy array image
+            geometry: Shapely geometry object
+            metadata: dict of metadata
+            protection_level: 'low', 'medium', or 'high'
+            layout_type: Type of layout transformation
+            fractal_type: Optional fractal transformation
+            
+        Returns:
+            encoded_data: encrypted and encoded image data
+            secure_metadata: encrypted metadata with access info
+        """
+        # 1. Apply geo-privacy transformation
+        transformed_geom, geo_metadata = self.geo_encoder.encode_geometry(
+            geometry,
+            layout_type=layout_type,
+            fractal_type=fractal_type,
+            protection_level=protection_level
+        )
+        
+        # 2. Apply image encoding
+        encrypted_data, secure_metadata = self.encode_image(
+            image,
+            metadata,
+            protection_level
+        )
+        
+        # 3. Combine metadata
+        secure_metadata.update({
+            'geo_privacy': geo_metadata,
+            'geometry': mapping(transformed_geom)
+        })
+        
+        return encrypted_data, secure_metadata
+    
+    def decode_with_geo_privacy(
+        self,
+        encrypted_data: bytes,
+        secure_metadata: Dict[str, Any],
+        access_token: str
+    ) -> Tuple[Optional[np.ndarray], Optional[Any]]:
+        """
+        Decode image and geometry with geo-privacy protection
+        
+        Args:
+            encrypted_data: encrypted image bytes
+            secure_metadata: metadata with access info
+            access_token: valid access token
+            
+        Returns:
+            tuple of (decoded image, decoded geometry) or (None, None) if unauthorized
+        """
+        # 1. Decode image
+        image = self.decode_image(
+            encrypted_data,
+            secure_metadata,
+            access_token
+        )
+        
+        if image is None:
+            return None, None
+            
+        # 2. Decode geometry
+        if 'geo_privacy' in secure_metadata:
+            transformed_geom = shape(secure_metadata['geometry'])
+            original_geom = self.geo_encoder.decode_geometry(
+                transformed_geom,
+                secure_metadata['geo_privacy']
+            )
+            return image, original_geom
+            
+        return image, None
 
 class SecureAPILayer:
     """Secure API layer with access control"""
@@ -193,6 +298,38 @@ class SecureAPILayer:
     ) -> Optional[np.ndarray]:
         """Decode tile data with access validation"""
         return self.encoder.decode_image(
+            encrypted_data,
+            secure_metadata,
+            access_token
+        )
+
+    def encode_tile_with_geo_privacy(
+        self,
+        tile_data: np.ndarray,
+        geometry: Any,
+        tile_metadata: Dict[str, Any],
+        protection_level: str = 'high',
+        layout_type: str = 'grid',
+        fractal_type: Optional[str] = None
+    ) -> Tuple[bytes, Dict[str, Any]]:
+        """Encode tile data with geo-privacy protection"""
+        return self.encoder.encode_with_geo_privacy(
+            tile_data,
+            geometry,
+            tile_metadata,
+            protection_level,
+            layout_type,
+            fractal_type
+        )
+        
+    def decode_tile_with_geo_privacy(
+        self,
+        encrypted_data: bytes,
+        secure_metadata: Dict[str, Any],
+        access_token: str
+    ) -> Tuple[Optional[np.ndarray], Optional[Any]]:
+        """Decode tile data with geo-privacy protection"""
+        return self.encoder.decode_with_geo_privacy(
             encrypted_data,
             secure_metadata,
             access_token

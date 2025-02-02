@@ -122,7 +122,7 @@ class SyntheticGenerator:
                     noise_layer[y, x] = snoise2(
                         x * frequency,
                         y * frequency,
-                        octave=1,
+                        octaves=1,
                         persistence=params.persistence,
                         lacunarity=2.0,
                         repeatx=width,
