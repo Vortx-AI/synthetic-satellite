@@ -10,7 +10,7 @@ Creating a decentralized, sustainable AGI ecosystem that democratizes access to 
 
 ## 📊 Ecosystem Architecture
 
-### Stakeholder Flow
+### Stakeholder Flow with Tokenomics
 ```mermaid
 graph TD
     subgraph Data Providers
@@ -20,6 +20,19 @@ graph TD
         A4[Research Institutions] -->|Domain Knowledge| B
     end
     
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Data Staking| A1
+        T1 -->|Sensor Staking| A2
+        T1 -->|Instrument Staking| A3
+        T1 -->|Knowledge Staking| A4
+        
+        B -->|Quality Rewards| T2[Reward Pool]
+        C -->|Compute Rewards| T2
+        D -->|Intelligence Rewards| T2
+        
+        T2 -->|Distribution| T1
+    end
+    
     B[Data Integration Layer] -->|Verified Data| C
     
     subgraph Processing Layer
@@ -27,6 +40,10 @@ graph TD
         C1[Cloud Nodes] -->|High Performance| C
         C2[Edge Devices] -->|Local Processing| C
         C3[Quantum Systems] -->|Complex Calculations| C
+        
+        T1 -->|Node Staking| C1
+        T1 -->|Edge Staking| C2
+        T1 -->|Quantum Staking| C3
     end
     
     D[AGI Layer] -->|Intelligence| E
@@ -35,27 +52,129 @@ graph TD
         D1[Memory Formation] -->|Synthesis| D
         D2[Inference Engine] -->|Analysis| D
         D3[Learning Models] -->|Evolution| D
+        
+        T1 -->|Memory Power| D1
+        T1 -->|Inference Power| D2
+        T1 -->|Learning Power| D3
     end
     
     subgraph Application Layer
         E[Service Layer] -->|Solutions| F1
         E -->|Analytics| F2
         E -->|Automation| F3
+        
+        F1[Enterprise Systems] -->|Usage Fees| T2
+        F2[Scientific Applications] -->|Service Fees| T2
+        F3[Autonomous Agents] -->|Agent Fees| T2
     end
     
-    F1[Enterprise Systems]
-    F2[Scientific Applications]
-    F3[Autonomous Agents]
-    
-    classDef providers fill:#f9f,stroke:#333
-    classDef processing fill:#ff9,stroke:#333
-    classDef intelligence fill:#9f9,stroke:#333
-    classDef applications fill:#9ff,stroke:#333
+    classDef providers fill:#f9f,stroke:#333,stroke-width:2px
+    classDef processing fill:#ff9,stroke:#333,stroke-width:2px
+    classDef intelligence fill:#9f9,stroke:#333,stroke-width:2px
+    classDef applications fill:#9ff,stroke:#333,stroke-width:2px
+    classDef token fill:#f6f,stroke:#333,stroke-width:2px
     
     class A1,A2,A3,A4 providers
     class C,C1,C2,C3 processing
     class D,D1,D2,D3 intelligence
     class E,F1,F2,F3 applications
+    class T1,T2 token
+```
+
+### Token Flow Specifications
+```python
+STAKEHOLDER_TOKENOMICS = {
+    'data_provider_rewards': {
+        'satellite_networks': {
+            'base_rate': '1000 VORTX/TB',
+            'quality_multiplier': '1.0-3.0',
+            'coverage_bonus': '10% for global coverage'
+        },
+        'iot_sensors': {
+            'base_rate': '100 VORTX/GB',
+            'reliability_multiplier': '1.0-2.5',
+            'real_time_bonus': '15% for < 1s latency'
+        },
+        'scientific_instruments': {
+            'base_rate': '500 VORTX/dataset',
+            'precision_multiplier': '1.0-4.0',
+            'novelty_bonus': '20% for unique data'
+        },
+        'research_institutions': {
+            'base_rate': '2000 VORTX/contribution',
+            'impact_multiplier': '1.0-5.0',
+            'peer_review_bonus': '25% for validated research'
+        }
+    },
+    'compute_provider_rewards': {
+        'cloud_nodes': {
+            'base_rate': '50 VORTX/PFLOP-hour',
+            'uptime_multiplier': '1.0-2.0',
+            'efficiency_bonus': '10% for PUE < 1.1'
+        },
+        'edge_devices': {
+            'base_rate': '20 VORTX/TFLOP-hour',
+            'latency_multiplier': '1.0-3.0',
+            'availability_bonus': '15% for 99.99% uptime'
+        },
+        'quantum_systems': {
+            'base_rate': '1000 VORTX/qubit-hour',
+            'coherence_multiplier': '1.0-10.0',
+            'quantum_advantage_bonus': '50% for quantum speedup'
+        }
+    },
+    'intelligence_provider_rewards': {
+        'memory_formation': {
+            'base_rate': '200 VORTX/pattern',
+            'accuracy_multiplier': '1.0-4.0',
+            'novelty_bonus': '20% for new patterns'
+        },
+        'inference_engine': {
+            'base_rate': '100 VORTX/inference',
+            'precision_multiplier': '1.0-3.0',
+            'speed_bonus': '15% for real-time inference'
+        },
+        'learning_models': {
+            'base_rate': '500 VORTX/model',
+            'performance_multiplier': '1.0-5.0',
+            'innovation_bonus': '30% for breakthrough algorithms'
+        }
+    },
+    'application_fees': {
+        'enterprise_systems': {
+            'base_fee': '1000 VORTX/month',
+            'usage_fee': '10 VORTX/query',
+            'volume_discount': 'Up to 50% for high usage'
+        },
+        'scientific_applications': {
+            'base_fee': '500 VORTX/month',
+            'compute_fee': '5 VORTX/job',
+            'academic_discount': '40% for research institutions'
+        },
+        'autonomous_agents': {
+            'base_fee': '200 VORTX/agent/month',
+            'action_fee': '1 VORTX/action',
+            'efficiency_rebate': 'Up to 30% for optimal behavior'
+        }
+    },
+    'staking_requirements': {
+        'data_providers': {
+            'minimum_stake': '10000 VORTX',
+            'optimal_stake': '100000 VORTX',
+            'maximum_boost': '3x rewards'
+        },
+        'compute_providers': {
+            'minimum_stake': '50000 VORTX',
+            'optimal_stake': '500000 VORTX',
+            'maximum_boost': '4x rewards'
+        },
+        'intelligence_providers': {
+            'minimum_stake': '100000 VORTX',
+            'optimal_stake': '1000000 VORTX',
+            'maximum_boost': '5x rewards'
+        }
+    }
+}
 ```
 
 ### Value Flow Architecture
@@ -442,57 +561,133 @@ graph TD
         L3[Application Level] -->|Governs| P3[Service Policies]
     end
     
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Protocol Staking| L1
+        T1 -->|Network Staking| L2
+        T1 -->|Service Staking| L3
+        
+        P1 -->|Parameter Rewards| T2[Reward Pool]
+        P2 -->|Operation Rewards| T2
+        P3 -->|Policy Rewards| T2
+        
+        T2 -->|Distribution| T1
+    end
+    
     subgraph Voting Mechanisms
-        V1[Token Voting] -->|Weighted by| S1[Stake]
+        V1[Token Voting] -->|Weighted by| S1[Stake Time]
         V2[Reputation Voting] -->|Weighted by| S2[Contribution]
         V3[Quadratic Voting] -->|Prevents| S3[Plutocracy]
+        
+        T1 -->|Voting Power| V1
+        T1 -->|Reputation Power| V2
+        T1 -->|Democratic Power| V3
     end
     
     subgraph Proposal System
         PR1[Improvement Proposals] -->|Through| PS1[Standard Process]
         PR2[Emergency Proposals] -->|Through| PS2[Fast Track]
         PR3[Parameter Updates] -->|Through| PS3[Automated Gov]
+        
+        PS1 -->|Execution Rewards| T2
+        PS2 -->|Emergency Rewards| T2
+        PS3 -->|Update Rewards| T2
     end
     
-    classDef layer fill:#f9f,stroke:#333
-    classDef mechanism fill:#9f9,stroke:#333
-    classDef process fill:#ff9,stroke:#333
+    classDef layer fill:#f9f,stroke:#333,stroke-width:2px
+    classDef mechanism fill:#9f9,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#f6f,stroke:#333,stroke-width:2px
     
     class L1,L2,L3 layer
-    class V1,V2,V3 mechanism
-    class PR1,PR2,PR3 process
+    class V1,V2,V3,S1,S2,S3 mechanism
+    class PR1,PR2,PR3,PS1,PS2,PS3 process
+    class T1,T2 token
 ```
 
-### Governance Parameters
+### Enhanced Governance Parameters
 ```python
-GOVERNANCE_SPEC = {
+GOVERNANCE_TOKENOMICS = {
     'voting_power': {
-        'calculation': {
-            'base': 'Token Balance',
-            'multiplier': 'Staking Duration',
-            'cap': 'Quadratic Scaling'
+        'token_based': {
+            'base_power': '1 vote per 1000 VORTX',
+            'time_multiplier': {
+                '6 months': '1.5x',
+                '1 year': '2x',
+                '2 years': '3x',
+                '4 years': '4x'
+            },
+            'cap': 'Square root of total stake'
         },
-        'delegation': {
-            'enabled': True,
-            'max_delegations': 5,
-            'min_delegation': '1000 tokens'
+        'reputation_based': {
+            'contribution_score': {
+                'proposals_accepted': '100 points',
+                'successful_votes': '10 points',
+                'community_activity': '1 point/day'
+            },
+            'multiplier': 'Up to 2x voting power',
+            'decay': '10% per month without activity'
+        },
+        'quadratic_voting': {
+            'cost': 'VORTX^2 per vote',
+            'max_votes': '100 per proposal',
+            'refund': '50% for winning votes'
         }
     },
     'proposal_system': {
-        'submission_requirements': {
-            'min_tokens': '100,000',
-            'holding_period': '30 days',
-            'reputation_score': '> 80%'
+        'standard_proposals': {
+            'submission_cost': '10000 VORTX',
+            'minimum_stake': '100000 VORTX',
+            'reward_pool': '1000 VORTX/day',
+            'quorum': '40% of total stake',
+            'passing_threshold': '66%'
         },
-        'voting_periods': {
-            'standard': '7 days',
-            'emergency': '24 hours',
-            'parameter': '3 days'
+        'emergency_proposals': {
+            'submission_cost': '50000 VORTX',
+            'minimum_stake': '500000 VORTX',
+            'reward_pool': '5000 VORTX/day',
+            'quorum': '60% of total stake',
+            'passing_threshold': '75%'
         },
-        'quorum_requirements': {
-            'standard': '40%',
-            'emergency': '66%',
-            'parameter': '51%'
+        'parameter_updates': {
+            'submission_cost': '5000 VORTX',
+            'minimum_stake': '50000 VORTX',
+            'reward_pool': '500 VORTX/day',
+            'quorum': '30% of total stake',
+            'passing_threshold': '60%'
+        }
+    },
+    'governance_rewards': {
+        'proposal_creation': {
+            'base_reward': '1000 VORTX',
+            'acceptance_bonus': '5000 VORTX',
+            'implementation_bonus': '10000 VORTX'
+        },
+        'voting_participation': {
+            'base_reward': '10 VORTX/vote',
+            'stake_multiplier': '1.0-2.0',
+            'consistency_bonus': 'Up to 50%'
+        },
+        'protocol_improvement': {
+            'minor_update': '10000 VORTX',
+            'major_update': '50000 VORTX',
+            'critical_update': '100000 VORTX'
+        }
+    },
+    'slashing_conditions': {
+        'malicious_proposals': {
+            'first_offense': '10% stake',
+            'second_offense': '50% stake',
+            'third_offense': '100% stake'
+        },
+        'voting_manipulation': {
+            'coordinated_voting': '20% stake',
+            'multiple_accounts': '100% stake',
+            'bribe_acceptance': '100% stake'
+        },
+        'governance_attacks': {
+            'spam_proposals': '5% stake per incident',
+            'false_emergency': '30% stake',
+            'parameter_manipulation': '100% stake'
         }
     }
 }
@@ -523,9 +718,9 @@ graph TD
         V2 -->|Staking| V3[Network Security]
     end
     
-    classDef flow fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef result fill:#ff9,stroke:#333
+    classDef flow fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#9f9,stroke:#333,stroke-width:2px
+    classDef result fill:#ff9,stroke:#333,stroke-width:2px
     
     class D1,C1,I1,V1 flow
     class D2,C2,I2,V2 process
@@ -569,6 +764,132 @@ PROTOCOL_SPEC = {
             'quality_check': 'Consensus-based',
             'performance_metrics': 'Real-time',
             'feedback_loop': 'Continuous'
+        }
+    }
+}
+```
+
+### AGI Exchange Protocol with Tokenomics
+```mermaid
+graph TD
+    subgraph Data Flow
+        D1[Raw Data] -->|Validation| D2[Verified Data]
+        D2 -->|Processing| D3[Intelligence Input]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Data Staking| D1
+        T1 -->|Quality Power| D2
+        D3 -->|Data Rewards| T2[Reward Pool]
+        
+        T1 -->|Compute Staking| C1
+        T1 -->|Execution Power| C2
+        C3 -->|Compute Rewards| T2
+        
+        T1 -->|Intelligence Staking| I1
+        T1 -->|Service Power| I2
+        I3 -->|Intelligence Rewards| T2
+        
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Compute Flow
+        C1[Resource Request] -->|Allocation| C2[Compute Assignment]
+        C2 -->|Execution| C3[Results Verification]
+    end
+    
+    subgraph Intelligence Flow
+        I1[Model Request] -->|Matching| I2[Service Execution]
+        I2 -->|Validation| I3[Result Delivery]
+    end
+    
+    subgraph Value Flow
+        V1[Token Generation] -->|Distribution| V2[Reward Settlement]
+        V2 -->|Staking| V3[Network Security]
+        
+        V3 -->|Security Rewards| T2
+    end
+    
+    classDef flow fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#9f9,stroke:#333,stroke-width:2px
+    classDef result fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#f6f,stroke:#333,stroke-width:2px
+    
+    class D1,C1,I1,V1 flow
+    class D2,C2,I2,V2 process
+    class D3,C3,I3,V3 result
+    class T1,T2 token
+```
+
+### Exchange Protocol Tokenomics
+```python
+EXCHANGE_TOKENOMICS = {
+    'data_exchange': {
+        'validation_rewards': {
+            'base_rate': '10 VORTX/validation',
+            'accuracy_multiplier': '1.0-3.0',
+            'volume_bonus': 'Up to 50% for high throughput'
+        },
+        'processing_rewards': {
+            'base_rate': '20 VORTX/GB',
+            'complexity_multiplier': '1.0-4.0',
+            'quality_bonus': 'Up to 30% for high-quality outputs'
+        },
+        'staking_requirements': {
+            'validator': '50000 VORTX',
+            'processor': '100000 VORTX',
+            'maximum_boost': '3x rewards'
+        }
+    },
+    'compute_exchange': {
+        'allocation_rewards': {
+            'base_rate': '30 VORTX/hour',
+            'efficiency_multiplier': '1.0-2.5',
+            'utilization_bonus': 'Up to 40% for high utilization'
+        },
+        'verification_rewards': {
+            'base_rate': '5 VORTX/verification',
+            'speed_multiplier': '1.0-2.0',
+            'accuracy_bonus': 'Up to 20% for perfect verification'
+        },
+        'staking_requirements': {
+            'allocator': '75000 VORTX',
+            'verifier': '25000 VORTX',
+            'maximum_boost': '2.5x rewards'
+        }
+    },
+    'intelligence_exchange': {
+        'matching_rewards': {
+            'base_rate': '50 VORTX/match',
+            'precision_multiplier': '1.0-3.0',
+            'satisfaction_bonus': 'Up to 35% for perfect matches'
+        },
+        'execution_rewards': {
+            'base_rate': '100 VORTX/service',
+            'performance_multiplier': '1.0-5.0',
+            'innovation_bonus': 'Up to 50% for unique solutions'
+        },
+        'staking_requirements': {
+            'matcher': '100000 VORTX',
+            'executor': '200000 VORTX',
+            'maximum_boost': '4x rewards'
+        }
+    },
+    'security_incentives': {
+        'staking_rewards': {
+            'base_rate': '1000 VORTX/month',
+            'amount_multiplier': '1.0-2.0',
+            'duration_bonus': 'Up to 100% for 4-year lock'
+        },
+        'slashing_conditions': {
+            'minor_violation': '10% stake',
+            'major_violation': '50% stake',
+            'critical_violation': '100% stake'
+        },
+        'minimum_requirements': {
+            'validator_node': '500000 VORTX',
+            'security_node': '250000 VORTX',
+            'guardian_node': '1000000 VORTX'
         }
     }
 }
