@@ -1,370 +1,161 @@
 nohup: ignoring input
-[I 2025-02-02 05:46:41.242 ServerApp] jupyter_lsp | extension was successfully linked.
-[I 2025-02-02 05:46:41.246 ServerApp] jupyter_server_terminals | extension was successfully linked.
-[I 2025-02-02 05:46:41.251 ServerApp] jupyterlab | extension was successfully linked.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'ip' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.254 JupyterNotebookApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
-[W 2025-02-02 05:46:41.257 ServerApp] ServerApp.password config is deprecated in 2.0. Use PasswordIdentityProvider.hashed_password.
-[W 2025-02-02 05:46:41.258 ServerApp] ServerApp.token config is deprecated in 2.0. Use IdentityProvider.token.
-[I 2025-02-02 05:46:41.258 ServerApp] notebook | extension was successfully linked.
-[I 2025-02-02 05:46:41.696 ServerApp] notebook_shim | extension was successfully linked.
-[I 2025-02-02 05:46:41.722 ServerApp] notebook_shim | extension was successfully loaded.
-[I 2025-02-02 05:46:41.724 ServerApp] jupyter_lsp | extension was successfully loaded.
-[I 2025-02-02 05:46:41.725 ServerApp] jupyter_server_terminals | extension was successfully loaded.
-[I 2025-02-02 05:46:41.731 LabApp] JupyterLab extension loaded from /home/jaya/myenv/lib/python3.10/site-packages/jupyterlab
-[I 2025-02-02 05:46:41.732 LabApp] JupyterLab application directory is /home/jaya/myenv/share/jupyter/lab
-[I 2025-02-02 05:46:41.732 LabApp] Extension Manager is 'pypi'.
-[I 2025-02-02 05:46:41.827 ServerApp] jupyterlab | extension was successfully loaded.
-[I 2025-02-02 05:46:41.831 ServerApp] notebook | extension was successfully loaded.
-[I 2025-02-02 05:46:41.832 ServerApp] Serving notebooks from local directory: /home/jaya/synthetic-satellite
-[I 2025-02-02 05:46:41.832 ServerApp] Jupyter Server 2.15.0 is running at:
-[I 2025-02-02 05:46:41.832 ServerApp] http://synthetic-satellite1:8888/tree
-[I 2025-02-02 05:46:41.832 ServerApp]     http://127.0.0.1:8888/tree
-[I 2025-02-02 05:46:41.832 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[I 2025-02-02 05:46:41.854 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
-[I 2025-02-02 05:47:29.504 ServerApp] 302 GET / (@171.76.87.196) 0.64ms
-[I 2025-02-02 05:47:29.767 JupyterNotebookApp] 302 GET /tree? (@171.76.87.196) 0.85ms
-[I 2025-02-02 05:47:37.940 ServerApp] User c5fa35f3668f42b9a9bab66d6aad1a44 logged in.
-[I 2025-02-02 05:47:37.941 ServerApp] 302 POST /login?next=%2Ftree%3F (c5fa35f3668f42b9a9bab66d6aad1a44@171.76.87.196) 48.18ms
-[I 2025-02-02 05:49:13.039 ServerApp] 302 GET / (@209.38.23.224) 0.59ms
-[I 2025-02-02 05:49:13.211 JupyterNotebookApp] 302 GET /tree? (@209.38.23.224) 0.70ms
-[I 2025-02-02 05:49:30.303 ServerApp] Kernel started: afa7ef89-f48a-4fba-aa98-84b9611d2614
-[I 2025-02-02 05:49:31.102 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:49:31.674 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:49:32.204 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:49:37.239 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:51:29.893 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[W 2025-02-02 05:54:36.088 ServerApp] Notebook tests/notebooks/deepseek_vl_inference_test.ipynb is not trusted
-[W 2025-02-02 05:54:38.786 ServerApp] Notebook tests/notebooks/deepseek_vl_inference_test.ipynb is not trusted
-[I 2025-02-02 05:54:38.933 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:54:39.887 ServerApp] Kernel started: 240a6e42-7961-4e71-aaa9-57668d77e64d
-[I 2025-02-02 05:54:40.421 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[W 2025-02-02 05:54:58.021 ServerApp] Notebook tests/notebooks/test_atmospheric.ipynb is not trusted
-[W 2025-02-02 05:55:00.786 ServerApp] Notebook tests/notebooks/test_atmospheric.ipynb is not trusted
-[I 2025-02-02 05:55:00.955 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:01.518 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:55:01.835 ServerApp] Kernel started: e7d4daa3-28c4-40dd-8420-85285f2c6b6b
-[I 2025-02-02 05:55:02.627 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:55:06.791 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
-[I 2025-02-02 05:55:09.470 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
-[I 2025-02-02 05:55:11.934 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:25629023-9f1b-478e-977b-5c12ec107063
-[I 2025-02-02 05:55:19.765 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:f544bc6e-b1fe-487d-a235-47adff5db068
-[I 2025-02-02 05:55:25.410 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[I 2025-02-02 05:55:28.274 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[I 2025-02-02 05:55:30.755 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:857eae13-16e1-46c4-a9d5-905bf51117ac
-[W 2025-02-02 05:55:33.712 ServerApp] Notebook tests/notebooks/test_synthesis.ipynb is not trusted
-[W 2025-02-02 05:55:36.432 ServerApp] Notebook tests/notebooks/test_synthesis.ipynb is not trusted
-[I 2025-02-02 05:55:36.591 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:37.131 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:55:37.389 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:46b89e49-1a9a-48c4-b12c-bbc3684c7370
-[I 2025-02-02 05:55:37.676 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:55:37.687 ServerApp] Kernel started: afd117fb-4613-456c-b0ca-6f2a310054ad
-[I 2025-02-02 05:55:37.934 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:bac4a91d-9267-4e48-aaac-6d0110a80246
-[I 2025-02-02 05:55:38.451 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:89ef7761-9065-41fb-9f30-8668fc60fd09
-[I 2025-02-02 05:55:38.741 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:55:39.283 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:39.827 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:55:40.088 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:062b4ca3-4d49-4839-9849-d96bf48b6de0
-[I 2025-02-02 05:55:40.353 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:55:40.614 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:d5637871-b248-4db0-84f6-b9eb5b7f34d4
-[I 2025-02-02 05:55:40.893 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:41.115 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:2c70c585-a87e-4a43-92de-f14c9ec3e208
-[W 2025-02-02 05:55:41.281 ServerApp] Notebook tests/notebooks/test_data_sources.ipynb is not trusted
-[I 2025-02-02 05:55:41.999 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:42.404 ServerApp] Kernel started: b04c98a4-63a5-4c07-8896-61aba97ba315
-[I 2025-02-02 05:55:42.592 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:55:43.131 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:55:43.381 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:84f4cd7b-9a55-4a03-9133-cddadd2bd05a
-[I 2025-02-02 05:55:43.696 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:55:43.911 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:30a0f1f4-aa2c-4e68-b80d-b4bfdd65836e
-[W 2025-02-02 05:55:44.201 ServerApp] Notebook tests/notebooks/test_data_sources.ipynb is not trusted
-[I 2025-02-02 05:55:44.814 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:55:45.135 ServerApp] Kernel started: efecb2c0-d4b5-46e5-b5f9-91a14f25e146
-[I 2025-02-02 05:55:45.346 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:55:45.890 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:55:46.419 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:55:46.676 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:aa80738b-3f39-4f06-b6dc-e8d69e823a37
-[I 2025-02-02 05:55:46.952 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:55:47.194 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:52f3f26a-38de-4eec-99c4-98a924e2d406
-[I 2025-02-02 05:55:47.202 ServerApp] Saving file at /tests/notebooks/test_synthesis.ipynb
-[I 2025-02-02 05:55:47.498 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:55:48.033 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:55:48.573 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:55:49.333 ServerApp] Saving file at /tests/notebooks/test_synthesis.ipynb
-[I 2025-02-02 05:55:50.705 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:ef31e571-ef9e-4e4c-b4ea-278f8e43a09d
-[I 2025-02-02 05:55:55.865 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:44cc2bee-617e-4682-b7e6-6797cfd3366e
-[I 2025-02-02 05:56:04.385 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:7706cc28-9bab-4e60-92a1-aae0c1a53980
-[I 2025-02-02 05:56:12.007 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:58fd39b2-1038-4439-b4d4-304727700c58
-[W 2025-02-02 05:56:17.483 ServerApp] Notebook tests/notebooks/insights.ipynb is not trusted
-[W 2025-02-02 05:56:20.243 ServerApp] Notebook tests/notebooks/insights.ipynb is not trusted
-[I 2025-02-02 05:56:20.412 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:56:20.950 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:56:21.186 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:2375b7aa-9433-471a-8efb-2c9b3ea5baed
-[I 2025-02-02 05:56:21.295 ServerApp] Kernel started: cdb567ad-8125-4edc-ba14-d973297e3693
-[I 2025-02-02 05:56:21.488 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:56:21.746 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:a3abb467-67c9-4a83-9800-904d5c80b0d7
-[I 2025-02-02 05:56:22.011 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:56:22.137 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:e60907c5-1cd9-4195-99bf-5fda15be778b
-[I 2025-02-02 05:56:22.137 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:32bd8e8a-3988-45f4-a079-9e96f8b6ec74
-[W 2025-02-02 05:56:23.571 ServerApp] Notebook tests/notebooks/synthetic_data_generator.ipynb is not trusted
-[W 2025-02-02 05:56:26.139 ServerApp] Notebook tests/notebooks/synthetic_data_generator.ipynb is not trusted
-[I 2025-02-02 05:56:26.305 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:56:26.835 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:56:27.085 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:2beda983-682c-4ea5-b923-1f143a5d0a95
-[I 2025-02-02 05:56:27.236 ServerApp] Kernel started: f0f8715c-da19-4d45-9f76-c328dcebe062
-[I 2025-02-02 05:56:27.363 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:56:27.603 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:9b1e544c-06af-459c-accc-d1db2ac9e29e
-[I 2025-02-02 05:56:27.931 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:56:28.130 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:c8a3994d-a864-41b5-b98c-7679948a741c
-[I 2025-02-02 05:56:28.470 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:56:28.767 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:abe17cfc-fcf8-4574-a29c-21010f9ff696
-[I 2025-02-02 05:56:29.013 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:56:29.251 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:7de18ce1-baed-4569-a237-e56fc8adfa9d
-[I 2025-02-02 05:56:29.551 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:56:29.820 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:3318f54c-cd0f-4e87-bc15-0c0c1da23bc4
-[I 2025-02-02 05:56:30.135 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 05:56:30.428 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:59fac283-714e-4592-a311-7d2ce426036b
-[I 2025-02-02 05:56:37.966 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:47f390b5-8e19-4394-808c-ca82c4391241
-[W 2025-02-02 05:56:39.704 ServerApp] Notebook tests/notebooks/deepseek_vl_inference_test.ipynb is not trusted
-[W 2025-02-02 05:56:42.250 ServerApp] Notebook tests/notebooks/deepseek_vl_inference_test.ipynb is not trusted
-[I 2025-02-02 05:56:42.407 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:56:42.932 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:56:43.179 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:2fb1a6b1-5f0a-4d64-b098-8cf562038b3b
-[I 2025-02-02 05:56:43.460 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:56:43.698 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:760d5150-cc79-48e0-a1db-609482b1fe2b
-[I 2025-02-02 05:56:44.051 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:56:44.353 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:1d2d93dd-585c-420d-9974-0f8766966c62
-[I 2025-02-02 05:56:44.636 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:56:44.912 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:01d4d000-bc72-4871-856e-a9d59adce1ca
-[I 2025-02-02 05:56:44.967 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:61282e9a-1cad-4022-9601-d16ff6729861
-[W 2025-02-02 05:56:45.920 ServerApp] Notebook tests/notebooks/insights.ipynb is not trusted
-[W 2025-02-02 05:56:48.489 ServerApp] Notebook tests/notebooks/insights.ipynb is not trusted
-[I 2025-02-02 05:56:48.667 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:56:49.200 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:56:49.465 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:8bd7db20-8696-4fd7-8053-6a7ab44104ad
-[I 2025-02-02 05:56:49.732 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:56:49.968 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:3f6cd249-cf95-43dd-9932-a4ff0727c5d2
-[I 2025-02-02 05:56:50.297 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:56:50.603 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:a4486fa1-475b-4813-bf68-dfb957f82306
-[I 2025-02-02 05:56:50.821 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:54a752fc-cd9a-4849-b590-89e9b10e2a45
-[I 2025-02-02 05:56:55.548 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:56:56.089 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:56:56.346 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:d78ac846-ff95-4a4f-94c3-ed7f00874556
-[I 2025-02-02 05:56:56.633 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:56:56.880 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:a47ad5b9-0730-4f9c-9771-473415305004
-[I 2025-02-02 05:56:57.173 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:56:57.466 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:a20ea148-7a97-43d2-ba02-7952bae014c2
-[I 2025-02-02 05:56:57.774 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:56:58.034 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:01ed4250-8901-436d-ab5b-e6fd2815fbeb
-[I 2025-02-02 05:56:58.320 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:56:58.588 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:ab538625-d8f3-4715-ba6c-b75f697e2c27
-[I 2025-02-02 05:56:58.920 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:56:58.992 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:ca29ae05-2826-4728-91ad-1103761b222a
-[I 2025-02-02 05:56:59.009 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:b9621d84-a515-4ed9-bea8-353b9486823b
-[W 2025-02-02 05:57:00.317 ServerApp] Notebook tests/notebooks/test_data_sources.ipynb is not trusted
-[W 2025-02-02 05:57:03.155 ServerApp] Notebook tests/notebooks/test_data_sources.ipynb is not trusted
-[I 2025-02-02 05:57:03.321 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:57:03.862 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:57:04.105 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:190c4a63-c067-48ef-bf93-2cae75de911e
-[I 2025-02-02 05:57:04.388 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:57:04.693 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:ae9a4fd3-b7eb-46d1-9191-a7265ef5aeb4
-[I 2025-02-02 05:57:04.962 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:57:05.201 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:63244394-b8e5-4feb-89e2-49bd4a5f048f
-[I 2025-02-02 05:57:05.507 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:57:05.737 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:5b8028fb-a412-4e52-98ae-eeb5b9b9be45
-[I 2025-02-02 05:57:06.038 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:57:06.300 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:7974406e-fcea-4104-ae94-a9dc271f0881
-[I 2025-02-02 05:57:06.330 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:e5e47907-a906-4e3d-8738-6662ca5179be
-[I 2025-02-02 05:57:10.360 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:57:10.894 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:57:11.132 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:86d7b171-69b9-4a17-b7ed-ad63e8cfe938
-[I 2025-02-02 05:57:11.422 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:57:11.678 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:82ac4cc3-0925-4eaf-867b-b85e742e270c
-[I 2025-02-02 05:57:11.964 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:57:12.206 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:d2c5ed81-910d-41ef-b4bf-47d4bf8cc596
-[I 2025-02-02 05:57:12.495 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:57:12.758 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:1916b7e3-204a-428f-9862-efd8a64e282e
-[I 2025-02-02 05:57:13.034 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:57:13.334 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:c509241d-7979-40a2-a0c6-763673bdc63c
-[I 2025-02-02 05:57:13.646 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:57:13.954 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:be314421-ca89-4c64-bfb6-0e18b8d1b340
-[I 2025-02-02 05:57:14.262 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 05:57:14.563 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:5ea46209-23eb-467a-bd0f-2a0a9139aacd
-[I 2025-02-02 05:57:14.830 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:57:15.073 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:73b20406-51a2-4b9f-bfd2-2d7f9ae9b7bf
-[I 2025-02-02 05:57:15.111 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:105c1f8f-7bd3-4dfa-8c4b-bcbb36c9fc0b
-[W 2025-02-02 05:57:27.566 ServerApp] Notebook tests/notebooks/test_memory.ipynb is not trusted
-[W 2025-02-02 05:57:30.288 ServerApp] Notebook tests/notebooks/test_memory.ipynb is not trusted
-[I 2025-02-02 05:57:30.456 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:57:31.023 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:57:31.229 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:e62279a8-0811-46f7-84e6-d1be45bba8d3
-[I 2025-02-02 05:57:31.547 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:57:31.848 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:a2f9a087-e935-4386-b2da-4c007d1aca85
-[I 2025-02-02 05:57:32.076 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:57:32.382 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:43e97ea6-925c-429d-8710-e7fe967fc9a8
-[I 2025-02-02 05:57:32.692 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:57:32.945 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:e0b27683-5dcc-4b4a-bd44-ecb0dc4b65f1
-[I 2025-02-02 05:57:33.216 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:57:33.508 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:836f9f27-857c-4d63-8693-9561042e0b27
-[I 2025-02-02 05:57:33.784 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:57:34.121 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:d4c04ce1-f6d3-4dcf-89e4-d39c426fef3a
-[I 2025-02-02 05:57:34.439 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 05:57:34.658 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:8816f515-fc4e-4fda-aa2c-2d66beec9a82
-[I 2025-02-02 05:57:34.663 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:0e946ec2-3ce5-4d61-811b-24a05cfe55e9
-[I 2025-02-02 05:57:39.112 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:57:39.654 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:57:39.911 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:cea2f122-f32e-4ca6-afca-5156875b35ec
-[I 2025-02-02 05:57:40.181 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:57:40.433 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:06efe257-0e51-47ae-b657-5191d1e43d8b
-[I 2025-02-02 05:57:40.706 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:57:40.983 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:5bef3239-3d32-4bd4-a072-621a0afbc170
-[I 2025-02-02 05:57:41.298 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:57:41.546 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:b9564653-52b6-4ce9-a18b-d953c97e3497
-[I 2025-02-02 05:57:41.827 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:57:42.115 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:95c42965-7249-4e46-9f14-c81916944ed5
-[I 2025-02-02 05:57:42.427 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:57:42.725 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:2e9420d2-7b60-4caf-8ccf-334bcd947396
-[I 2025-02-02 05:57:43.039 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 05:57:43.344 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:8b18b176-89e4-42d2-b253-222bcc7e9bff
-[I 2025-02-02 05:57:43.655 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:57:43.912 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:1ef471f9-d507-4c83-b88c-70ed73e1f4ae
-[I 2025-02-02 05:57:55.516 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:4ba7c697-d6d1-42ee-a491-7ab10a517a48
-[I 2025-02-02 05:58:13.774 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 05:58:14.309 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 05:58:14.556 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:c5124221-1ca7-4a12-be3c-900e2dade1e0
-[I 2025-02-02 05:58:14.847 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 05:58:15.186 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:4d203d3a-cdcc-45e9-8410-ca88f632465d
-[I 2025-02-02 05:58:15.496 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:58:15.799 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:02fb276f-796d-4ac8-ace9-e0088a7c3ca6
-[I 2025-02-02 05:58:16.112 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 05:58:16.396 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:f76ee7e8-ab18-4d02-a294-93c03b5c76f1
-[I 2025-02-02 05:58:16.728 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 05:58:17.028 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:8867b3ae-90c6-413c-8eef-3e3e684be15d
-[I 2025-02-02 05:58:17.337 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 05:58:17.641 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:52642815-db70-4d11-b094-64f7fe913aa2
-[I 2025-02-02 05:58:17.951 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 05:58:18.259 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:321192fc-a673-4d7e-8c24-5a0f6774eea4
-[I 2025-02-02 05:58:18.569 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 05:58:18.816 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:d99c04c4-c959-4c23-b77c-1eb6eb0b64a4
-[I 2025-02-02 06:20:27.062 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:a9293d54-5d83-4444-8d65-3ebaa867c2ca
-[W 2025-02-02 06:21:44.515 ServerApp] 404 GET /api/contents/tests/notebooks/Untitled.ipynb?type=notebook&content=1&hash=1&1738477304320 (c5fa35f3668f42b9a9bab66d6aad1a44@171.76.87.196) 1.60ms referer=http://35.223.170.211:8888/notebooks/tests/notebooks/Untitled.ipynb
-[W 2025-02-02 06:21:44.515 ServerApp] 404 GET /api/contents/tests/notebooks/Untitled.ipynb?type=notebook&content=1&hash=1&1738477304320 (171.76.87.196): No such file or directory: tests/notebooks/Untitled.ipynb
-[I 2025-02-02 06:21:44.702 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:21:45.242 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:21:45.537 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:6b0918ed-ef54-4c5f-80f9-054d099930c0
-[I 2025-02-02 06:21:45.880 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:21:46.140 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:0bfac6c7-d7e3-447a-86cf-30328e315520
-[I 2025-02-02 06:21:46.495 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:21:46.753 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:b46c7a20-d8aa-48ed-a161-b37806f1135f
-[I 2025-02-02 06:21:47.039 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:21:47.311 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:074aadb6-35b3-4c76-ae00-82eba82cb575
-[I 2025-02-02 06:21:47.591 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:21:47.894 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:dcae1564-6945-4e5d-b174-6219eaa70b98
-[I 2025-02-02 06:21:48.229 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 06:21:48.496 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:271733e8-5501-4c66-adf9-25cdaa97a951
-[I 2025-02-02 06:21:48.761 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 06:21:49.045 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:fe96966d-d539-4a87-adcd-5519eb5f17c8
-[I 2025-02-02 06:21:49.562 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:d0fcb3ce-e916-4d43-8711-56417df2f964
-[I 2025-02-02 06:21:59.143 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:21:59.686 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:21:59.930 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:e9421e02-c7b2-4193-b980-de5fdf47bccb
-[I 2025-02-02 06:22:00.212 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:22:00.474 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:765e97e9-d1d9-4751-a35b-de6476ba7c8c
-[I 2025-02-02 06:22:00.745 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:22:00.978 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:61608de1-cefe-4840-90c6-2f00e94a0814
-[I 2025-02-02 06:22:01.280 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:22:01.521 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:4440aa67-f90c-4aa1-8540-48563e8a97f7
-[I 2025-02-02 06:22:01.847 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:22:02.154 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:7e677f71-5532-4314-8ea1-8e808b8005d8
-[I 2025-02-02 06:22:02.469 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 06:22:02.718 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:13ef1534-7231-4805-b274-9f8ce61d71cc
-[I 2025-02-02 06:22:02.998 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 06:22:03.283 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:0a2d5c38-62d7-49bf-8634-ffd53c0ad032
-[I 2025-02-02 06:22:03.890 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:8fa3f7c6-adc9-4bfb-9e2a-84c6c8d27486
-[I 2025-02-02 06:23:42.353 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:23:42.884 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:23:43.161 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:c0278ce1-8503-4428-9a2c-01e1584f020c
-[I 2025-02-02 06:23:43.258 ServerApp] Kernel started: 8e8bee03-1dab-41f7-918d-73656c4a16dd
-[I 2025-02-02 06:23:43.424 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:23:43.656 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:4fbf9877-2b04-4612-9b4a-99d7d818b339
-[I 2025-02-02 06:23:43.970 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:23:44.214 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:a4bb7c0b-b046-4b9a-8336-532f267ab70e
-[I 2025-02-02 06:23:44.507 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:23:44.759 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:c67a385b-77b5-4985-8b16-f0f4ff76f08b
-[I 2025-02-02 06:23:45.072 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:23:45.373 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:e12bce55-b89f-43c0-998f-d5828672aff5
-[I 2025-02-02 06:23:45.689 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 06:23:45.987 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:0515488b-f715-44d5-ba12-2d05486d05ff
-[I 2025-02-02 06:23:46.258 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 06:23:46.519 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:ab268420-0702-4d88-b362-78d1c7cc670c
-[I 2025-02-02 06:23:46.821 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
-[I 2025-02-02 06:23:47.082 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:bfd44b0b-e498-4f48-9a85-b3c08c260e46
-[I 2025-02-02 06:24:46.983 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:dc506a68-7dfc-4b13-924a-71ab041ebcc4
-[W 2025-02-02 06:24:48.052 ServerApp] Notebook tests/Untitled.ipynb is not trusted
-[W 2025-02-02 06:24:52.712 ServerApp] Notebook tests/Untitled.ipynb is not trusted
-[I 2025-02-02 06:24:52.900 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:24:53.441 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:24:53.715 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:87e7b058-824e-46b9-a05b-5cc622b82bd9
-[I 2025-02-02 06:24:53.975 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:24:54.288 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:9e8aec74-a626-4d03-8f3c-b12f083e19d3
-[I 2025-02-02 06:24:54.599 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:24:54.905 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:da157186-5989-4e19-bac1-6631fb74fc36
-[I 2025-02-02 06:24:55.213 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:24:55.518 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:fff01d89-f85d-46fe-b646-7769daac9af0
-[I 2025-02-02 06:24:55.828 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:24:56.017 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:cddefcda-9829-45a9-97ce-1a02364b0293
-[I 2025-02-02 06:24:56.021 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:18700d35-370f-40c1-9329-96feccd6086a
-[W 2025-02-02 06:25:26.564 ServerApp] Notebook tests/Untitled.ipynb is not trusted
-[W 2025-02-02 06:25:29.189 ServerApp] Notebook tests/Untitled.ipynb is not trusted
-[I 2025-02-02 06:25:29.361 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:25:29.891 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:25:30.162 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:78814370-38bf-4f0c-83c5-da505524406f
-[I 2025-02-02 06:25:30.439 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:25:30.666 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:c8fabff6-4966-450b-840b-07f0bde1d65f
-[I 2025-02-02 06:25:30.985 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:25:31.247 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:abd17aee-aca7-4731-a406-9b223bb7b644
-[I 2025-02-02 06:25:31.566 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:25:31.832 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:3a62204b-db03-4957-8507-aa96ca9bd68a
-[I 2025-02-02 06:25:32.111 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:25:32.382 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:789a1b77-c9c0-40d3-a8e6-9a632a4bd863
-[I 2025-02-02 06:25:32.692 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 06:25:33.002 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:b45b4228-cf23-4e68-b16b-0bfe36123285
-[I 2025-02-02 06:25:33.314 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
-[I 2025-02-02 06:25:33.609 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:2171aac5-eaff-4222-b63f-d14673d60e52
-[I 2025-02-02 06:25:33.922 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 06:25:34.187 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:6e8a7572-39fd-4e43-9cd8-490c4a7b19b5
-[I 2025-02-02 06:25:34.473 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
-[I 2025-02-02 06:25:34.738 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:817fc4c9-2ea0-45d4-a1bd-64b551e1a264
-[I 2025-02-02 06:25:48.278 ServerApp] Saving file at /tests/Untitled.ipynb
-[I 2025-02-02 06:33:10.728 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:96d0240a-3e66-436a-9192-84a5efde904c
-[W 2025-02-02 06:33:17.615 ServerApp] Notebook tests/notebooks/test_secure_encodings.ipynb is not trusted
-[W 2025-02-02 06:33:22.323 ServerApp] Notebook tests/notebooks/test_secure_encodings.ipynb is not trusted
-[I 2025-02-02 06:33:22.484 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:33:23.019 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
-[I 2025-02-02 06:33:23.270 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:f75f54b2-f933-4c38-a2f0-9f9005ec31b0
-[I 2025-02-02 06:33:23.566 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
-[I 2025-02-02 06:33:23.808 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:500d738e-580d-49cb-b3bf-8c95358fe551
-[I 2025-02-02 06:33:24.138 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
-[I 2025-02-02 06:33:24.353 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:f744adbf-f0a7-42ad-8814-3c7ac3d9112a
-[I 2025-02-02 06:33:24.688 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
-[I 2025-02-02 06:33:24.975 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:9be3da35-ae69-4bc8-8528-7ac5550637fd
-[I 2025-02-02 06:33:25.233 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
-[I 2025-02-02 06:33:25.539 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:9849aeed-af76-49c5-af3e-4caffb3e60cf
-[I 2025-02-02 06:33:25.805 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
-[I 2025-02-02 06:33:26.063 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:8543775c-b347-430c-9207-ceba254a4716
-[I 2025-02-02 06:33:26.401 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
-[I 2025-02-02 06:33:26.707 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:982e85d4-99f9-4ab5-8a7b-74684779b109
-[I 2025-02-02 06:33:26.979 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
-[I 2025-02-02 06:33:27.221 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:90d13cb2-c913-4a00-8c64-2ba72aa149b1
-[I 2025-02-02 06:33:27.508 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
-[I 2025-02-02 06:33:27.832 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:faa46841-3912-4589-a5a0-517ba7f3fa9a
-[I 2025-02-02 06:35:22.887 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[W 2025-02-02 06:35:36.394 ServerApp] 404 HEAD http://112.124.42.80:63435/ (@60.191.125.35) 7.05ms referer=None
-[I 2025-02-02 06:37:23.779 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[I 2025-02-02 06:39:24.638 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[I 2025-02-02 06:45:25.452 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
-[I 2025-02-02 06:47:27.015 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
+[I 2025-02-02 10:50:00.841 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2025-02-02 10:50:00.845 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[I 2025-02-02 10:50:00.850 ServerApp] jupyterlab | extension was successfully linked.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'ip' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.853 JupyterNotebookApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-02 10:50:00.856 ServerApp] ServerApp.password config is deprecated in 2.0. Use PasswordIdentityProvider.hashed_password.
+[W 2025-02-02 10:50:00.856 ServerApp] ServerApp.token config is deprecated in 2.0. Use IdentityProvider.token.
+[I 2025-02-02 10:50:00.856 ServerApp] notebook | extension was successfully linked.
+[I 2025-02-02 10:50:01.298 ServerApp] notebook_shim | extension was successfully linked.
+[I 2025-02-02 10:50:01.325 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2025-02-02 10:50:01.327 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2025-02-02 10:50:01.328 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2025-02-02 10:50:01.334 LabApp] JupyterLab extension loaded from /home/jaya/myenv/lib/python3.10/site-packages/jupyterlab
+[I 2025-02-02 10:50:01.334 LabApp] JupyterLab application directory is /home/jaya/myenv/share/jupyter/lab
+[I 2025-02-02 10:50:01.335 LabApp] Extension Manager is 'pypi'.
+[I 2025-02-02 10:50:01.428 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2025-02-02 10:50:01.432 ServerApp] notebook | extension was successfully loaded.
+[I 2025-02-02 10:50:01.432 ServerApp] Serving notebooks from local directory: /home/jaya/synthetic-satellite
+[I 2025-02-02 10:50:01.432 ServerApp] Jupyter Server 2.15.0 is running at:
+[I 2025-02-02 10:50:01.432 ServerApp] http://synthetic-satellite1:8888/tree
+[I 2025-02-02 10:50:01.432 ServerApp]     http://127.0.0.1:8888/tree
+[I 2025-02-02 10:50:01.432 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 2025-02-02 10:50:01.454 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+[I 2025-02-02 10:50:05.167 ServerApp] 302 GET / (@171.76.87.196) 0.55ms
+[I 2025-02-02 10:50:05.454 JupyterNotebookApp] 302 GET /tree? (@171.76.87.196) 0.64ms
+[I 2025-02-02 10:50:14.281 ServerApp] User 3b533f18e1074979a90801aab49ac3fe logged in.
+[I 2025-02-02 10:50:14.281 ServerApp] 302 POST /login?next=%2Ftree%3F (3b533f18e1074979a90801aab49ac3fe@171.76.87.196) 43.16ms
+[I 2025-02-02 11:14:33.942 ServerApp] 302 GET / (@171.76.87.196) 0.81ms
+[W 2025-02-02 11:14:56.845 ServerApp] 400 GET /api/contents/examples/earth_memory_demo.ipynb?type=notebook&content=1&hash=1&1738494896432 (171.76.87.196): Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: ' '")
+[W 2025-02-02 11:14:56.846 ServerApp] wrote error: 'Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: \' \'")'
+    Traceback (most recent call last):
+      File "/home/jaya/myenv/lib/python3.10/site-packages/tornado/web.py", line 1790, in _execute
+        result = await result
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/auth/decorator.py", line 73, in inner
+        return await out
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/handlers.py", line 156, in get
+        model = await ensure_async(
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 198, in ensure_async
+        result = await obj
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/filemanager.py", line 922, in get
+        model = await self._notebook_model(path, content=content, require_hash=require_hash)
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/filemanager.py", line 868, in _notebook_model
+        nb, bytes_content = await self._read_notebook(
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/fileio.py", line 471, in _read_notebook
+        raise HTTPError(
+    tornado.web.HTTPError: HTTP 400: Bad Request (Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: ' '"))
+[W 2025-02-02 11:14:56.855 ServerApp] 400 GET /api/contents/examples/earth_memory_demo.ipynb?type=notebook&content=1&hash=1&1738494896432 (3b533f18e1074979a90801aab49ac3fe@171.76.87.196) 24.36ms referer=http://34.173.57.235:8888/tree/examples
+[W 2025-02-02 11:14:59.527 ServerApp] 400 GET /api/contents/examples/earth_memory_demo.ipynb?type=notebook&content=1&hash=1&1738494899303 (171.76.87.196): Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: ' '")
+[W 2025-02-02 11:14:59.528 ServerApp] wrote error: 'Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: \' \'")'
+    Traceback (most recent call last):
+      File "/home/jaya/myenv/lib/python3.10/site-packages/tornado/web.py", line 1790, in _execute
+        result = await result
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/auth/decorator.py", line 73, in inner
+        return await out
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/handlers.py", line 156, in get
+        model = await ensure_async(
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 198, in ensure_async
+        result = await obj
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/filemanager.py", line 922, in get
+        model = await self._notebook_model(path, content=content, require_hash=require_hash)
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/filemanager.py", line 868, in _notebook_model
+        nb, bytes_content = await self._read_notebook(
+      File "/home/jaya/myenv/lib/python3.10/site-packages/jupyter_server/services/contents/fileio.py", line 471, in _read_notebook
+        raise HTTPError(
+    tornado.web.HTTPError: HTTP 400: Bad Request (Unreadable Notebook: /home/jaya/synthetic-satellite/examples/earth_memory_demo.ipynb NotJSONError("Notebook does not appear to be JSON: ' '"))
+[W 2025-02-02 11:14:59.529 ServerApp] 400 GET /api/contents/examples/earth_memory_demo.ipynb?type=notebook&content=1&hash=1&1738494899303 (3b533f18e1074979a90801aab49ac3fe@171.76.87.196) 3.77ms referer=http://34.173.57.235:8888/notebooks/examples/earth_memory_demo.ipynb
+[I 2025-02-02 11:15:23.793 ServerApp] Kernel started: 24da7b4a-b43f-4f15-98c9-1ca6842f6efa
+[I 2025-02-02 11:15:24.674 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:15:25.292 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:15:25.913 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:15:28.196 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:16:31.835 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 11:16:32.096 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:16:32.097 ServerApp] Restoring connection for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 11:16:33.136 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 11:16:34.893 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:16:34.893 ServerApp] Restoring connection for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[W 2025-02-02 11:18:04.896 ServerApp] WebSocket ping timeout after 90003 ms.
+[I 2025-02-02 11:18:09.899 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 11:25:48.152 ServerApp] Saving file at /examples/notebooks/memory_deepseek.ipynb
+[I 2025-02-02 11:54:58.113 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 11:54:58.113 ServerApp] Restoring connection for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[W 2025-02-02 11:57:28.115 ServerApp] WebSocket ping timeout after 119738 ms.
+[I 2025-02-02 11:57:33.117 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 12:11:56.022 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:11:56.022 ServerApp] Restoring connection for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 12:38:34.545 ServerApp] 302 GET / (@139.59.70.107) 0.62ms
+[I 2025-02-02 12:38:35.109 JupyterNotebookApp] 302 GET /tree (@139.59.70.107) 0.74ms
+[W 2025-02-02 12:40:18.516 ServerApp] 404 GET /cgi-bin/luci/;stok=/locale (@45.148.10.242) 7.12ms referer=None
+[I 2025-02-02 12:55:25.564 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:55:27.763 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:d0915fd1-8d21-478a-833e-cd177bea2c4f
+[I 2025-02-02 12:55:30.287 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:55:31.054 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:fad3d53a-7adc-4cbd-8a00-dbb813ddbf54
+[I 2025-02-02 12:55:46.769 ServerApp] Creating new notebook in /tests/notebooks
+[I 2025-02-02 12:55:48.006 ServerApp] Saving file at /tests/notebooks/Untitled.ipynb
+[I 2025-02-02 12:55:48.294 ServerApp] Kernel started: 3b0a9aab-141c-454e-816e-9813a8a1adc4
+[I 2025-02-02 12:55:49.170 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 12:55:51.450 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:55:51.983 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 12:55:52.237 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:5c02eadc-e3ad-45f3-959a-dd6c0596abbf
+[I 2025-02-02 12:55:52.543 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 12:56:16.636 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 12:57:17.961 ServerApp] Creating new notebook in /tests/notebooks
+[I 2025-02-02 12:57:19.044 ServerApp] Saving file at /tests/notebooks/Untitled.ipynb
+[I 2025-02-02 12:57:19.332 ServerApp] Kernel started: 872c4ebb-6fb3-4d3b-9f08-557b4cb88f71
+[I 2025-02-02 12:57:20.133 ServerApp] Connecting to kernel 872c4ebb-6fb3-4d3b-9f08-557b4cb88f71.
+[I 2025-02-02 12:57:22.236 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:57:22.767 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 12:57:23.001 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:7973f3e0-702d-4a7d-bcc2-8ecc7ad5fdcc
+[I 2025-02-02 12:57:23.288 ServerApp] Connecting to kernel 872c4ebb-6fb3-4d3b-9f08-557b4cb88f71.
+[I 2025-02-02 12:57:23.892 ServerApp] Connecting to kernel 872c4ebb-6fb3-4d3b-9f08-557b4cb88f71.
+[I 2025-02-02 12:57:29.622 ServerApp] Kernel shutdown: 872c4ebb-6fb3-4d3b-9f08-557b4cb88f71
+[W 2025-02-02 12:57:30.252 ServerApp] delete /tests/notebooks/Untitled.ipynb
+[I 2025-02-02 12:57:36.281 ServerApp] Creating new file in /tests/notebooks
+[I 2025-02-02 12:57:49.480 ServerApp] Connecting to kernel 24da7b4a-b43f-4f15-98c9-1ca6842f6efa.
+[I 2025-02-02 12:57:50.007 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 12:57:50.246 ServerApp] Starting buffering for 24da7b4a-b43f-4f15-98c9-1ca6842f6efa:9c9dbb1b-00d6-4422-9a57-f17cd43b6260
+[I 2025-02-02 12:57:52.569 ServerApp] Saving file at /tests/notebooks/vllm_config.py
+[I 2025-02-02 12:58:17.412 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[W 2025-02-02 13:00:42.152 ServerApp] 404 HEAD http://112.124.42.80:63435/ (@60.191.125.35) 1.30ms referer=None
+[I 2025-02-02 13:02:18.957 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:06:19.745 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:08:20.646 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:08:54.282 ServerApp] AsyncIOLoopKernelRestarter: restarting kernel (1/5), keep random ports
+[W 2025-02-02 13:08:54.282 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[W 2025-02-02 13:08:54.283 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[I 2025-02-02 13:08:54.546 ServerApp] Starting buffering for 3b0a9aab-141c-454e-816e-9813a8a1adc4:abcc5de4-bbef-4402-aebf-e1a0ef0e694a
+[I 2025-02-02 13:08:54.809 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:08:55.415 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:10:21.546 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:12:14.238 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:14:15.104 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:16:16.139 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:18:17.440 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:18:31.932 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:20:32.970 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:21:09.296 ServerApp] AsyncIOLoopKernelRestarter: restarting kernel (1/5), keep random ports
+[W 2025-02-02 13:21:09.297 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[W 2025-02-02 13:21:09.297 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[I 2025-02-02 13:21:09.554 ServerApp] Starting buffering for 3b0a9aab-141c-454e-816e-9813a8a1adc4:17e4398f-bbef-4993-985f-c0f523ac9982
+[I 2025-02-02 13:21:09.817 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:21:09.818 ServerApp] Discarding 3 buffered messages for 3b0a9aab-141c-454e-816e-9813a8a1adc4:17e4398f-bbef-4993-985f-c0f523ac9982
+[I 2025-02-02 13:21:10.358 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:22:34.209 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:24:07.198 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:24:12.986 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:24:24.318 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
+[I 2025-02-02 13:24:48.310 ServerApp] AsyncIOLoopKernelRestarter: restarting kernel (1/5), keep random ports
+[W 2025-02-02 13:24:48.310 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[W 2025-02-02 13:24:48.311 ServerApp] kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4 restarted
+[I 2025-02-02 13:24:48.569 ServerApp] Starting buffering for 3b0a9aab-141c-454e-816e-9813a8a1adc4:abcc5de4-bbef-4402-aebf-e1a0ef0e694a
+[I 2025-02-02 13:24:48.821 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:24:48.821 ServerApp] Restoring connection for 3b0a9aab-141c-454e-816e-9813a8a1adc4:abcc5de4-bbef-4402-aebf-e1a0ef0e694a
+[I 2025-02-02 13:24:48.828 ServerApp] Replaying 1 buffered messages
+[I 2025-02-02 13:24:49.479 ServerApp] Connecting to kernel 3b0a9aab-141c-454e-816e-9813a8a1adc4.
+[I 2025-02-02 13:26:25.514 ServerApp] Saving file at /tests/notebooks/deepseek_r1_query.ipynb
