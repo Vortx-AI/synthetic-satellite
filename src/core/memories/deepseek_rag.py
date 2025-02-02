@@ -11,11 +11,11 @@ from pathlib import Path
 class DeepSeekRAG:
     def __init__(
         self,
-        model_name: str = "deepseek-ai/deepseek-coder-1.3b-base",
-        embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+        model_name: str = "deepseek-ai/deepseek-coder-33b-instruct",
+        embedding_model: str = "BAAI/bge-large-en-v1.5",
         index_path: Optional[str] = None,
         knowledge_base_path: Optional[str] = None,
-        max_tokens: int = 1024,
+        max_tokens: int = 2048,
         temperature: float = 0.7,
         top_k_docs: int = 3,
         verbose: bool = False
@@ -36,15 +36,13 @@ class DeepSeekRAG:
         self.setup_logging(verbose)
         self.top_k = top_k_docs
         
-        # Initialize LLM
+        # Initialize LLM with float16 dtype
         self.logger.info("Initializing DeepSeek LLM...")
         self.model = LLM(
             model=model_name,
             trust_remote_code=True,
-            dtype="float16",
-            gpu_memory_utilization=0.45,
-            max_model_len=4096,
-            quantization="int8"
+            max_model_len=max_tokens,
+            dtype="float16"  # Explicitly set to float16 for T4 GPU compatibility
         )
         
         # Initialize embedding model
@@ -192,7 +190,7 @@ Answer:"""
 if __name__ == "__main__":
     # Initialize RAG system
     rag = DeepSeekRAG(
-        knowledge_base_path="path/to/knowledge_base.json",
+        knowledge_base_path="./knowledge_base.json",
         verbose=True
     )
     
