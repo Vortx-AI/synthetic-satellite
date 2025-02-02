@@ -1,4 +1,4 @@
-# Token Economics and Governance
+# Token Economics and Governance Plan
 
 ## Overview
 This document details the token economics and governance model of the Vortx Earth Memory System, focusing on the $VORTX token utility, distribution, and governance mechanisms.
