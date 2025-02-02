@@ -9,29 +9,41 @@ This document details comprehensive industry scenarios and use cases for the Vor
 ```mermaid
 graph TD
     subgraph Data Sources
-        D1[IoT Sensors] -->|Real-time Data| P1
+        D1[IoT Sensors] -->|Real-time Data| P1[Data Integration]
         D2[Production Lines] -->|Status Data| P1
         D3[Quality Control] -->|Inspection Data| P1
+        D4[Supply Chain] -->|Logistics Data| P1
     end
     
-    subgraph Processing
-        P1[Data Integration] -->|Analysis| P2[Factory Intelligence]
-        P2 -->|Optimization| P3[Control Systems]
+    subgraph Processing Layer
+        P1 -->|Analysis| P2[Factory Intelligence]
+        P2 -->|$VORTX Validation| P3[Quality Verification]
+        P3 -->|Optimization| P4[Control Systems]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Staking Pool] -->|Access Rights| P1
+        T1 -->|Compute Power| P2
+        P4 -->|Performance Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        P3 -->|Controls| A1[Automated Production]
-        P3 -->|Manages| A2[Resource Allocation]
-        P3 -->|Optimizes| A3[Quality Assurance]
+        P4 -->|Controls| A1[Automated Production]
+        P4 -->|Manages| A2[Resource Allocation]
+        P4 -->|Optimizes| A3[Quality Assurance]
+        P4 -->|Coordinates| A4[Supply Chain]
     end
     
-    classDef source fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef source fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,D2,D3 source
-    class P1,P2,P3 process
-    class A1,A2,A3 app
+    class D1,D2,D3,D4 source
+    class P1,P2,P3,P4 process
+    class T1,T2 token
+    class A1,A2,A3,A4 app
 ```
 
 ### Manufacturing Specifications
@@ -68,29 +80,41 @@ MANUFACTURING_SPECS = {
 ```mermaid
 graph TD
     subgraph Data Sources
-        D1[Clinical Trials] -->|Research Data| P1
+        D1[Clinical Trials] -->|Research Data| P1[Data Integration]
         D2[Genomic Data] -->|Sequence Data| P1
         D3[Medical Imaging] -->|Diagnostic Data| P1
+        D4[Patient Records] -->|Clinical Data| P1
     end
     
-    subgraph Processing
-        P1[Data Integration] -->|Analysis| P2[Medical Intelligence]
-        P2 -->|Discovery| P3[Research Insights]
+    subgraph Processing Layer
+        P1 -->|Analysis| P2[Medical Intelligence]
+        P2 -->|$VORTX Validation| P3[Research Verification]
+        P3 -->|Discovery| P4[Research Insights]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Staking Pool] -->|Access Rights| P1
+        T1 -->|Compute Power| P2
+        P4 -->|Research Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        P3 -->|Enables| A1[Drug Discovery]
-        P3 -->|Supports| A2[Treatment Planning]
-        P3 -->|Drives| A3[Clinical Research]
+        P4 -->|Enables| A1[Drug Discovery]
+        P4 -->|Supports| A2[Treatment Planning]
+        P4 -->|Drives| A3[Clinical Research]
+        P4 -->|Optimizes| A4[Patient Care]
     end
     
-    classDef source fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef source fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,D2,D3 source
-    class P1,P2,P3 process
-    class A1,A2,A3 app
+    class D1,D2,D3,D4 source
+    class P1,P2,P3,P4 process
+    class T1,T2 token
+    class A1,A2,A3,A4 app
 ```
 
 ### Healthcare Specifications
@@ -127,29 +151,41 @@ HEALTHCARE_SPECS = {
 ```mermaid
 graph TD
     subgraph Data Sources
-        D1[Market Data] -->|Real-time Feeds| P1
+        D1[Market Data] -->|Real-time Feeds| P1[Data Integration]
         D2[News Feeds] -->|Sentiment Data| P1
         D3[Transaction Data] -->|Trading Data| P1
+        D4[Economic Data] -->|Macro Data| P1
     end
     
-    subgraph Processing
-        P1[Data Integration] -->|Analysis| P2[Financial Intelligence]
-        P2 -->|Strategy| P3[Trading Systems]
+    subgraph Processing Layer
+        P1 -->|Analysis| P2[Financial Intelligence]
+        P2 -->|$VORTX Validation| P3[Strategy Verification]
+        P3 -->|Optimization| P4[Trading Systems]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Staking Pool] -->|Access Rights| P1
+        T1 -->|Trading Power| P2
+        P4 -->|Trading Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        P3 -->|Executes| A1[Automated Trading]
-        P3 -->|Manages| A2[Risk Assessment]
-        P3 -->|Optimizes| A3[Portfolio Management]
+        P4 -->|Executes| A1[Automated Trading]
+        P4 -->|Manages| A2[Risk Assessment]
+        P4 -->|Optimizes| A3[Portfolio Management]
+        P4 -->|Monitors| A4[Compliance]
     end
     
-    classDef source fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef source fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,D2,D3 source
-    class P1,P2,P3 process
-    class A1,A2,A3 app
+    class D1,D2,D3,D4 source
+    class P1,P2,P3,P4 process
+    class T1,T2 token
+    class A1,A2,A3,A4 app
 ```
 
 ### Financial Specifications
@@ -186,29 +222,41 @@ FINANCIAL_SPECS = {
 ```mermaid
 graph TD
     subgraph Data Sources
-        D1[Grid Sensors] -->|Power Data| P1
+        D1[Grid Sensors] -->|Power Data| P1[Data Integration]
         D2[Weather Data] -->|Forecast Data| P1
         D3[Consumption Data] -->|Usage Data| P1
+        D4[Renewable Sources] -->|Generation Data| P1
     end
     
-    subgraph Processing
-        P1[Data Integration] -->|Analysis| P2[Grid Intelligence]
-        P2 -->|Optimization| P3[Grid Control]
+    subgraph Processing Layer
+        P1 -->|Analysis| P2[Grid Intelligence]
+        P2 -->|$VORTX Validation| P3[Grid Verification]
+        P3 -->|Optimization| P4[Grid Control]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Staking Pool] -->|Access Rights| P1
+        T1 -->|Grid Power| P2
+        P4 -->|Efficiency Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        P3 -->|Manages| A1[Power Distribution]
-        P3 -->|Optimizes| A2[Load Balancing]
-        P3 -->|Controls| A3[Energy Storage]
+        P4 -->|Manages| A1[Power Distribution]
+        P4 -->|Optimizes| A2[Load Balancing]
+        P4 -->|Controls| A3[Energy Storage]
+        P4 -->|Coordinates| A4[Renewable Integration]
     end
     
-    classDef source fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef source fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,D2,D3 source
-    class P1,P2,P3 process
-    class A1,A2,A3 app
+    class D1,D2,D3,D4 source
+    class P1,P2,P3,P4 process
+    class T1,T2 token
+    class A1,A2,A3,A4 app
 ```
 
 ### Energy Specifications
@@ -245,29 +293,41 @@ ENERGY_SPECS = {
 ```mermaid
 graph TD
     subgraph Data Sources
-        D1[Satellite Telemetry] -->|Status Data| P1
+        D1[Satellite Telemetry] -->|Status Data| P1[Data Integration]
         D2[Earth Observation] -->|Image Data| P1
         D3[Space Weather] -->|Environment Data| P1
+        D4[Ground Stations] -->|Control Data| P1
     end
     
-    subgraph Processing
-        P1[Data Integration] -->|Analysis| P2[Space Intelligence]
-        P2 -->|Control| P3[Mission Control]
+    subgraph Processing Layer
+        P1 -->|Analysis| P2[Space Intelligence]
+        P2 -->|$VORTX Validation| P3[Mission Verification]
+        P3 -->|Optimization| P4[Mission Control]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Staking Pool] -->|Access Rights| P1
+        T1 -->|Space Power| P2
+        P4 -->|Mission Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        P3 -->|Manages| A1[Fleet Operations]
-        P3 -->|Optimizes| A2[Data Collection]
-        P3 -->|Controls| A3[Mission Planning]
+        P4 -->|Manages| A1[Fleet Operations]
+        P4 -->|Optimizes| A2[Data Collection]
+        P4 -->|Controls| A3[Mission Planning]
+        P4 -->|Coordinates| A4[Ground Operations]
     end
     
-    classDef source fill:#f9f,stroke:#333
-    classDef process fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef source fill:#f9f,stroke:#333,stroke-width:2px
+    classDef process fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,D2,D3 source
-    class P1,P2,P3 process
-    class A1,A2,A3 app
+    class D1,D2,D3,D4 source
+    class P1,P2,P3,P4 process
+    class T1,T2 token
+    class A1,A2,A3,A4 app
 ```
 
 ### Space Operations Specifications

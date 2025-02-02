@@ -11,27 +11,31 @@ graph TD
     subgraph Robotics Layer
         R1[Robot Fleet] -->|Data Collection| R2[Sensor Fusion]
         R2 -->|Processing| R3[Robot Intelligence]
+        R3 -->|Optimization| R4[Swarm Coordination]
     end
     
     subgraph Token Mechanics
-        T1[$VORTX Staking] -->|Access| R2
-        T1 -->|Control| R3
-        R3 -->|Rewards| T2[Token Distribution]
+        T1[$VORTX Staking] -->|Access & Control| R2
+        T1 -->|Intelligence Power| R3
+        T1 -->|Coordination Power| R4
+        R4 -->|Performance Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        R3 -->|Enables| A1[Autonomous Operations]
-        R3 -->|Powers| A2[Swarm Intelligence]
-        R3 -->|Drives| A3[Industrial Automation]
+        R4 -->|Enables| A1[Autonomous Operations]
+        R4 -->|Powers| A2[Swarm Intelligence]
+        R4 -->|Drives| A3[Industrial Automation]
+        R4 -->|Optimizes| A4[Resource Management]
     end
     
-    classDef robotics fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef robotics fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class R1,R2,R3 robotics
+    class R1,R2,R3,R4 robotics
     class T1,T2 token
-    class A1,A2,A3 app
+    class A1,A2,A3,A4 app
 ```
 
 ### Nanotechnology Integration
@@ -40,27 +44,31 @@ graph TD
     subgraph Nano Layer
         N1[Nanobot Network] -->|Data Collection| N2[Molecular Analysis]
         N2 -->|Processing| N3[Nano Intelligence]
+        N3 -->|Coordination| N4[Swarm Control]
     end
     
     subgraph Token Mechanics
-        T1[$VORTX Staking] -->|Access| N2
-        T1 -->|Control| N3
-        N3 -->|Rewards| T2[Token Distribution]
+        T1[$VORTX Staking] -->|Access & Control| N2
+        T1 -->|Analysis Power| N3
+        T1 -->|Control Power| N4
+        N4 -->|Performance Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        N3 -->|Enables| A1[Medical Applications]
-        N3 -->|Powers| A2[Material Science]
-        N3 -->|Drives| A3[Molecular Manufacturing]
+        N4 -->|Enables| A1[Medical Applications]
+        N4 -->|Powers| A2[Material Science]
+        N4 -->|Drives| A3[Molecular Manufacturing]
+        N4 -->|Supports| A4[Drug Delivery]
     end
     
-    classDef nano fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef nano fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class N1,N2,N3 nano
+    class N1,N2,N3,N4 nano
     class T1,T2 token
-    class A1,A2,A3 app
+    class A1,A2,A3,A4 app
 ```
 
 ### Neural Interface Integration
@@ -69,27 +77,31 @@ graph TD
     subgraph Neural Layer
         B1[Brain-Computer Interface] -->|Signal Processing| B2[Neural Decoding]
         B2 -->|Analysis| B3[Neural Intelligence]
+        B3 -->|Optimization| B4[Cognitive Enhancement]
     end
     
     subgraph Token Mechanics
-        T1[$VORTX Staking] -->|Access| B2
-        T1 -->|Control| B3
-        B3 -->|Rewards| T2[Token Distribution]
+        T1[$VORTX Staking] -->|Access & Control| B2
+        T1 -->|Processing Power| B3
+        T1 -->|Enhancement Power| B4
+        B4 -->|Performance Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Applications
-        B3 -->|Enables| A1[Neural Enhancement]
-        B3 -->|Powers| A2[Direct Interface]
-        B3 -->|Drives| A3[Cognitive Augmentation]
+        B4 -->|Enables| A1[Neural Enhancement]
+        B4 -->|Powers| A2[Direct Interface]
+        B4 -->|Drives| A3[Cognitive Augmentation]
+        B4 -->|Supports| A4[Medical Treatment]
     end
     
-    classDef neural fill:#f9f,stroke:#333
-    classDef token fill:#9f9,stroke:#333
-    classDef app fill:#ff9,stroke:#333
+    classDef neural fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef app fill:#9f9,stroke:#333,stroke-width:2px
     
-    class B1,B2,B3 neural
+    class B1,B2,B3,B4 neural
     class T1,T2 token
-    class A1,A2,A3 app
+    class A1,A2,A3,A4 app
 ```
 
 ## Advanced Quantum Security
@@ -159,25 +171,39 @@ graph TD
     subgraph QKD Network
         Q1[Quantum Channel] -->|Key Distribution| Q2[Key Pool]
         Q2 -->|Key Management| Q3[Key Usage]
+        Q3 -->|Rotation| Q4[Key Lifecycle]
+    end
+    
+    subgraph Token Mechanics
+        T1[$VORTX Staking] -->|Access & Control| Q1
+        T1 -->|Security Power| Q2
+        T1 -->|Management Power| Q3
+        Q4 -->|Security Rewards| T2[$VORTX Distribution]
+        T2 -->|Reinvestment| T1
     end
     
     subgraph Classical Network
         C1[Authentication] -->|Verification| Q1
-        Q3 -->|Encryption| C2[Secure Communication]
+        Q4 -->|Encryption| C2[Secure Communication]
+        C2 -->|Validation| C3[Security Audit]
     end
     
     subgraph Security Layer
         S1[Intrusion Detection] -->|Monitoring| Q1
         S1 -->|Protection| C2
+        S1 -->|Analysis| S2[Threat Response]
+        S2 -->|Mitigation| S3[Security Updates]
     end
     
-    classDef quantum fill:#f9f,stroke:#333
-    classDef classical fill:#9f9,stroke:#333
-    classDef security fill:#ff9,stroke:#333
+    classDef quantum fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef classical fill:#ff9,stroke:#333,stroke-width:2px
+    classDef security fill:#9f9,stroke:#333,stroke-width:2px
     
-    class Q1,Q2,Q3 quantum
-    class C1,C2 classical
-    class S1 security
+    class Q1,Q2,Q3,Q4 quantum
+    class T1,T2 token
+    class C1,C2,C3 classical
+    class S1,S2,S3 security
 ```
 
 ### Quantum Random Number Generation

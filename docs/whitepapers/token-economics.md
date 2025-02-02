@@ -90,30 +90,43 @@ TOKEN_SPECS = {
 graph TD
     subgraph Data Economy
         D1[Data Providers] -->|Stake & Earn| D2[Data Pool]
-        D2 -->|Quality Validation| D3[Rewards]
+        D2 -->|Data Verification| D3[Quality Analysis]
+        D3 -->|Performance Analysis| D4[Data Rewards]
     end
     
     subgraph Compute Economy
         C1[Compute Providers] -->|Stake & Process| C2[Compute Pool]
-        C2 -->|Performance Validation| C3[Rewards]
+        C2 -->|Resource Verification| C3[Performance Analysis]
+        C3 -->|Resource Analysis| C4[Compute Rewards]
     end
     
     subgraph Intelligence Economy
         I1[AGI Services] -->|Stake & Serve| I2[Intelligence Pool]
-        I2 -->|Value Validation| I3[Rewards]
+        I2 -->|Service Verification| I3[Value Analysis]
+        I3 -->|Impact Analysis| I4[Intelligence Rewards]
     end
     
-    D3 -->|Distribution| T1[$VORTX Token]
-    C3 -->|Distribution| T1
-    I3 -->|Distribution| T1
+    subgraph Token Flow
+        T1[$VORTX Token Pool] -->|Staking Allocation| T2[Provider Staking]
+        T2 -->|Data Staking| D1
+        T2 -->|Compute Staking| C1
+        T2 -->|Intelligence Staking| I1
+        
+        D4 -->|Data Rewards| T3[Reward Distribution]
+        C4 -->|Compute Rewards| T3
+        I4 -->|Intelligence Rewards| T3
+        
+        T3 -->|Distribution| T1
+    end
     
-    classDef economy fill:#f9f,stroke:#333
-    classDef pool fill:#9f9,stroke:#333
-    classDef token fill:#ff9,stroke:#333
+    classDef economy fill:#f9f,stroke:#333,stroke-width:2px
+    classDef pool fill:#ff9,stroke:#333,stroke-width:2px
+    classDef token fill:#9f9,stroke:#333,stroke-width:2px
     
-    class D1,C1,I1 economy
-    class D2,C2,I2 pool
-    class T1 token
+    class D1,D2,D3,D4 economy
+    class C1,C2,C3,C4 economy
+    class I1,I2,I3,I4 economy
+    class T1,T2,T3 token
 ```
 
 ### Reward Mechanisms
@@ -188,30 +201,42 @@ REWARD_MECHANISMS = {
 ```mermaid
 graph TD
     subgraph Voting Power
-        V1[Token Staking] -->|Weight| V2[Voting Rights]
-        V2 -->|Influence| V3[Decisions]
+        V1[$VORTX Staking] -->|Base Power| V2[Base Voting Power]
+        V2 -->|Time Lock| V3[Enhanced Voting Power]
+        V3 -->|Participation| V4[Final Voting Power]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Token Pool] -->|Governance Staking| V1
+        V4 -->|Voting Weight| T2[Governance Power]
+        T2 -->|Proposal Creation| P1
+        T2 -->|Voting Rights| P3
     end
     
     subgraph Proposal System
-        P1[Community Proposals] -->|Review| P2[Governance Vote]
-        P2 -->|Execution| P3[Implementation]
+        P1[Community Proposals] -->|Submission| P2[Proposal Review]
+        P2 -->|Discussion| P3[Governance Vote]
+        P3 -->|Execution| P4[Implementation]
     end
     
-    subgraph Execution
-        E1[Smart Contracts] -->|Automate| E2[Changes]
-        E2 -->|Update| E3[Protocol]
+    subgraph Execution Layer
+        E1[Smart Contracts] -->|Parameter Updates| E2[Protocol Changes]
+        E2 -->|Validation| E3[State Updates]
+        E3 -->|Monitoring| E4[Performance Analysis]
     end
     
-    V3 -->|Approve| P2
-    P3 -->|Trigger| E1
+    P4 -->|Trigger| E1
+    E4 -->|Feedback| P1
     
-    classDef voting fill:#f9f,stroke:#333
-    classDef proposal fill:#9f9,stroke:#333
-    classDef execution fill:#ff9,stroke:#333
+    classDef voting fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef proposal fill:#9f9,stroke:#333,stroke-width:2px
+    classDef execution fill:#9f9,stroke:#333,stroke-width:2px
     
-    class V1,V2,V3 voting
-    class P1,P2,P3 proposal
-    class E1,E2,E3 execution
+    class V1,V2,V3,V4 voting
+    class T1,T2 token
+    class P1,P2,P3,P4 proposal
+    class E1,E2,E3,E4 execution
 ```
 
 ### Governance Parameters
@@ -277,29 +302,51 @@ GOVERNANCE_PARAMS = {
 ```mermaid
 graph TD
     subgraph Staking Pools
-        S1[Data Staking] -->|Secures| D[Data Network]
-        S2[Compute Staking] -->|Secures| C[Compute Network]
-        S3[Intelligence Staking] -->|Secures| I[Intelligence Network]
+        S1[$VORTX Data Staking] -->|Secures| D[Data Network]
+        S2[$VORTX Compute Staking] -->|Secures| C[Compute Network]
+        S3[$VORTX Intelligence Staking] -->|Secures| I[Intelligence Network]
     end
     
-    subgraph Security
+    subgraph Token Flow
+        T1[$VORTX Token Pool] -->|Allocation| S1
+        T1 -->|Allocation| S2
+        T1 -->|Allocation| S3
+        
+        M1 -->|Quality Rewards| T2[Reward Pool]
+        M2 -->|Performance Rewards| T2
+        M3 -->|Value Rewards| T2
+        
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Security Validation
         D -->|Validates| V1[Data Quality]
         C -->|Ensures| V2[Compute Integrity]
         I -->|Verifies| V3[Intelligence Value]
+        
+        V1 -->|Metrics| M1[Quality Score]
+        V2 -->|Metrics| M2[Performance Score]
+        V3 -->|Metrics| M3[Value Score]
     end
     
     subgraph Penalties
-        V1 -->|Triggers| P1[Slashing]
-        V2 -->|Triggers| P2[Slashing]
-        V3 -->|Triggers| P3[Slashing]
+        M1 -->|Triggers| P1[Data Slashing]
+        M2 -->|Triggers| P2[Compute Slashing]
+        M3 -->|Triggers| P3[Intelligence Slashing]
+        
+        P1 -->|Updates| S1
+        P2 -->|Updates| S2
+        P3 -->|Updates| S3
     end
     
-    classDef staking fill:#f9f,stroke:#333
-    classDef validation fill:#9f9,stroke:#333
-    classDef penalty fill:#ff9,stroke:#333
+    classDef staking fill:#f9f,stroke:#333,stroke-width:2px
+    classDef token fill:#ff9,stroke:#333,stroke-width:2px
+    classDef validation fill:#9f9,stroke:#333,stroke-width:2px
+    classDef penalty fill:#9f9,stroke:#333,stroke-width:2px
     
     class S1,S2,S3 staking
-    class V1,V2,V3 validation
+    class T1,T2 token
+    class V1,V2,V3,M1,M2,M3 validation
     class P1,P2,P3 penalty
 ```
 
