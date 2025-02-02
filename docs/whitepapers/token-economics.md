@@ -5,14 +5,14 @@ This document details the token economics and governance model of the Vortx Eart
 
 ## Token Economics
 
-### Token Distribution
+### Token Distribution Planned
 ```mermaid
 pie title $VORTX Token Distribution
-    "Ecosystem Rewards" : 40
+    "Ecosystem Rewards" : 10
     "Development" : 20
     "Foundation" : 15
-    "Team" : 15
-    "Advisors" : 5
+    "Team" : 35
+    "Investors" : 15
     "Community" : 5
 ```
 
