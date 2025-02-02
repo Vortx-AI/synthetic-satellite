@@ -1,0 +1,69 @@
+nohup: ignoring input
+[I 2025-02-01 18:06:00.014 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2025-02-01 18:06:00.019 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[I 2025-02-01 18:06:00.024 ServerApp] jupyterlab | extension was successfully linked.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'ip' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'allow_remote_access' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.026 JupyterNotebookApp] 'port' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-01 18:06:00.029 ServerApp] ServerApp.password config is deprecated in 2.0. Use PasswordIdentityProvider.hashed_password.
+[W 2025-02-01 18:06:00.029 ServerApp] ServerApp.token config is deprecated in 2.0. Use IdentityProvider.token.
+[I 2025-02-01 18:06:00.029 ServerApp] notebook | extension was successfully linked.
+[I 2025-02-01 18:06:00.238 ServerApp] notebook_shim | extension was successfully linked.
+[I 2025-02-01 18:06:00.253 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2025-02-01 18:06:00.255 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2025-02-01 18:06:00.256 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2025-02-01 18:06:00.258 LabApp] JupyterLab extension loaded from /home/jaya/myenv/lib/python3.10/site-packages/jupyterlab
+[I 2025-02-01 18:06:00.258 LabApp] JupyterLab application directory is /home/jaya/myenv/share/jupyter/lab
+[I 2025-02-01 18:06:00.258 LabApp] Extension Manager is 'pypi'.
+[I 2025-02-01 18:06:00.330 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2025-02-01 18:06:00.333 ServerApp] notebook | extension was successfully loaded.
+[I 2025-02-01 18:06:00.334 ServerApp] Serving notebooks from local directory: /home/jaya/synthetic-satellite
+[I 2025-02-01 18:06:00.334 ServerApp] Jupyter Server 2.15.0 is running at:
+[I 2025-02-01 18:06:00.334 ServerApp] http://synthetic-satellite1:8888/tree
+[I 2025-02-01 18:06:00.334 ServerApp]     http://127.0.0.1:8888/tree
+[I 2025-02-01 18:06:00.334 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 2025-02-01 18:06:00.354 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+[I 2025-02-01 18:06:14.840 ServerApp] Creating new notebook in /tests/notebooks
+[I 2025-02-01 18:06:16.266 ServerApp] Saving file at /tests/notebooks/Untitled.ipynb
+[I 2025-02-01 18:06:16.606 ServerApp] Kernel started: 5ee1c352-6512-48df-b250-693d70e6ff94
+[I 2025-02-01 18:06:17.443 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:06:18.010 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:06:19.584 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:06:20.700 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:07:46.121 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:08:04.755 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:10:05.581 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:10:25.663 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:12:26.533 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:14:28.011 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:16:28.890 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:20:29.766 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:22:32.392 ServerApp] Saving file at /tests/notebooks/test_atmospheric.ipynb
+[I 2025-02-01 18:28:26.422 ServerApp] Creating new notebook in /tests/notebooks
+[I 2025-02-01 18:28:27.527 ServerApp] Saving file at /tests/notebooks/Untitled.ipynb
+[I 2025-02-01 18:28:27.820 ServerApp] Kernel started: b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd
+[I 2025-02-01 18:28:28.626 ServerApp] Connecting to kernel b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd.
+[I 2025-02-01 18:28:30.773 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:28:31.290 ServerApp] Connecting to kernel b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd.
+[I 2025-02-01 18:28:31.884 ServerApp] Connecting to kernel b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd.
+[I 2025-02-01 18:30:52.574 ServerApp] Saving file at /tests/notebooks/test_memory.ipynb
+[I 2025-02-01 18:32:12.617 ServerApp] Saving file at /tests/notebooks/test_memory.ipynb
+[I 2025-02-01 18:33:56.963 ServerApp] Saving file at /tests/notebooks/test_memory.ipynb
+[I 2025-02-01 18:34:42.896 ServerApp] Creating new notebook in /tests/notebooks
+[I 2025-02-01 18:34:44.233 ServerApp] Saving file at /tests/notebooks/Untitled.ipynb
+[I 2025-02-01 18:34:44.256 ServerApp] Kernel started: c92372ef-b75a-42bf-b783-681ea8edf0e8
+[I 2025-02-01 18:34:45.049 ServerApp] Connecting to kernel c92372ef-b75a-42bf-b783-681ea8edf0e8.
+[I 2025-02-01 18:34:47.412 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:34:47.933 ServerApp] Connecting to kernel b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd.
+[I 2025-02-01 18:34:48.446 ServerApp] Connecting to kernel c92372ef-b75a-42bf-b783-681ea8edf0e8.
+[I 2025-02-01 18:34:48.963 ServerApp] Connecting to kernel c92372ef-b75a-42bf-b783-681ea8edf0e8.
+[I 2025-02-01 18:36:02.573 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:36:03.086 ServerApp] Connecting to kernel b8bba90c-bdf7-44ce-bc76-c5ce8c2f11bd.
+[I 2025-02-01 18:36:03.603 ServerApp] Connecting to kernel c92372ef-b75a-42bf-b783-681ea8edf0e8.
+[I 2025-02-01 18:36:05.996 ServerApp] Connecting to kernel 5ee1c352-6512-48df-b250-693d70e6ff94.
+[I 2025-02-01 18:36:19.946 ServerApp] Saving file at /tests/notebooks/test_synthesis.ipynb
+[I 2025-02-01 18:38:20.894 ServerApp] Saving file at /tests/notebooks/test_synthesis.ipynb
+[I 2025-02-01 18:40:21.786 ServerApp] Saving file at /tests/notebooks/test_synthesis.ipynb
