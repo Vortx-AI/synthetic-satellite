@@ -167,43 +167,22 @@ class DeepSeekVLLM:
         """Get conversation history"""
         return self.conversation_history
 
-# Example usage
-if __name__ == "__main__":
-    # Initialize DeepSeek with vLLM
-    deepseek = DeepSeekVLLM(verbose=True)
-    
-    # Example with a simple prompt
-    prompt = "Write a Python function to implement binary search."
-    response = deepseek.generate(prompt)
-    print(f"\nDirect Response:\n{response}")
-    
-    # Example with a template
-    template = """
-    You are an expert Python programmer. Please help with the following task:
-    
-    {query}
-    
-    Please provide a detailed solution with comments and example usage.
+def query_llm(prompt: str, model_name: str = "deepseek-ai/deepseek-coder-1.3b-base") -> str:
     """
+    Simple function to query the LLM with a single prompt
     
-    response = deepseek.generate(
-        prompt="Implement a function to find the longest common subsequence of two strings.",
-        template=template
-    )
-    print(f"\nTemplate Response:\n{response}")
-    
-    # Batch processing example
-    prompts = [
-        "Explain what is a neural network",
-        "Write a function to sort a list in Python",
-        "What are the benefits of using LangChain?"
-    ]
-    
-    responses = deepseek.batch_generate(prompts)
-    
-    for prompt, response in zip(prompts, responses):
-        print(f"\nPrompt: {prompt}")
-        print(f"Response: {response}")
+    Args:
+        prompt: The input prompt to send to the model
+        model_name: Optional model name/path (defaults to deepseek-coder-1.3b-base)
         
-    # Save conversation history
-    deepseek.save_history("conversation_history.json")
+    Returns:
+        str: The model's response
+    """
+    try:
+        llm = DeepSeekVLLM(model_name=model_name)
+        response = llm.generate(prompt)
+        return response
+    except Exception as e:
+        logging.error(f"Error querying LLM: {str(e)}")
+        raise
+
