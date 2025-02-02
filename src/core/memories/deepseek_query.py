@@ -1,4 +1,4 @@
-from langchain_community.llms import VLLMOpenAI
+from vllm import LLM, SamplingParams
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import LLMChain
@@ -7,6 +7,7 @@ from typing import List, Optional, Dict, Union
 import logging
 from datetime import datetime
 import json
+import torch
 
 class DeepSeekVLLM:
     def __init__(
@@ -18,7 +19,7 @@ class DeepSeekVLLM:
         verbose: bool = False
     ):
         """
-        Initialize DeepSeek with LangChain and vLLM
+        Initialize DeepSeek with vLLM
         
         Args:
             model_name: Name or path of the model
@@ -30,20 +31,24 @@ class DeepSeekVLLM:
         self.verbose = verbose
         self._setup_logging()
         
-        self.logger.info(f"Initializing DeepSeek with LangChain using model: {model_name}")
+        self.logger.info(f"Initializing DeepSeek with vLLM using model: {model_name}")
         
-        # Setup callback manager for streaming output
-        callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+        # Initialize vLLM with conservative memory settings
+        self.model = LLM(
+            model=model_name,
+            trust_remote_code=True,
+            tensor_parallel_size=1,
+            dtype="float16",  # For T4 GPU compatibility
+            max_model_len=2048,  # Conservative sequence length
+            gpu_memory_utilization=0.8,  # Conservative memory usage
+            enforce_eager=True  # Disable CUDA graphs for better compatibility
+        )
         
-        # Initialize LangChain VLLM wrapper
-        self.model = VLLMOpenAI(
-            model_name=model_name,
+        # Store sampling parameters
+        self.sampling_params = SamplingParams(
             temperature=temperature,
             max_tokens=max_tokens,
-            top_p=top_p,
-            model_kwargs={"dtype": "float16"},  # For T4 compatibility
-            callback_manager=callback_manager if verbose else None,
-            verbose=verbose
+            top_p=top_p
         )
         
         self.conversation_history = []
@@ -73,16 +78,18 @@ class DeepSeekVLLM:
         """
         try:
             if template:
-                # Use LangChain's PromptTemplate if template is provided
+                # Use template if provided
                 prompt_template = PromptTemplate(
                     input_variables=["query"],
                     template=template
                 )
-                chain = LLMChain(llm=self.model, prompt=prompt_template)
-                response = chain.run(query=prompt)
+                formatted_prompt = prompt_template.format(query=prompt)
             else:
-                # Direct generation if no template
-                response = self.model(prompt)
+                formatted_prompt = prompt
+            
+            # Generate response using vLLM directly
+            outputs = self.model.generate(formatted_prompt, self.sampling_params)
+            response = outputs[0].outputs[0].text
             
             # Store in conversation history
             self.conversation_history.append({
@@ -118,10 +125,13 @@ class DeepSeekVLLM:
                     input_variables=["query"],
                     template=template
                 )
-                chain = LLMChain(llm=self.model, prompt=prompt_template)
-                responses = [chain.run(query=prompt) for prompt in prompts]
+                formatted_prompts = [prompt_template.format(query=p) for p in prompts]
             else:
-                responses = self.model.generate(prompts)
+                formatted_prompts = prompts
+            
+            # Generate responses using vLLM directly
+            outputs = self.model.generate(formatted_prompts, self.sampling_params)
+            responses = [output.outputs[0].text for output in outputs]
             
             # Store in conversation history
             for prompt, response in zip(prompts, responses):
@@ -159,7 +169,7 @@ class DeepSeekVLLM:
 
 # Example usage
 if __name__ == "__main__":
-    # Initialize DeepSeek with LangChain
+    # Initialize DeepSeek with vLLM
     deepseek = DeepSeekVLLM(verbose=True)
     
     # Example with a simple prompt
