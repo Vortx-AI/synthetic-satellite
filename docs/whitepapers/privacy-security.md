@@ -1,4 +1,4 @@
-# Privacy and Security Framework: Technical Whitepaper
+# Privacy and Security Framework: Planning Whitepaper
 
 **Authors:**  
 Kumari Jaya¹, Vortx Security Agent¹  
