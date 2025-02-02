@@ -285,3 +285,86 @@ nohup: ignoring input
 [I 2025-02-02 06:22:02.998 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
 [I 2025-02-02 06:22:03.283 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:0a2d5c38-62d7-49bf-8634-ffd53c0ad032
 [I 2025-02-02 06:22:03.890 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:8fa3f7c6-adc9-4bfb-9e2a-84c6c8d27486
+[I 2025-02-02 06:23:42.353 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
+[I 2025-02-02 06:23:42.884 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
+[I 2025-02-02 06:23:43.161 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:c0278ce1-8503-4428-9a2c-01e1584f020c
+[I 2025-02-02 06:23:43.258 ServerApp] Kernel started: 8e8bee03-1dab-41f7-918d-73656c4a16dd
+[I 2025-02-02 06:23:43.424 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
+[I 2025-02-02 06:23:43.656 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:4fbf9877-2b04-4612-9b4a-99d7d818b339
+[I 2025-02-02 06:23:43.970 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
+[I 2025-02-02 06:23:44.214 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:a4bb7c0b-b046-4b9a-8336-532f267ab70e
+[I 2025-02-02 06:23:44.507 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
+[I 2025-02-02 06:23:44.759 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:c67a385b-77b5-4985-8b16-f0f4ff76f08b
+[I 2025-02-02 06:23:45.072 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
+[I 2025-02-02 06:23:45.373 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:e12bce55-b89f-43c0-998f-d5828672aff5
+[I 2025-02-02 06:23:45.689 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
+[I 2025-02-02 06:23:45.987 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:0515488b-f715-44d5-ba12-2d05486d05ff
+[I 2025-02-02 06:23:46.258 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
+[I 2025-02-02 06:23:46.519 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:ab268420-0702-4d88-b362-78d1c7cc670c
+[I 2025-02-02 06:23:46.821 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
+[I 2025-02-02 06:23:47.082 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:bfd44b0b-e498-4f48-9a85-b3c08c260e46
+[I 2025-02-02 06:24:46.983 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:dc506a68-7dfc-4b13-924a-71ab041ebcc4
+[W 2025-02-02 06:24:48.052 ServerApp] Notebook tests/Untitled.ipynb is not trusted
+[W 2025-02-02 06:24:52.712 ServerApp] Notebook tests/Untitled.ipynb is not trusted
+[I 2025-02-02 06:24:52.900 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
+[I 2025-02-02 06:24:53.441 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
+[I 2025-02-02 06:24:53.715 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:87e7b058-824e-46b9-a05b-5cc622b82bd9
+[I 2025-02-02 06:24:53.975 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
+[I 2025-02-02 06:24:54.288 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:9e8aec74-a626-4d03-8f3c-b12f083e19d3
+[I 2025-02-02 06:24:54.599 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
+[I 2025-02-02 06:24:54.905 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:da157186-5989-4e19-bac1-6631fb74fc36
+[I 2025-02-02 06:24:55.213 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
+[I 2025-02-02 06:24:55.518 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:fff01d89-f85d-46fe-b646-7769daac9af0
+[I 2025-02-02 06:24:55.828 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
+[I 2025-02-02 06:24:56.017 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:cddefcda-9829-45a9-97ce-1a02364b0293
+[I 2025-02-02 06:24:56.021 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:18700d35-370f-40c1-9329-96feccd6086a
+[W 2025-02-02 06:25:26.564 ServerApp] Notebook tests/Untitled.ipynb is not trusted
+[W 2025-02-02 06:25:29.189 ServerApp] Notebook tests/Untitled.ipynb is not trusted
+[I 2025-02-02 06:25:29.361 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
+[I 2025-02-02 06:25:29.891 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
+[I 2025-02-02 06:25:30.162 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:78814370-38bf-4f0c-83c5-da505524406f
+[I 2025-02-02 06:25:30.439 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
+[I 2025-02-02 06:25:30.666 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:c8fabff6-4966-450b-840b-07f0bde1d65f
+[I 2025-02-02 06:25:30.985 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
+[I 2025-02-02 06:25:31.247 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:abd17aee-aca7-4731-a406-9b223bb7b644
+[I 2025-02-02 06:25:31.566 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
+[I 2025-02-02 06:25:31.832 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:3a62204b-db03-4957-8507-aa96ca9bd68a
+[I 2025-02-02 06:25:32.111 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
+[I 2025-02-02 06:25:32.382 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:789a1b77-c9c0-40d3-a8e6-9a632a4bd863
+[I 2025-02-02 06:25:32.692 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
+[I 2025-02-02 06:25:33.002 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:b45b4228-cf23-4e68-b16b-0bfe36123285
+[I 2025-02-02 06:25:33.314 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
+[I 2025-02-02 06:25:33.609 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:2171aac5-eaff-4222-b63f-d14673d60e52
+[I 2025-02-02 06:25:33.922 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
+[I 2025-02-02 06:25:34.187 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:6e8a7572-39fd-4e43-9cd8-490c4a7b19b5
+[I 2025-02-02 06:25:34.473 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
+[I 2025-02-02 06:25:34.738 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:817fc4c9-2ea0-45d4-a1bd-64b551e1a264
+[I 2025-02-02 06:25:48.278 ServerApp] Saving file at /tests/Untitled.ipynb
+[I 2025-02-02 06:33:10.728 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:96d0240a-3e66-436a-9192-84a5efde904c
+[W 2025-02-02 06:33:17.615 ServerApp] Notebook tests/notebooks/test_secure_encodings.ipynb is not trusted
+[W 2025-02-02 06:33:22.323 ServerApp] Notebook tests/notebooks/test_secure_encodings.ipynb is not trusted
+[I 2025-02-02 06:33:22.484 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
+[I 2025-02-02 06:33:23.019 ServerApp] Connecting to kernel 240a6e42-7961-4e71-aaa9-57668d77e64d.
+[I 2025-02-02 06:33:23.270 ServerApp] Starting buffering for afa7ef89-f48a-4fba-aa98-84b9611d2614:f75f54b2-f933-4c38-a2f0-9f9005ec31b0
+[I 2025-02-02 06:33:23.566 ServerApp] Connecting to kernel e7d4daa3-28c4-40dd-8420-85285f2c6b6b.
+[I 2025-02-02 06:33:23.808 ServerApp] Starting buffering for 240a6e42-7961-4e71-aaa9-57668d77e64d:500d738e-580d-49cb-b3bf-8c95358fe551
+[I 2025-02-02 06:33:24.138 ServerApp] Connecting to kernel afd117fb-4613-456c-b0ca-6f2a310054ad.
+[I 2025-02-02 06:33:24.353 ServerApp] Starting buffering for e7d4daa3-28c4-40dd-8420-85285f2c6b6b:f744adbf-f0a7-42ad-8814-3c7ac3d9112a
+[I 2025-02-02 06:33:24.688 ServerApp] Connecting to kernel efecb2c0-d4b5-46e5-b5f9-91a14f25e146.
+[I 2025-02-02 06:33:24.975 ServerApp] Starting buffering for afd117fb-4613-456c-b0ca-6f2a310054ad:9be3da35-ae69-4bc8-8528-7ac5550637fd
+[I 2025-02-02 06:33:25.233 ServerApp] Connecting to kernel b04c98a4-63a5-4c07-8896-61aba97ba315.
+[I 2025-02-02 06:33:25.539 ServerApp] Starting buffering for efecb2c0-d4b5-46e5-b5f9-91a14f25e146:9849aeed-af76-49c5-af3e-4caffb3e60cf
+[I 2025-02-02 06:33:25.805 ServerApp] Connecting to kernel cdb567ad-8125-4edc-ba14-d973297e3693.
+[I 2025-02-02 06:33:26.063 ServerApp] Starting buffering for b04c98a4-63a5-4c07-8896-61aba97ba315:8543775c-b347-430c-9207-ceba254a4716
+[I 2025-02-02 06:33:26.401 ServerApp] Connecting to kernel f0f8715c-da19-4d45-9f76-c328dcebe062.
+[I 2025-02-02 06:33:26.707 ServerApp] Starting buffering for cdb567ad-8125-4edc-ba14-d973297e3693:982e85d4-99f9-4ab5-8a7b-74684779b109
+[I 2025-02-02 06:33:26.979 ServerApp] Connecting to kernel 8e8bee03-1dab-41f7-918d-73656c4a16dd.
+[I 2025-02-02 06:33:27.221 ServerApp] Starting buffering for f0f8715c-da19-4d45-9f76-c328dcebe062:90d13cb2-c913-4a00-8c64-2ba72aa149b1
+[I 2025-02-02 06:33:27.508 ServerApp] Connecting to kernel afa7ef89-f48a-4fba-aa98-84b9611d2614.
+[I 2025-02-02 06:33:27.832 ServerApp] Starting buffering for 8e8bee03-1dab-41f7-918d-73656c4a16dd:faa46841-3912-4589-a5a0-517ba7f3fa9a
+[I 2025-02-02 06:35:22.887 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
+[W 2025-02-02 06:35:36.394 ServerApp] 404 HEAD http://112.124.42.80:63435/ (@60.191.125.35) 7.05ms referer=None
+[I 2025-02-02 06:37:23.779 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
+[I 2025-02-02 06:39:24.638 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
+[I 2025-02-02 06:45:25.452 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
+[I 2025-02-02 06:47:27.015 ServerApp] Saving file at /tests/notebooks/test_secure_encodings.ipynb
