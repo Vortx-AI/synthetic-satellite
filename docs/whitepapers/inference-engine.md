@@ -1,4 +1,4 @@
-# Inference Engine Design: Technical Whitepaper
+# Inference Engine Design: Planning Whitepaper
 
 **Authors:**  
 Kumari Jaya¹, Vortx Inference Agents¹  
@@ -9,7 +9,7 @@ Kumari Jaya¹, Vortx Inference Agents¹
 
 ## Abstract
 
-This whitepaper presents groundbreaking innovations in AGI inference engine design, introducing patent-pending approaches to runtime optimization, distributed inference, and tokenized compute allocation. Our novel architecture achieves unprecedented performance in large-scale inference operations while maintaining adaptability, reliability, and fair value distribution through the $VORTX token ecosystem.
+This whitepaper presents groundbreaking plans in AGI inference engine design, introducing patent-pending approaches to runtime optimization, distributed inference, and tokenized compute allocation. Our novel architecture achieves unprecedented performance in large-scale inference operations while maintaining adaptability, reliability, and fair value distribution through the $VORTX token ecosystem.
 
 ## Executive Summary
 
