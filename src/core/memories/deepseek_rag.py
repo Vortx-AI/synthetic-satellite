@@ -277,3 +277,4 @@ if __name__ == "__main__":
     response = rag.generate(query)
     print(f"\nQuery: {query}")
     print(f"Response: {response}") 
+
