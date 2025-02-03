@@ -12,6 +12,8 @@ import os
 from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 from dataclasses import dataclass
+import faiss  # Ensure FAISS is properly installed and imported
+from io import BytesIO
 
 @dataclass
 class SyntheticConfig:
@@ -39,6 +41,10 @@ class DeepSeekImageRAG:
         
         # Set PyTorch memory settings
         os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+        
+        # Determine device
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.logger.info(f"Using device: {self.device}")
         
         # Clear CUDA cache before initialization
         if torch.cuda.is_available():
@@ -77,14 +83,19 @@ class DeepSeekImageRAG:
             encode_kwargs={'normalize_embeddings': True}
         )
         
-        # Initialize image embedding model
+        # Initialize image embedding model and processor
         self.logger.info("Initializing image embedding model...")
-        self.image_embedding_model = CLIPModel.from_pretrained(
-            image_embedding_model
-        ).to('cuda')
-        self.image_processor = CLIPProcessor.from_pretrained(
-            image_embedding_model
-        )
+        self.image_embedding_model = CLIPModel.from_pretrained(image_embedding_model)
+        self.image_processor = CLIPProcessor.from_pretrained(image_embedding_model)
+        
+        # Move model to device and set to eval mode
+        self.image_embedding_model.to(self.device)
+        self.image_embedding_model.eval()
+        
+        # Verify model device and dtype
+        model_params = next(self.image_embedding_model.parameters())
+        self.logger.info(f"Model is on device: {model_params.device}")
+        self.logger.info(f"Model dtype: {model_params.dtype}")
         
         # Initialize vector stores
         self.text_vector_store = None
@@ -258,21 +269,31 @@ class DeepSeekImageRAG:
             image_paths = []
             metadatas = []
             
-            # Determine device
-            device = next(self.image_embedding_model.parameters()).device
-            
             for image_doc in images:
                 # Load and process image
                 image = Image.open(image_doc['path'])
                 inputs = self.image_processor(images=image, return_tensors="pt")
                 
-                # Move all input tensors to the same device as the model
-                inputs = {k: v.to(device) if torch.is_tensor(v) else v 
-                         for k, v in inputs.items()}
+                # Debug: Check initial device and dtype of pixel_values
+                if 'pixel_values' in inputs:
+                    print(f"Before moving: pixel_values device={inputs['pixel_values'].device}, dtype={inputs['pixel_values'].dtype}")
+                    
+                    # Move pixel_values to the correct device without changing dtype
+                    inputs['pixel_values'] = inputs['pixel_values'].to(self.device)
+                    
+                    # Debug: Check after moving
+                    print(f"After moving: pixel_values device={inputs['pixel_values'].device}, dtype={inputs['pixel_values'].dtype}")
+                else:
+                    raise ValueError("pixel_values not found in inputs")
                 
                 # Generate embeddings
                 with torch.no_grad():
                     image_features = self.image_embedding_model.get_image_features(**inputs)
+                    
+                    # Debug: Check device and dtype of image_features
+                    print(f"image_features device={image_features.device}, dtype={image_features.dtype}")
+                    
+                    # Move features to CPU and convert to numpy
                     embedding = image_features.cpu().squeeze().numpy()
                 
                 image_embeddings.append(embedding)

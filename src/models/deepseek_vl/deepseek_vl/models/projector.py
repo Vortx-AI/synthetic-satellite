@@ -21,7 +21,8 @@ from typing import Tuple, Union
 
 import torch
 import torch.nn as nn
-from attrdict import AttrDict
+from box import Box
+#from attrdict import AttrDict
 
 
 class MlpProjector(nn.Module):
@@ -87,7 +88,7 @@ class MlpProjector(nn.Module):
 
 
 if __name__ == "__main__":
-    cfg = AttrDict(
+    cfg = Box(
         input_dim=1024,
         n_embed=2048,
         depth=2,
