@@ -347,19 +347,19 @@ graph TD
     subgraph Data Economy
         D1[Data Providers] -->|Submit Data| D2[Data Pool]
         D2 -->|Validate| D3[Smart Contract]
-        D3 -->|Mint| D4[VDATA Tokens]
+        D3 -->|Mint| D4[VORTX Tokens]
     end
     
     subgraph Compute Economy
         C1[Compute Providers] -->|Offer Resources| C2[Compute Pool]
         C2 -->|Validate| C3[Smart Contract]
-        C3 -->|Mint| C4[VCPU Tokens]
+        C3 -->|Mint| C4[VORTX Tokens]
     end
     
     subgraph Intelligence Economy
         I1[AGI Services] -->|Provide Intelligence| I2[Service Pool]
         I2 -->|Validate| I3[Smart Contract]
-        I3 -->|Mint| I4[VAGI Tokens]
+        I3 -->|Mint| I4[VORTX Tokens]
     end
     
     classDef economy fill:#f9f,stroke:#333
