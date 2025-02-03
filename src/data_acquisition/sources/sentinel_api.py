@@ -8,11 +8,11 @@ from datetime import datetime
 import rasterio
 import numpy as np
 from shapely.geometry import box, Polygon, mapping
-from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
+from sentinelsat.sentinel import SentinelAPI  # Direct import from sentinel module
 from rasterio.warp import transform_bounds
 import json
 
-class SentinelAPI:
+class CustomSentinelAPI:
     """Interface for accessing data from Copernicus Open Access Hub."""
     
     def __init__(
@@ -35,11 +35,17 @@ class SentinelAPI:
         if not (self.user and self.password):
             raise ValueError("Copernicus credentials required")
         
-        self.api = SentinelAPI(
+        # Create API instance using direct import
+        self._api = SentinelAPI(
             self.user,
             self.password,
             api_url
         )
+        
+    @property
+    def api(self):
+        """Access the underlying API instance"""
+        return self._api
     
     def search_and_download(
         self,

@@ -13,6 +13,11 @@
                 "source": "doc2",
                 "type": "technology"
             }
+            
+        },
+        {
+            "content": "San Francisco is known for the Golden Gate Bridge...",
+            "metadata": {}
         }
     ]
 }
