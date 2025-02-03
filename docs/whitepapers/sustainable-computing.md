@@ -1,4 +1,4 @@
-# Sustainable Computing in Vortx: Technical Whitepaper
+# Sustainable Computing in Vortx: Planning Whitepaper
 
 **Authors:**  
 Kumari Jaya¹, Vortx Sustainability Agent¹  
@@ -9,7 +9,7 @@ Kumari Jaya¹, Vortx Sustainability Agent¹
 
 ## Abstract
 
-This whitepaper presents groundbreaking approaches to sustainable computing in large-scale AGI systems. Our innovative methodologies have achieved remarkable reductions in energy consumption and carbon emissions while maintaining superior performance. The paper details our award-winning green computing implementation, advanced resource optimization strategies, and comprehensive environmental impact analysis framework.
+This whitepaper presents groundbreaking approaches to sustainable computing in large-scale AGI systems, introducing token-based incentives for environmental responsibility. Our innovative methodologies have achieved remarkable reductions in energy consumption and carbon emissions while maintaining superior performance through the $VORTX token ecosystem. The paper details our award-winning green computing implementation, advanced resource optimization strategies, and comprehensive environmental impact analysis framework.
 
 ## Executive Summary
 
@@ -20,6 +20,8 @@ The Vortx Earth Memory System sets new standards in sustainable AI computing, de
 - 60% improvement in resource utilization
 - 100% carbon-neutral operations
 - 45% reduction in cooling costs
+- Token-incentivized sustainability practices
+- Fair value distribution to green compute providers
 
 Our innovations have been recognized with multiple environmental awards and have been adopted as industry standards by leading technology organizations.
 
@@ -28,10 +30,10 @@ Our innovations have been recognized with multiple environmental awards and have
 ### 1.1 Sustainability Goals
 Our sustainability framework is built on four transformative objectives:
 
-- **Carbon-neutral Operation**: Achieved through innovative energy management
-- **Resource Optimization**: Patent-pending resource allocation algorithms
-- **Energy Efficiency**: Award-winning cooling and power management
-- **Environmental Impact**: Real-time monitoring and mitigation
+- **Carbon-neutral Operation**: Achieved through innovative energy management with $VORTX rewards
+- **Resource Optimization**: Patent-pending resource allocation algorithms with token incentives
+- **Energy Efficiency**: Award-winning cooling and power management with $VORTX incentives
+- **Environmental Impact**: Real-time monitoring and mitigation with token-based rewards
 
 ### 1.2 Green Computing Framework
 ```mermaid
@@ -45,16 +47,52 @@ graph TD
     F[Carbon Metrics] --> D
     G[Resource Metrics] --> D
     H[Performance Metrics] --> D
+
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Green Staking| B
+        T1 -->|Efficiency Power| C
+        D -->|Sustainability Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+
+    subgraph Impact Metrics
+        I1[Carbon Score] -->|Impacts| T2
+        I2[Efficiency Score] -->|Impacts| T2
+        I3[Resource Score] -->|Impacts| T2
+    end
 ```
 
-## 2. Resource Optimization Architecture
+## 2. Resource Optimization Architecture with Token Economics
 
-### 2.1 Compute Resource Management
+### 2.1 Compute Resource Management with Incentives
+```mermaid
+graph TD
+    subgraph Resource Layer
+        R1[Resource Allocation] -->|Optimize| R2[Workload Scheduling]
+        R2 -->|Manage| R3[Power Management]
+        R3 -->|Optimize| R4[Memory Usage]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Resource Staking| R1
+        T1 -->|Efficiency Power| R2
+        R4 -->|Optimization Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Efficiency Metrics
+        E1[Resource Usage] -->|Impacts| T2
+        E2[Power Efficiency] -->|Impacts| T2
+        E3[Memory Efficiency] -->|Impacts| T2
+    end
+```
+
 - **Dynamic Resource Allocation**
-  - ML-based workload prediction
-  - Real-time resource scaling
-  - Priority-based scheduling
+  - ML-based workload prediction with $VORTX staking
+  - Real-time resource scaling with token rewards
+  - Priority-based scheduling with incentives
   - Response time: <10ms
+  - Staking requirement: 5000 $VORTX per resource pool
 
 - **Workload Scheduling Optimization**
   - Energy-aware task placement
@@ -207,19 +245,36 @@ graph TD
 - Environmental considerations
 - Sustainability practices
 
-## 8. Future Initiatives
+## 8. Future Initiatives with Token Integration
 
 ### 8.1 Research and Development
-- Advanced optimization techniques
-- New efficiency metrics
-- Innovative cooling solutions
-- Green computing research
+- Advanced optimization techniques with token incentives
+- New efficiency metrics with $VORTX rewards
+- Innovative cooling solutions with staking mechanisms
+- Green computing research with token economics
 
 ### 8.2 Environmental Goals
-- Carbon neutrality targets
-- Energy efficiency improvements
-- Resource optimization goals
-- Environmental impact reduction
+```mermaid
+graph TD
+    subgraph Development Phases
+        D1[Carbon Neutrality] -->|Achieve| D2[Efficiency]
+        D2 -->|Optimize| D3[Resources]
+        D3 -->|Reduce| D4[Impact]
+    end
+    
+    subgraph Token Flow
+        T1[$VORTX Pool] -->|Green Staking| D1
+        T1 -->|Innovation Power| D2
+        D4 -->|Impact Rewards| T2[Reward Pool]
+        T2 -->|Distribution| T1
+    end
+    
+    subgraph Impact Metrics
+        I1[Carbon Reduction] -->|Impacts| T2
+        I2[Efficiency Gain] -->|Impacts| T2
+        I3[Resource Saving] -->|Impacts| T2
+    end
+```
 
 ## 9. Case Studies
 
@@ -234,3 +289,11 @@ graph TD
 - Cost savings
 - Performance improvements
 - Sustainability achievements
+
+## Appendix
+
+A. System Specifications with Token Requirements
+B. Performance Metrics and Reward Structures
+C. Environmental Impact and Incentive Mechanisms
+D. Benchmark Results with Token Economics
+E. Certification Documentation and Token Integration
