@@ -12,6 +12,8 @@ import os
 from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 from dataclasses import dataclass
+import faiss  # Ensure FAISS is properly installed and imported
+from io import BytesIO
 
 @dataclass
 class SyntheticConfig:
@@ -39,6 +41,10 @@ class DeepSeekImageRAG:
         
         # Set PyTorch memory settings
         os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+        
+        # Determine device
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.logger.info(f"Using device: {self.device}")
         
         # Clear CUDA cache before initialization
         if torch.cuda.is_available():
@@ -77,14 +83,19 @@ class DeepSeekImageRAG:
             encode_kwargs={'normalize_embeddings': True}
         )
         
-        # Initialize image embedding model
+        # Initialize image embedding model and processor
         self.logger.info("Initializing image embedding model...")
-        self.image_embedding_model = CLIPModel.from_pretrained(
-            image_embedding_model
-        ).to('cuda')
-        self.image_processor = CLIPProcessor.from_pretrained(
-            image_embedding_model
-        )
+        self.image_embedding_model = CLIPModel.from_pretrained(image_embedding_model)
+        self.image_processor = CLIPProcessor.from_pretrained(image_embedding_model)
+        
+        # Move model to device and set to eval mode
+        self.image_embedding_model.to(self.device)
+        self.image_embedding_model.eval()
+        
+        # Verify model device and dtype
+        model_params = next(self.image_embedding_model.parameters())
+        self.logger.info(f"Model is on device: {model_params.device}")
+        self.logger.info(f"Model dtype: {model_params.dtype}")
         
         # Initialize vector stores
         self.text_vector_store = None
@@ -252,31 +263,58 @@ class DeepSeekImageRAG:
             raise
     
     def add_images(self, images: List[Dict[str, Any]]):
-        """Add images to the image vector store"""
+        """Add images to the vector store"""
         try:
             image_embeddings = []
-            metadata_list = []
-            for img in images:
-                img_path = img['path']
-                if not Path(img_path).exists():
-                    self.logger.warning(f"Image path does not exist: {img_path}")
-                    continue
-                image = Image.open(img_path).convert("RGB")
+            image_paths = []
+            metadatas = []
+            
+            for image_doc in images:
+                # Load and process image
+                image = Image.open(image_doc['path'])
                 inputs = self.image_processor(images=image, return_tensors="pt")
+                
+                # Debug: Check initial device and dtype of pixel_values
+                if 'pixel_values' in inputs:
+                    print(f"Before moving: pixel_values device={inputs['pixel_values'].device}, dtype={inputs['pixel_values'].dtype}")
+                    
+                    # Move pixel_values to the correct device without changing dtype
+                    inputs['pixel_values'] = inputs['pixel_values'].to(self.device)
+                    
+                    # Debug: Check after moving
+                    print(f"After moving: pixel_values device={inputs['pixel_values'].device}, dtype={inputs['pixel_values'].dtype}")
+                else:
+                    raise ValueError("pixel_values not found in inputs")
+                
+                # Generate embeddings
                 with torch.no_grad():
                     image_features = self.image_embedding_model.get_image_features(**inputs)
-                embedding = image_features.squeeze().numpy()
+                    
+                    # Debug: Check device and dtype of image_features
+                    print(f"image_features device={image_features.device}, dtype={image_features.dtype}")
+                    
+                    # Move features to CPU and convert to numpy
+                    embedding = image_features.cpu().squeeze().numpy()
+                
                 image_embeddings.append(embedding)
-                metadata_list.append(img.get('metadata', {'path': img_path}))
+                image_paths.append(image_doc['path'])
+                metadatas.append(image_doc.get('metadata', {}))
             
-            if image_embeddings:
-                self.image_vector_store = FAISS.from_embeddings(
-                    image_embeddings,
-                    metadatas=metadata_list
+            # Initialize image vector store if it doesn't exist
+            if self.image_vector_store is None:
+                self.image_vector_store = FAISS.from_texts(
+                    texts=image_paths,
+                    embedding=self.image_embedding_model,
+                    metadatas=metadatas
                 )
-                self.logger.info(f"Added {len(image_embeddings)} images to the image vector store")
             else:
-                self.logger.warning("No valid images were added to the image vector store")
+                self.image_vector_store.add_texts(
+                    texts=image_paths,
+                    metadatas=metadatas
+                )
+            
+            self.logger.info(f"Added {len(image_paths)} images to the vector store")
+            
         except Exception as e:
             self.logger.error(f"Error adding images: {str(e)}")
             raise
