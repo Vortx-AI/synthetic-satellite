@@ -18,7 +18,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import torch
-from attrdict import AttrDict
+from box import Box
 from einops import rearrange
 from transformers import (
     AutoConfig,
@@ -59,7 +59,7 @@ def model_name_to_cls(cls_name):
 class VisionConfig(PretrainedConfig):
     model_type = "vision"
     cls: str = ""
-    params: AttrDict = {}
+    params: Box = {}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -68,13 +68,13 @@ class VisionConfig(PretrainedConfig):
         if not isinstance(self.cls, str):
             self.cls = self.cls.__name__
 
-        self.params = AttrDict(kwargs.get("params", {}))
+        self.params = Box(kwargs.get("params", {}))
 
 
 class AlignerConfig(PretrainedConfig):
     model_type = "aligner"
     cls: str = ""
-    params: AttrDict = {}
+    params: Box = {}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -83,7 +83,7 @@ class AlignerConfig(PretrainedConfig):
         if not isinstance(self.cls, str):
             self.cls = self.cls.__name__
 
-        self.params = AttrDict(kwargs.get("params", {}))
+        self.params = Box(kwargs.get("params", {}))
 
 
 class MultiModalityConfig(PretrainedConfig):
