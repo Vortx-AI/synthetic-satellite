@@ -1,17 +1,20 @@
 from vllm import LLM, SamplingParams
 from sentence_transformers import SentenceTransformer
-import faiss
-import numpy as np
+from langchain_core.prompts import PromptTemplate
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
 from typing import List, Dict, Optional
 import json
 import torch
 import logging
 from pathlib import Path
+import gc
+import os
 
 class DeepSeekRAG:
     def __init__(
         self,
-        model_name: str = "deepseek-ai/deepseek-coder-33b-instruct",
+        model_name: str = "deepseek-ai/deepseek-coder-1.3b-base",
         embedding_model: str = "BAAI/bge-large-en-v1.5",
         index_path: Optional[str] = None,
         knowledge_base_path: Optional[str] = None,
@@ -21,44 +24,25 @@ class DeepSeekRAG:
         verbose: bool = False
     ):
         """
-        Initialize DeepSeek RAG system
-        
-        Args:
-            model_name: DeepSeek model name/path
-            embedding_model: Sentence transformer model for embeddings
-            index_path: Path to save/load FAISS index
-            knowledge_base_path: Path to knowledge base documents
-            max_tokens: Maximum tokens for generation
-            temperature: Sampling temperature
-            top_k_docs: Number of documents to retrieve
-            verbose: Enable verbose logging
+        Initialize DeepSeek RAG system with LangChain
         """
         self.setup_logging(verbose)
         self.top_k = top_k_docs
         
-        # Initialize LLM with float16 dtype
+        # Initialize vector store
+        self.vector_store = None
+        
+        # Initialize LLM
         self.logger.info("Initializing DeepSeek LLM...")
         self.model = LLM(
             model=model_name,
             trust_remote_code=True,
-            max_model_len=max_tokens,
-            dtype="float16"  # Explicitly set to float16 for T4 GPU compatibility
+            tensor_parallel_size=1,
+            dtype="float16",
+            max_model_len=512,
+            gpu_memory_utilization=0.6,
+            enforce_eager=True
         )
-        
-        # Initialize embedding model
-        self.logger.info("Initializing embedding model...")
-        self.embedding_model = SentenceTransformer(embedding_model)
-        
-        # Setup FAISS index
-        self.embedding_dim = self.embedding_model.get_sentence_embedding_dimension()
-        self.index = faiss.IndexFlatL2(self.embedding_dim)
-        
-        # Load or create knowledge base
-        self.documents = []
-        if index_path and Path(index_path).exists():
-            self.load_index(index_path)
-        elif knowledge_base_path:
-            self.load_knowledge_base(knowledge_base_path)
         
         # Set sampling parameters
         self.sampling_params = SamplingParams(
@@ -66,6 +50,32 @@ class DeepSeekRAG:
             max_tokens=max_tokens,
             top_p=0.95,
             presence_penalty=0.1
+        )
+        
+        # Initialize embedding model using LangChain
+        self.logger.info("Initializing embedding model...")
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name=embedding_model,
+            model_kwargs={'device': 'cuda'},
+            encode_kwargs={'normalize_embeddings': True}
+        )
+        
+        # Initialize or load vector store
+        if index_path and Path(index_path).exists():
+            self.load_index(index_path)
+        elif knowledge_base_path:
+            self.load_knowledge_base(knowledge_base_path)
+        
+        # Setup RAG prompt template
+        self.rag_prompt = PromptTemplate(
+            template="""Context information:
+{context}
+
+Based on the above context, please answer the following question:
+{query}
+
+Answer:""",
+            input_variables=["context", "query"]
         )
     
     def setup_logging(self, verbose: bool):
@@ -81,60 +91,110 @@ class DeepSeekRAG:
         self.logger.info(f"Loading knowledge base from {path}")
         try:
             with open(path, 'r', encoding='utf-8') as f:
-                documents = json.load(f)
+                data = json.load(f)
             
-            # Add documents to index
-            self.add_documents(documents)
-            self.logger.info(f"Loaded {len(documents)} documents")
+            # Handle different possible JSON formats
+            if isinstance(data, list):
+                documents = data
+            elif isinstance(data, dict) and 'documents' in data:
+                documents = data['documents']
+            elif isinstance(data, str):
+                # Handle single document as string
+                documents = [{"content": data, "metadata": {}}]
+            else:
+                raise ValueError(f"Unsupported knowledge base format in {path}")
             
+            # Validate and normalize documents
+            normalized_docs = []
+            for doc in documents:
+                if isinstance(doc, str):
+                    # Convert string documents to proper format
+                    normalized_docs.append({
+                        "content": doc,
+                        "metadata": {}
+                    })
+                elif isinstance(doc, dict) and 'content' in doc:
+                    # Use existing document structure
+                    normalized_docs.append(doc)
+                else:
+                    self.logger.warning(f"Skipping invalid document format: {doc}")
+                    continue
+            
+            if not normalized_docs:
+                raise ValueError("No valid documents found in knowledge base")
+            
+            # Add normalized documents
+            self.add_documents(normalized_docs)
+            self.logger.info(f"Loaded {len(normalized_docs)} documents")
+            
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Invalid JSON format in knowledge base: {str(e)}")
+            raise
         except Exception as e:
             self.logger.error(f"Error loading knowledge base: {str(e)}")
             raise
     
     def add_documents(self, documents: List[Dict[str, str]]):
-        """Add documents to the index"""
+        """Add documents to the vector store"""
         try:
-            # Get embeddings for documents
-            texts = [doc['content'] for doc in documents]
-            embeddings = self.embedding_model.encode(texts)
+            # Validate and extract document content
+            texts = []
+            metadatas = []
             
-            # Add to FAISS index
-            self.index.add(np.array(embeddings).astype('float32'))
+            for doc in documents:
+                if isinstance(doc, dict) and 'content' in doc:
+                    texts.append(doc['content'])
+                    metadatas.append({
+                        'source': doc.get('metadata', {}).get('source', 'unknown'),
+                        'type': doc.get('metadata', {}).get('type', 'unknown')
+                    })
+                else:
+                    self.logger.warning(f"Skipping invalid document format: {doc}")
+                    continue
             
-            # Store documents
-            self.documents.extend(documents)
+            if not texts:
+                raise ValueError("No valid documents to add")
+            
+            # Create or update vector store
+            if self.vector_store is None:
+                self.vector_store = FAISS.from_texts(
+                    texts=texts,
+                    embedding=self.embedding_model,
+                    metadatas=metadatas
+                )
+            else:
+                self.vector_store.add_texts(texts=texts, metadatas=metadatas)
             
         except Exception as e:
             self.logger.error(f"Error adding documents: {str(e)}")
             raise
     
     def save_index(self, path: str):
-        """Save FAISS index and documents"""
+        """Save vector store"""
         try:
-            # Save FAISS index
-            faiss.write_index(self.index, f"{path}.index")
-            
-            # Save documents
-            with open(f"{path}.json", 'w', encoding='utf-8') as f:
-                json.dump(self.documents, f, indent=2)
-                
-            self.logger.info(f"Saved index and documents to {path}")
+            if self.vector_store:
+                # Create directory if it doesn't exist
+                Path(path).parent.mkdir(parents=True, exist_ok=True)
+                self.vector_store.save_local(path)
+                self.logger.info(f"Saved vector store to {path}")
+            else:
+                self.logger.warning("No vector store to save")
             
         except Exception as e:
             self.logger.error(f"Error saving index: {str(e)}")
             raise
     
     def load_index(self, path: str):
-        """Load FAISS index and documents"""
+        """Load vector store"""
         try:
-            # Load FAISS index
-            self.index = faiss.read_index(f"{path}.index")
+            if not Path(path).exists():
+                raise FileNotFoundError(f"Index path {path} does not exist")
             
-            # Load documents
-            with open(f"{path}.json", 'r', encoding='utf-8') as f:
-                self.documents = json.load(f)
-                
-            self.logger.info(f"Loaded index with {len(self.documents)} documents")
+            self.vector_store = FAISS.load_local(
+                folder_path=path,
+                embeddings=self.embedding_model
+            )
+            self.logger.info(f"Loaded vector store from {path}")
             
         except Exception as e:
             self.logger.error(f"Error loading index: {str(e)}")
@@ -143,17 +203,17 @@ class DeepSeekRAG:
     def retrieve(self, query: str) -> List[str]:
         """Retrieve relevant documents for query"""
         try:
-            # Get query embedding
-            query_embedding = self.embedding_model.encode([query])
+            if not self.vector_store:
+                raise ValueError("No documents in vector store")
             
-            # Search in FAISS
-            distances, indices = self.index.search(
-                np.array(query_embedding).astype('float32'), 
-                self.top_k
+            # Use similarity_search instead of direct embedding
+            docs = self.vector_store.similarity_search(
+                query,
+                k=self.top_k
             )
             
-            # Get relevant documents
-            retrieved_docs = [self.documents[i]['content'] for i in indices[0]]
+            # Extract document contents
+            retrieved_docs = [doc.page_content for doc in docs]
             return retrieved_docs
             
         except Exception as e:

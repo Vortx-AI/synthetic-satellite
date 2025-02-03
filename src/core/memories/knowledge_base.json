@@ -1,20 +1,23 @@
 {
     "documents": [
         {
-            "content": "Python is a high-level programming language...",
+            "content": "Python is a high-level programming language known for its simplicity and readability.",
             "metadata": {
-                "source": "python_docs",
-                "type": "documentation",
-                "date": "2024-02-02"
+                "source": "doc1",
+                "type": "programming"
             }
         },
         {
-            "content": "FAISS (Facebook AI Similarity Search) is a library...",
+            "content": "FAISS is a library for efficient similarity search developed by Facebook Research.",
             "metadata": {
-                "source": "faiss_docs",
-                "type": "documentation",
-                "date": "2024-02-02"
+                "source": "doc2",
+                "type": "technology"
             }
+            
+        },
+        {
+            "content": "San Francisco is known for the Golden Gate Bridge...",
+            "metadata": {}
         }
     ]
 }
