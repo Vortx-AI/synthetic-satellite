@@ -21,41 +21,45 @@ class SyntheticConfig:
 class DeepSeekImageRAG:
     def __init__(
         self,
-        model_name: str = "deepseek-ai/deepseek-coder-1.3b-base",
-        embedding_model: str = "BAAI/bge-large-en-v1.5",
-        image_embedding_model: str = "openai/clip-vit-base-patch32",
-        index_path: Optional[str] = None,
-        image_index_path: Optional[str] = None,
-        knowledge_base_path: Optional[str] = None,
-        image_knowledge_base_path: Optional[str] = None,
-        max_tokens: int = 2048,
+        model_name: str,
+        embedding_model: str,
+        image_embedding_model: str,
+        index_path: str = None,
+        image_index_path: str = None,
+        knowledge_base_path: str = None,
+        image_knowledge_base_path: str = None,
+        max_tokens: int = 256,
         temperature: float = 0.7,
         top_k_docs: int = 3,
         verbose: bool = False
     ):
-        """
-        Initialize DeepSeek Image RAG system with LangChain and Image RAG capabilities
-        """
-        self.setup_logging(verbose)
-        self.top_k = top_k_docs
+        """Initialize DeepSeek Image RAG system"""
+        self.verbose = verbose
+        self.logger = logging.getLogger(__name__)
         
-        # Initialize text vector store
-        self.text_vector_store = None
+        # Set PyTorch memory settings
+        os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
         
-        # Initialize image vector store
-        self.image_vector_store = None
+        # Clear CUDA cache before initialization
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
         
-        # Initialize LLM
+        # Initialize DeepSeek LLM
         self.logger.info("Initializing DeepSeek LLM...")
-        self.model = LLM(
-            model=model_name,
-            trust_remote_code=True,
-            tensor_parallel_size=1,
-            dtype="float16",
-            max_model_len=512,
-            gpu_memory_utilization=0.6,
-            enforce_eager=True
-        )
+        try:
+            self.model = LLM(
+                model=model_name,
+                trust_remote_code=True,
+                tensor_parallel_size=1,
+                dtype="float16",
+                max_model_len=128,  # Reduced from 512
+                gpu_memory_utilization=0.3,  # Reduced from 0.6
+                enforce_eager=True,
+                max_num_batched_tokens=256  # Add limit to batch size
+            )
+        except Exception as e:
+            self.logger.error(f"Failed to initialize LLM: {str(e)}")
+            raise
         
         # Set sampling parameters
         self.sampling_params = SamplingParams(
@@ -65,7 +69,7 @@ class DeepSeekImageRAG:
             presence_penalty=0.1
         )
         
-        # Initialize text embedding model using LangChain
+        # Initialize text embedding model
         self.logger.info("Initializing text embedding model...")
         self.text_embedding_model = HuggingFaceEmbeddings(
             model_name=embedding_model,
@@ -73,21 +77,27 @@ class DeepSeekImageRAG:
             encode_kwargs={'normalize_embeddings': True}
         )
         
-        # Initialize image embedding model using CLIP
+        # Initialize image embedding model
         self.logger.info("Initializing image embedding model...")
-        self.clip_model = CLIPModel.from_pretrained(image_embedding_model)
-        self.clip_processor = CLIPProcessor.from_pretrained(image_embedding_model)
+        self.image_embedding_model = CLIPModel.from_pretrained(
+            image_embedding_model
+        ).to('cuda')
+        self.image_processor = CLIPProcessor.from_pretrained(
+            image_embedding_model
+        )
         
-        # Initialize or load text vector store
-        if index_path and Path(index_path).exists():
-            self.load_text_index(index_path)
-        elif knowledge_base_path:
+        # Initialize vector stores
+        self.text_vector_store = None
+        self.image_vector_store = None
+        
+        # Load existing indices if provided
+        if index_path and image_index_path:
+            self.load_index(index_path, image_index_path)
+        
+        # Load knowledge bases if provided
+        if knowledge_base_path:
             self.load_text_knowledge_base(knowledge_base_path)
-        
-        # Initialize or load image vector store
-        if image_index_path and Path(image_index_path).exists():
-            self.load_image_index(image_index_path)
-        elif image_knowledge_base_path:
+        if image_knowledge_base_path:
             self.load_image_knowledge_base(image_knowledge_base_path)
         
         # Setup RAG prompt template
@@ -218,47 +228,72 @@ class DeepSeekImageRAG:
             self.logger.error(f"Error loading image knowledge base: {str(e)}")
             raise
     
-    def add_text_documents(self, documents: List[Dict[str, str]]):
-        """Add textual documents to the text vector store"""
+    def add_text_documents(self, documents: List[Dict[str, Any]]):
+        """Add textual documents to the vector store"""
         try:
             texts = [doc['content'] for doc in documents]
-            embeddings = self.text_embedding_model.embed_documents(texts)
-            self.text_vector_store.add_texts(
-                texts,
-                embeddings,
-                metadatas=[doc.get('metadata', {}) for doc in documents]
-            )
+            metadatas = [doc.get('metadata', {}) for doc in documents]
+            
+            # Initialize text vector store if it doesn't exist
+            if self.text_vector_store is None:
+                self.text_vector_store = FAISS.from_texts(
+                    texts=texts,
+                    embedding=self.text_embedding_model,
+                    metadatas=metadatas
+                )
+            else:
+                self.text_vector_store.add_texts(
+                    texts=texts,
+                    metadatas=metadatas
+                )
             self.logger.info(f"Added {len(texts)} textual documents to the vector store")
         except Exception as e:
             self.logger.error(f"Error adding textual documents: {str(e)}")
             raise
     
     def add_images(self, images: List[Dict[str, Any]]):
-        """Add images to the image vector store"""
+        """Add images to the vector store"""
         try:
             image_embeddings = []
-            metadata_list = []
-            for img in images:
-                img_path = img['path']
-                if not Path(img_path).exists():
-                    self.logger.warning(f"Image path does not exist: {img_path}")
-                    continue
-                image = Image.open(img_path).convert("RGB")
-                inputs = self.clip_processor(images=image, return_tensors="pt")
-                with torch.no_grad():
-                    image_features = self.clip_model.get_image_features(**inputs)
-                embedding = image_features.squeeze().numpy()
-                image_embeddings.append(embedding)
-                metadata_list.append(img.get('metadata', {'path': img_path}))
+            image_paths = []
+            metadatas = []
             
-            if image_embeddings:
-                self.image_vector_store = FAISS.from_embeddings(
-                    image_embeddings,
-                    metadatas=metadata_list
+            # Determine device
+            device = next(self.image_embedding_model.parameters()).device
+            
+            for image_doc in images:
+                # Load and process image
+                image = Image.open(image_doc['path'])
+                inputs = self.image_processor(images=image, return_tensors="pt")
+                
+                # Move all input tensors to the same device as the model
+                inputs = {k: v.to(device) if torch.is_tensor(v) else v 
+                         for k, v in inputs.items()}
+                
+                # Generate embeddings
+                with torch.no_grad():
+                    image_features = self.image_embedding_model.get_image_features(**inputs)
+                    embedding = image_features.cpu().squeeze().numpy()
+                
+                image_embeddings.append(embedding)
+                image_paths.append(image_doc['path'])
+                metadatas.append(image_doc.get('metadata', {}))
+            
+            # Initialize image vector store if it doesn't exist
+            if self.image_vector_store is None:
+                self.image_vector_store = FAISS.from_texts(
+                    texts=image_paths,
+                    embedding=self.image_embedding_model,
+                    metadatas=metadatas
                 )
-                self.logger.info(f"Added {len(image_embeddings)} images to the image vector store")
             else:
-                self.logger.warning("No valid images were added to the image vector store")
+                self.image_vector_store.add_texts(
+                    texts=image_paths,
+                    metadatas=metadatas
+                )
+            
+            self.logger.info(f"Added {len(image_paths)} images to the vector store")
+            
         except Exception as e:
             self.logger.error(f"Error adding images: {str(e)}")
             raise
