@@ -183,56 +183,22 @@ class DeepSeekVLLM:
         """Get conversation history"""
         return self.conversation_history
 
-def query_llm(
-    prompt: str, 
-    model_name: str = "deepseek-ai/deepseek-coder-1.3b-base", 
-    template: Optional[str] = None
-) -> str:
+def query_llm(prompt: str, model_name: str = "deepseek-ai/deepseek-coder-1.3b-base") -> str:
     """
     Simple function to query the LLM with a single prompt
     
     Args:
         prompt: The input prompt to send to the model
         model_name: Optional model name/path (defaults to deepseek-coder-1.3b-base)
-        template: Optional prompt template to use
+<<<<<<< HEAD
         
     Returns:
         str: The model's response
     """
     try:
         llm = DeepSeekVLLM(model_name=model_name)
-        response = llm.generate(prompt=prompt, template=template)
+        response = llm.generate(prompt)
         return response
     except Exception as e:
         logging.error(f"Error querying LLM: {str(e)}")
         raise
-
-# Example usage
-if __name__ == "__main__":
-    # Test with a simple prompt
-    prompt = "Write a Python function to calculate fibonacci numbers."
-    try:
-        # Simple query
-        response = query_llm(prompt)
-        print(f"\nPrompt: {prompt}")
-        print(f"Response: {response}")
-        
-        # Query with template
-        template = """
-        You are an expert Python programmer. Please help with the following task:
-        
-        {query}
-        
-        Provide a detailed solution with comments and example usage.
-        """
-        
-        response = query_llm(
-            prompt="Implement a binary search tree class.",
-            template=template
-        )
-        print("\nTemplate Response:", response)
-        
-    except Exception as e:
-        print(f"Error: {str(e)}")
-
-
