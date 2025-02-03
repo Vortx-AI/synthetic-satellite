@@ -1,17 +1,23 @@
 from vllm import LLM, SamplingParams
-from sentence_transformers import SentenceTransformer
-import faiss
-import numpy as np
+from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
 from typing import List, Dict, Optional
 import json
 import torch
 import logging
 from pathlib import Path
+import gc
+import os
+
+# Set PyTorch memory management environment variables
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:128'
 
 class DeepSeekRAG:
     def __init__(
         self,
-        model_name: str = "deepseek-ai/deepseek-coder-33b-instruct",
+        model_name: str = "deepseek-ai/deepseek-coder-1.3b-base",
         embedding_model: str = "BAAI/bge-large-en-v1.5",
         index_path: Optional[str] = None,
         knowledge_base_path: Optional[str] = None,
@@ -21,11 +27,11 @@ class DeepSeekRAG:
         verbose: bool = False
     ):
         """
-        Initialize DeepSeek RAG system
+        Initialize DeepSeek RAG system with LangChain
         
         Args:
             model_name: DeepSeek model name/path
-            embedding_model: Sentence transformer model for embeddings
+            embedding_model: Model for embeddings
             index_path: Path to save/load FAISS index
             knowledge_base_path: Path to knowledge base documents
             max_tokens: Maximum tokens for generation
@@ -36,29 +42,17 @@ class DeepSeekRAG:
         self.setup_logging(verbose)
         self.top_k = top_k_docs
         
-        # Initialize LLM with float16 dtype
+        # Initialize LLM
         self.logger.info("Initializing DeepSeek LLM...")
         self.model = LLM(
             model=model_name,
             trust_remote_code=True,
-            max_model_len=max_tokens,
-            dtype="float16"  # Explicitly set to float16 for T4 GPU compatibility
+            tensor_parallel_size=1,
+            dtype="float16",
+            max_model_len=512,
+            gpu_memory_utilization=0.6,
+            enforce_eager=True
         )
-        
-        # Initialize embedding model
-        self.logger.info("Initializing embedding model...")
-        self.embedding_model = SentenceTransformer(embedding_model)
-        
-        # Setup FAISS index
-        self.embedding_dim = self.embedding_model.get_sentence_embedding_dimension()
-        self.index = faiss.IndexFlatL2(self.embedding_dim)
-        
-        # Load or create knowledge base
-        self.documents = []
-        if index_path and Path(index_path).exists():
-            self.load_index(index_path)
-        elif knowledge_base_path:
-            self.load_knowledge_base(knowledge_base_path)
         
         # Set sampling parameters
         self.sampling_params = SamplingParams(
@@ -67,7 +61,35 @@ class DeepSeekRAG:
             top_p=0.95,
             presence_penalty=0.1
         )
-    
+        
+        # Initialize embedding model using LangChain
+        self.logger.info("Initializing embedding model...")
+        self.embedding_model = HuggingFaceEmbeddings(
+            model_name=embedding_model,
+            model_kwargs={'device': 'cuda'},
+            encode_kwargs={'normalize_embeddings': True}
+        )
+        
+        # Initialize or load vector store
+        if index_path and Path(index_path).exists():
+            self.load_index(index_path)
+        else:
+            self.vector_store = None
+            if knowledge_base_path:
+                self.load_knowledge_base(knowledge_base_path)
+        
+        # Setup RAG prompt template
+        self.rag_prompt = PromptTemplate(
+            template="""Context information:
+{context}
+
+Based on the above context, please answer the following question:
+{query}
+
+Answer:""",
+            input_variables=["context", "query"]
+        )
+        
     def setup_logging(self, verbose: bool):
         """Setup logging configuration"""
         logging.basicConfig(
@@ -76,6 +98,17 @@ class DeepSeekRAG:
         )
         self.logger = logging.getLogger(__name__)
     
+    def _cleanup(self):
+        """Clean up GPU memory"""
+        try:
+            gc.collect()
+            if torch.cuda.is_available():
+                with torch.cuda.device('cuda'):
+                    torch.cuda.empty_cache()
+                    torch.cuda.ipc_collect()
+        except Exception as e:
+            self.logger.warning(f"Error during cleanup: {str(e)}")
+    
     def load_knowledge_base(self, path: str):
         """Load documents from knowledge base"""
         self.logger.info(f"Loading knowledge base from {path}")
@@ -83,8 +116,16 @@ class DeepSeekRAG:
             with open(path, 'r', encoding='utf-8') as f:
                 documents = json.load(f)
             
-            # Add documents to index
-            self.add_documents(documents)
+            # Create vector store
+            texts = [doc['content'] for doc in documents]
+            metadatas = [{'source': doc.get('metadata', {})} for doc in documents]
+            
+            self.vector_store = FAISS.from_texts(
+                texts=texts,
+                embedding=self.embedding_model,
+                metadatas=metadatas
+            )
+            
             self.logger.info(f"Loaded {len(documents)} documents")
             
         except Exception as e:
@@ -92,49 +133,43 @@ class DeepSeekRAG:
             raise
     
     def add_documents(self, documents: List[Dict[str, str]]):
-        """Add documents to the index"""
+        """Add documents to the vector store"""
         try:
-            # Get embeddings for documents
             texts = [doc['content'] for doc in documents]
-            embeddings = self.embedding_model.encode(texts)
+            metadatas = [{'source': doc.get('metadata', {})} for doc in documents]
             
-            # Add to FAISS index
-            self.index.add(np.array(embeddings).astype('float32'))
-            
-            # Store documents
-            self.documents.extend(documents)
+            if self.vector_store is None:
+                self.vector_store = FAISS.from_texts(
+                    texts=texts,
+                    embedding=self.embedding_model,
+                    metadatas=metadatas
+                )
+            else:
+                self.vector_store.add_texts(texts=texts, metadatas=metadatas)
             
         except Exception as e:
             self.logger.error(f"Error adding documents: {str(e)}")
             raise
     
     def save_index(self, path: str):
-        """Save FAISS index and documents"""
+        """Save vector store"""
         try:
-            # Save FAISS index
-            faiss.write_index(self.index, f"{path}.index")
-            
-            # Save documents
-            with open(f"{path}.json", 'w', encoding='utf-8') as f:
-                json.dump(self.documents, f, indent=2)
-                
-            self.logger.info(f"Saved index and documents to {path}")
+            if self.vector_store:
+                self.vector_store.save_local(path)
+                self.logger.info(f"Saved vector store to {path}")
             
         except Exception as e:
             self.logger.error(f"Error saving index: {str(e)}")
             raise
     
     def load_index(self, path: str):
-        """Load FAISS index and documents"""
+        """Load vector store"""
         try:
-            # Load FAISS index
-            self.index = faiss.read_index(f"{path}.index")
-            
-            # Load documents
-            with open(f"{path}.json", 'r', encoding='utf-8') as f:
-                self.documents = json.load(f)
-                
-            self.logger.info(f"Loaded index with {len(self.documents)} documents")
+            self.vector_store = FAISS.load_local(
+                folder_path=path,
+                embeddings=self.embedding_model
+            )
+            self.logger.info(f"Loaded vector store from {path}")
             
         except Exception as e:
             self.logger.error(f"Error loading index: {str(e)}")
@@ -143,17 +178,14 @@ class DeepSeekRAG:
     def retrieve(self, query: str) -> List[str]:
         """Retrieve relevant documents for query"""
         try:
-            # Get query embedding
-            query_embedding = self.embedding_model.encode([query])
+            if not self.vector_store:
+                raise ValueError("No documents in vector store")
             
-            # Search in FAISS
-            distances, indices = self.index.search(
-                np.array(query_embedding).astype('float32'), 
-                self.top_k
-            )
+            # Search in vector store
+            docs = self.vector_store.similarity_search(query, k=self.top_k)
             
-            # Get relevant documents
-            retrieved_docs = [self.documents[i]['content'] for i in indices[0]]
+            # Get document contents
+            retrieved_docs = [doc.page_content for doc in docs]
             return retrieved_docs
             
         except Exception as e:
@@ -163,27 +195,28 @@ class DeepSeekRAG:
     def generate(self, query: str) -> str:
         """Generate response using RAG"""
         try:
+            self._cleanup()  # Clean up before generation
+            
             # Retrieve relevant documents
             retrieved_docs = self.retrieve(query)
             
-            # Create prompt with context
+            # Format prompt with context
             context = "\n".join(retrieved_docs)
-            prompt = f"""Context information:
-{context}
-
-Based on the above context, please answer the following question:
-{query}
-
-Answer:"""
+            formatted_prompt = self.rag_prompt.format(
+                context=context,
+                query=query
+            )
             
-            # Generate response
-            outputs = self.model.generate([prompt], self.sampling_params)
+            # Generate response using vLLM
+            outputs = self.model.generate(formatted_prompt, self.sampling_params)
             response = outputs[0].outputs[0].text.strip()
             
+            self._cleanup()  # Clean up after generation
             return response
             
         except Exception as e:
             self.logger.error(f"Error during generation: {str(e)}")
+            self._cleanup()  # Clean up on error
             raise
 
 # Example usage
@@ -206,14 +239,18 @@ if __name__ == "__main__":
         }
     ]
     
-    # Add documents
-    rag.add_documents(documents)
-    
-    # Save index
-    rag.save_index("data/rag_index")
-    
-    # Test query
-    query = "What is Python programming language?"
-    response = rag.generate(query)
-    print(f"\nQuery: {query}")
-    print(f"Response: {response}") 
+    try:
+        # Add documents
+        rag.add_documents(documents)
+        
+        # Save index
+        rag.save_index("data/rag_index")
+        
+        # Test query
+        query = "What is Python programming language?"
+        response = rag.generate(query)
+        print(f"\nQuery: {query}")
+        print(f"Response: {response}")
+        
+    except Exception as e:
+        print(f"Error: {str(e)}")
