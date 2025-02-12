@@ -1,2 +1,2 @@
 # synthetic-satellite
- Project is now memories.dev , visit https://github.com/Vortx-AI/memories-dev .
+Project moved to memories.dev , access at https://github.com/Vortx-AI/memories-dev .
